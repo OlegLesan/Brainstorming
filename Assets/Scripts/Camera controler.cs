@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Cameraсontroller : MonoBehaviour
+public class Cameracontroller : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public float verticalSpeed = 5f;
     public float rotateSpeed = 90f;
     public float minYPosition = 23f;
     public float maxYPosition = 76f;
-    public float heightSmoothTime = 0.1f; // Время сглаживания высоты
+    public float heightSmoothTime = 0.1f; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     private CharacterController characterController;
     private float targetYPosition;
-    private float currentYVelocity; // Используется для SmoothDamp
+    private float currentYVelocity; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ SmoothDamp
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        targetYPosition = transform.position.y; // Инициализируем начальную высоту
+        targetYPosition = transform.position.y; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     void Update()
@@ -36,10 +36,10 @@ public class Cameraсontroller : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        // Перемещение камеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 move = (forward * v + right * h) * moveSpeed * Time.deltaTime;
 
-        // Изменение высоты камеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0f)
         {
@@ -47,14 +47,14 @@ public class Cameraсontroller : MonoBehaviour
             targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
         }
 
-        // Плавная интерполяция высоты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         float newYPosition = Mathf.SmoothDamp(transform.position.y, targetYPosition, ref currentYVelocity, heightSmoothTime);
-        move.y = newYPosition - transform.position.y; // Устанавливаем изменение высоты в вектор перемещения
+        move.y = newYPosition - transform.position.y; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        // Перемещение с помощью CharacterController
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ CharacterController
         characterController.Move(move);
 
-        // Поворот камеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.World);
