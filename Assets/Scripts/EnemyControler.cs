@@ -10,15 +10,23 @@ public class EnemyControler : MonoBehaviour
     private int currentPoint;
     private bool reachedEnd;
 
+    public float damage = 5;
+    private Base theBase;
+
     void Start()
     {
         thePath = FindObjectOfType<Path>();
+
+        theBase = FindObjectOfType<Base>();
+
+        
     }
     
     void Update()
     {
         if (!reachedEnd)
         {
+            transform.LookAt(thePath.points[currentPoint]);
             transform.position = Vector3.MoveTowards(transform.position, thePath.points[currentPoint].position, moveSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, thePath.points[currentPoint].position) < .01f)
             {
@@ -29,6 +37,12 @@ public class EnemyControler : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            
+                theBase.TakeDamage(damage);
+            Destroy(gameObject);
+        }    
 
       
     }
