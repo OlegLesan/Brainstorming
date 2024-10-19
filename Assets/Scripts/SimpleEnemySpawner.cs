@@ -10,6 +10,7 @@ public class SimpleEnemySpawner : MonoBehaviour
     public float timeBetweenSpawns;
     private float spawnCounter;
     public int amountToSpawn = 15;
+    public Path thePath;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class SimpleEnemySpawner : MonoBehaviour
             {
                 spawnCounter = timeBetweenSpawns;
 
-                Instantiate(enemyToSpawn, spawnPoint.position, spawnPoint.rotation);
+                Instantiate(enemyToSpawn, spawnPoint.position, spawnPoint.rotation).Setup(thePath);
                 amountToSpawn--;
             }
         }

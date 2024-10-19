@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyControler : MonoBehaviour
 {
     public float moveSpeed;
@@ -15,11 +16,11 @@ public class EnemyControler : MonoBehaviour
 
     void Start()
     {
-        thePath = FindObjectOfType<Path>();
-
+        if (thePath == null)
+        {
+            thePath = FindObjectOfType<Path>();
+        }
         theBase = FindObjectOfType<Base>();
-
-        
     }
     
     void Update()
@@ -46,5 +47,10 @@ public class EnemyControler : MonoBehaviour
 
       
     }
+    public void Setup( Path newPath)
+    {
+        
+        thePath = newPath;
 
+    }
 }
