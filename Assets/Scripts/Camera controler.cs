@@ -10,16 +10,16 @@ public class Cameracontroller : MonoBehaviour
     public float rotateSpeed = 90f;
     public float minYPosition = 23f;
     public float maxYPosition = 76f;
-    public float heightSmoothTime = 0.1f; // ����� ����������� ������
+    public float heightSmoothTime = 0.1f;
 
     private CharacterController characterController;
     private float targetYPosition;
-    private float currentYVelocity; // ������������ ��� SmoothDamp
+    private float currentYVelocity;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        targetYPosition = transform.position.y; // �������������� ��������� ������
+        targetYPosition = transform.position.y;
     }
 
     void Update()
@@ -36,25 +36,13 @@ public class Cameracontroller : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        // ����������� ������
         Vector3 move = (forward * v + right * h) * moveSpeed * Time.deltaTime;
 
-        // ��������� ������ ������
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f)
-        {
-            targetYPosition += scroll * verticalSpeed * Time.deltaTime;
-            targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
-        }
-
-        // ������� ������������ ������
         float newYPosition = Mathf.SmoothDamp(transform.position.y, targetYPosition, ref currentYVelocity, heightSmoothTime);
-        move.y = newYPosition - transform.position.y; // ������������� ��������� ������ � ������ �����������
+        move.y = newYPosition - transform.position.y;
 
-        // ����������� � ������� CharacterController
         characterController.Move(move);
 
-        // ������� ������
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.World);
