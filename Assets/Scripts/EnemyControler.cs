@@ -40,7 +40,7 @@ public class EnemyControler : MonoBehaviour
         else
         {
             
-                theBase.TakeDamage(damage);
+            theBase.TakeDamage(damage);
             Destroy(gameObject);
         }    
 
