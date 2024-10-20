@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+
 public class Cameracontroller : MonoBehaviour
 {
     public float moveSpeed = 10f;
@@ -10,7 +10,7 @@ public class Cameracontroller : MonoBehaviour
     public float minYPosition = 23f;
     public float maxYPosition = 76f;
     public float heightSmoothTime = 0.1f;
-    public float borderThickness = 10f; // Ширина границы для движения мыши
+    public float borderThickness = 10f; // Это поле можно удалить, если оно больше не нужно
 
     private CharacterController characterController;
     private float targetYPosition;
@@ -26,57 +26,31 @@ public class Cameracontroller : MonoBehaviour
     {
         Vector3 move = Vector3.zero;
 
-        // Получаем ввод от клавиш WASD
+        // Получаем значения для осей горизонтального и вертикального движения
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        // Определяем направления вперед и вправо с нормализованными векторами
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
 
-        // Отключаем движение по оси Y для горизонтального перемещения
         forward.y = 0;
         right.y = 0;
 
         forward.Normalize();
         right.Normalize();
 
-        // Движение от клавиш WASD
+        // Рассчитываем движение по осям с учетом скорости перемещения
         move = (forward * v + right * h) * moveSpeed * Time.deltaTime;
 
-        // Получаем текущие координаты мыши
-        Vector3 mousePosition = Input.mousePosition;
-
-        // Получаем размеры экрана
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-
-        // Добавляем движение от границ экрана
-        if (mousePosition.x <= borderThickness) // Левый край
-        {
-            move += -transform.right * moveSpeed * Time.deltaTime;
-        }
-        else if (mousePosition.x >= screenWidth - borderThickness) // Правый край
-        {
-            move += transform.right * moveSpeed * Time.deltaTime;
-        }
-
-        if (mousePosition.y <= borderThickness) // Нижний край
-        {
-            move += -transform.forward * moveSpeed * Time.deltaTime;
-        }
-        else if (mousePosition.y >= screenHeight - borderThickness) // Верхний край
-        {
-            move += transform.forward * moveSpeed * Time.deltaTime;
-        }
-
-        // Движение по вертикали (ограничение по Y)
+        // Контролируем вертикальное положение камеры с использованием SmoothDamp
         float newYPosition = Mathf.SmoothDamp(transform.position.y, targetYPosition, ref currentYVelocity, heightSmoothTime);
         move.y = newYPosition - transform.position.y;
 
         // Двигаем камеру
         characterController.Move(move);
 
-        // Поворот камеры с помощью Q и E
+        // Управляем поворотом камеры с помощью клавиш Q и E
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.World);
