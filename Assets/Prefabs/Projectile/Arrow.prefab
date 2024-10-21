@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRB: {fileID: 9170835674989367964}
   moveSpeed: 29.3
+  impactEffect: {fileID: 2107064138097909, guid: 84ad4265c32e5c74ca69ec86e5f42f9d, type: 3}
 --- !u!54 &9170835674989367964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

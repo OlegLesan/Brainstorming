@@ -6,7 +6,10 @@ public class Projectile : MonoBehaviour
 {
     public Rigidbody theRB;
     public float moveSpeed;
-    // Start is called before the first frame update
+
+    public GameObject impactEffect;
+
+
     void Start()
     {
         theRB.velocity = transform.forward * moveSpeed;
@@ -14,13 +17,15 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Instantiate(impactEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
+
     }
 
     void Update()
     {
-        
-        if (transform.position.y <= -10)
+
+        if ((transform.position.y <= -10) || (transform.position.y >= 10))
         {
             Destroy(gameObject);  
         }
