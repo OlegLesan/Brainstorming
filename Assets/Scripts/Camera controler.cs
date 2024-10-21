@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Cameracontroller : MonoBehaviour
 {
     public float moveSpeed = 10f;
@@ -10,16 +9,20 @@ public class Cameracontroller : MonoBehaviour
     public float minYPosition = 23f;
     public float maxYPosition = 76f;
     public float heightSmoothTime = 0.1f;
+    public float rotationStep = 90f; // Шаг поворота (90 градусов)
     public float borderThickness = 10f; // Это поле можно удалить, если оно больше не нужно
 
     private CharacterController characterController;
     private float targetYPosition;
     private float currentYVelocity;
+    private bool isRotating = false;
+    private Quaternion targetRotation;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         targetYPosition = transform.position.y;
+        targetRotation = transform.rotation; // Изначально целевой поворот равен текущему
     }
 
     void Update()
@@ -50,14 +53,34 @@ public class Cameracontroller : MonoBehaviour
         // Двигаем камеру
         characterController.Move(move);
 
-        // Управляем поворотом камеры с помощью клавиш Q и E
-        if (Input.GetKey(KeyCode.Q))
+        // Проверяем нажатие клавиш Q или E для поворота на 90 градусов
+        if (!isRotating)
         {
-            transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.World);
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                // Поворачиваем на -90 градусов
+                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - rotationStep, transform.eulerAngles.z);
+                isRotating = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Поворачиваем на 90 градусов
+                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + rotationStep, transform.eulerAngles.z);
+                isRotating = true;
+            }
         }
-        if (Input.GetKey(KeyCode.E))
+
+        // Если запущен процесс поворота, плавно вращаем камеру
+        if (isRotating)
         {
-            transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.World);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+            // Проверяем, достигли ли мы целевого поворота
+            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            {
+                transform.rotation = targetRotation;
+                isRotating = false;
+            }
         }
     }
 }

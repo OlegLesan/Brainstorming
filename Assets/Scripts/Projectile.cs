@@ -17,7 +17,15 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    void Update()
+    {
+        
+        if (transform.position.y <= -10)
+        {
+            Destroy(gameObject);  
+        }
+    }
+
 
 
 }
