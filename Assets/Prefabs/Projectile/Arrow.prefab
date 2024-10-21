@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1356914673781726405}
   - component: {fileID: 2700859198707159904}
   - component: {fileID: 189035084091336618}
-  - component: {fileID: 3423640087760438649}
   - component: {fileID: 5603937395247974272}
   - component: {fileID: 9170835674989367964}
   - component: {fileID: 2544413119891918777}
@@ -87,22 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3423640087760438649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846311025636673151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d3f3f4fa3ce3124bb934487650e59be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  firePoint: {fileID: 0}
-  timeBetweenShots: 1
-  launcherModel: {fileID: 0}
 --- !u!114 &5603937395247974272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 9170835674989367964}
-  moveSpeed: 15
+  moveSpeed: 20
 --- !u!54 &9170835674989367964
 Rigidbody:
   m_ObjectHideFlags: 0

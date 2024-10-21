@@ -11,6 +11,8 @@ public class DefencePeople : MonoBehaviour
     private float checkCounter;
     public float checkTime = .2f;
 
+    
+    public bool enemiesUpdated;
 
     void Start()
     {
@@ -20,6 +22,7 @@ public class DefencePeople : MonoBehaviour
 
     void Update()
     {
+        enemiesUpdated = false;
         checkCounter -= Time.deltaTime;
         if (checkCounter <= 0)
         {
@@ -30,6 +33,7 @@ public class DefencePeople : MonoBehaviour
             {
                 enemiesInRange.Add(col.GetComponent<EnemyControler>());
             }
+            enemiesUpdated = true;
         }
     }
 }
