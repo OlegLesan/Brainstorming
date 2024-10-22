@@ -16,20 +16,32 @@ public class TowerManager : MonoBehaviour
     public Transform indicator;
     public bool isPlacing;
 
-    public LayerMask whatIsPlacement;
+    public LayerMask whatIsPlacement, whatIsObstacle;
+
 
     void Update()
     {
-        if(isPlacing)
+        if (isPlacing)
         {
             indicator.position = GetGridPosition();
 
-            if (Input.GetMouseButtonDown(0))
+            RaycastHit hit;
+            if (Physics.Raycast(indicator.position + new Vector3(0f, -2f, 0f), Vector3.up, out hit, 10f, whatIsObstacle))
             {
-                isPlacing = false;
-
-                Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
                 indicator.gameObject.SetActive(false);
+            }
+            else
+            {
+
+                indicator.gameObject.SetActive(true);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    isPlacing = false;
+
+                    Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
+                    indicator.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -44,6 +56,8 @@ public class TowerManager : MonoBehaviour
         Destroy(indicator.gameObject);
         Tower placeTower = Instantiate(activeTower);
         placeTower.enabled = false;
+        placeTower.GetComponent<Collider>().enabled = false;
+
         indicator = placeTower.transform;
     }
 
