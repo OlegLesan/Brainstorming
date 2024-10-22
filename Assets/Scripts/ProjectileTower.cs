@@ -6,7 +6,7 @@ public class ProjectileTower : MonoBehaviour
 {
     
 
-    private DefencePeople theTower;
+    private Tower theTower;
 
     public GameObject projectile;
     public Transform firePoint;
@@ -23,7 +23,7 @@ public class ProjectileTower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        theTower = GetComponent<DefencePeople>();
+        theTower = GetComponent<Tower>();
         animator = GetComponent<Animator>(); // инициализация аниматора
         animator.speed = animationSpeed;
     }

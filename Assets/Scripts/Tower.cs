@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefencePeople : MonoBehaviour
+public class Tower : MonoBehaviour
 {
     public float range = 3f;
     private Collider[] colliderInRange;
