@@ -1167,7 +1167,7 @@ GameObject:
   - component: {fileID: 1684688455046092181}
   m_Layer: 9
   m_Name: Bone_Hips
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1626,8 +1626,8 @@ GameObject:
   - component: {fileID: 2583894474287805222}
   - component: {fileID: 3609683821145200971}
   - component: {fileID: 811070945219235639}
-  - component: {fileID: 6443256261950500802}
   - component: {fileID: -6621259051120026197}
+  - component: {fileID: 5249884335073472275}
   m_Layer: 9
   m_Name: SimpleZombie
   m_TagString: Enemy
@@ -1644,7 +1644,7 @@ Transform:
   m_GameObject: {fileID: 8595698503376618221}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.002538085, z: -0, w: 0.9999968}
-  m_LocalPosition: {x: -3.05, y: 0, z: 0}
+  m_LocalPosition: {x: -3.05, y: 0.014, z: 0}
   m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1686,11 +1686,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d2407cc89b067409d6f283f6c23dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.7
+  moveSpeed: 1
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
---- !u!65 &6443256261950500802
+--- !u!114 &-6621259051120026197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595698503376618221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalHealth: 15
+  healthBar: {fileID: 7219887277742519105}
+  rotationSpeed: 15
+--- !u!65 &5249884335073472275
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1709,23 +1724,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2573827, y: 0.92499375, z: 0.1836531}
-  m_Center: {x: 0.018406248, y: 0.44725886, z: 0.013770279}
---- !u!114 &-6621259051120026197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595698503376618221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalHealth: 15
-  healthBar: {fileID: 7219887277742519105}
-  rotationSpeed: 15
+  m_Size: {x: 1, y: 1.5472872, z: 1}
+  m_Center: {x: 0, y: 0.2736454, z: 0}
 --- !u!1 &8752927000456514481
 GameObject:
   m_ObjectHideFlags: 0
