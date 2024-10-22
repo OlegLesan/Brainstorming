@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ProjectileTower : MonoBehaviour
 {
+    
+
     private DefencePeople theTower;
 
     public GameObject projectile;
@@ -29,10 +31,12 @@ public class ProjectileTower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
         // Проверяем наличие цели (врага)
-        if (target != null)
+      
+        if (target != null  )
         {
+            
             animator.SetBool(isShooting, true);
             //launcherModel.LookAt(target);
             launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, Quaternion.LookRotation(target.position - transform.position), 5f * Time.deltaTime);

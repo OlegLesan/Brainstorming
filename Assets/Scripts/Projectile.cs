@@ -7,8 +7,11 @@ public class Projectile : MonoBehaviour
     public Rigidbody theRB;
     public float moveSpeed;
 
+    public float damageAmount;
+
     public GameObject impactEffect;
 
+    
 
     void Start()
     {
@@ -17,6 +20,11 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Enemy" )
+        {
+            other.GetComponent<EnemyHealthController>().TakeDamage(damageAmount);
+           
+        }
         Instantiate(impactEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
 
