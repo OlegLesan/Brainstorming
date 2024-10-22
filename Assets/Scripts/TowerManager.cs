@@ -40,7 +40,11 @@ public class TowerManager : MonoBehaviour
         activeTower = towerToPlace;
        
         isPlacing = true;
-        indicator.gameObject.SetActive(true);
+
+        Destroy(indicator.gameObject);
+        Tower placeTower = Instantiate(activeTower);
+        placeTower.enabled = false;
+        indicator = placeTower.transform;
     }
 
     public Vector3 GetGridPosition()
