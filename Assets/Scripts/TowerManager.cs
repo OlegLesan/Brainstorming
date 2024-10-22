@@ -16,6 +16,8 @@ public class TowerManager : MonoBehaviour
     public Transform indicator;
     public bool isPlacing;
 
+    public LayerMask whatIsPlacement;
+
     void Update()
     {
         if(isPlacing)
@@ -28,15 +30,24 @@ public class TowerManager : MonoBehaviour
     public void StartTowerPlacement(Tower towerToPlace)
     {
         activeTower = towerToPlace;
-        Debug.Log("Placing a tower");
+       
         isPlacing = true;
         indicator.gameObject.SetActive(true);
     }
 
     public Vector3 GetGridPosition()
     {
-        Vector3 location = new Vector3(2f, 0f, 2f);
+        Vector3 location = Input.mousePosition;
 
+        Ray ray = Camera.main.ScreenPointToRay(location);
+        Debug.DrawRay(ray.origin, ray.direction * 200f, Color.red);
+
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, 200f, whatIsPlacement))
+        {
+            location = hit.point;
+        }
+        location.y = 2.6f;
         return location;
     }
 }
