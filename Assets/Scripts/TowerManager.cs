@@ -23,6 +23,14 @@ public class TowerManager : MonoBehaviour
         if(isPlacing)
         {
             indicator.position = GetGridPosition();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                isPlacing = false;
+
+                Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
+                indicator.gameObject.SetActive(false);
+            }
         }
     }
 
