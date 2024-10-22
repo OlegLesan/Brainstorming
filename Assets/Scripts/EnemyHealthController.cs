@@ -15,7 +15,7 @@ public class EnemyHealthController : MonoBehaviour
     {
         healthBar.maxValue = totalHealth;
         healthBar.value = totalHealth;
-
+        healthBar.gameObject.SetActive(false);
         // Устанавливаем основную камеру, если она не указана вручную
         targetCamera = Camera.main;
 
@@ -58,5 +58,6 @@ public class EnemyHealthController : MonoBehaviour
             Destroy(gameObject);
         }
         healthBar.value = totalHealth;
+        healthBar.gameObject.SetActive(true);
     }
 }
