@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EnemyControler : MonoBehaviour
 {
     public float moveSpeed;
-    public float rotationSpeed = 5f; // скорость поворота
+    public float rotationSpeed = 5f; // РЎРєРѕСЂРѕСЃС‚СЊ РІСЂР°С‰РµРЅРёСЏ
     public Transform target;
     private Path thePath;
     private int currentPoint;
@@ -22,29 +21,38 @@ public class EnemyControler : MonoBehaviour
             thePath = FindObjectOfType<Path>();
         }
         theBase = FindObjectOfType<Base>();
+
+        // РџРѕР»СѓС‡Р°РµРј СЃР»СѓС‡Р°Р№РЅСѓСЋ РґРѕС‡РµСЂРЅСЋСЋ С‚РѕС‡РєСѓ РґР»СЏ РїРµСЂРІРѕР№ С‚РѕС‡РєРё РїСѓС‚Рё
+        target = thePath.points[currentPoint];
+        SetNewTarget();
     }
 
     void Update()
     {
         if (!reachedEnd)
         {
-            // Цель для поворота
-            Vector3 directionToTarget = (thePath.points[currentPoint].position - transform.position).normalized;
+            // РќР°РїСЂР°РІР»РµРЅРёРµ Рє С‚РµРєСѓС‰РµР№ С†РµР»Рё
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Плавный поворот с использованием Quaternion
+            // Р’СЂР°С‰РµРЅРёРµ Рє С†РµР»Рё
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            // Перемещение к следующей точке
-            transform.position = Vector3.MoveTowards(transform.position, thePath.points[currentPoint].position, moveSpeed * Time.deltaTime);
+            // Р”РІРёР¶РµРЅРёРµ Рє С†РµР»Рё
+            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
-            // Проверка, достигли ли мы текущей точки
-            if (Vector3.Distance(transform.position, thePath.points[currentPoint].position) < 0.01f)
+            // РџСЂРѕРІРµСЂРєР° РґРѕСЃС‚РёР¶РµРЅРёСЏ С†РµР»Рё
+            if (Vector3.Distance(transform.position, target.position) < 0.01f)
             {
-                currentPoint = currentPoint + 1;
+                currentPoint++;
+
                 if (currentPoint >= thePath.points.Length)
                 {
                     reachedEnd = true;
+                }
+                else
+                {
+                    SetNewTarget(); // РЈСЃС‚Р°РЅРѕРІРєР° РЅРѕРІРѕР№ С†РµР»Рё
                 }
             }
         }
@@ -53,6 +61,12 @@ public class EnemyControler : MonoBehaviour
             theBase.TakeDamage(damage);
             Destroy(gameObject);
         }
+    }
+
+    private void SetNewTarget()
+    {
+        // Р’С‹Р±РѕСЂ СЃР»СѓС‡Р°Р№РЅРѕР№ РґРѕС‡РµСЂРЅРµР№ С‚РѕС‡РєРё Сѓ С‚РµРєСѓС‰РµР№ С‚РѕС‡РєРё РїСѓС‚Рё
+        target = thePath.GetRandomChildPoint(thePath.points[currentPoint]);
     }
 
     public void Setup(Path newPath)
