@@ -7,16 +7,18 @@ public class EnemyHealthController : MonoBehaviour
 {
     public float totalHealth;
     public Slider healthBar;
-    public float rotationSpeed = 5f; // скорость поворота
-    private Camera targetCamera; // камера, на которую будет поворачиватьс€ healthBar
-    private float fixedXRotation = 70f; // фиксированный угол по оси X
+    public float rotationSpeed = 5f; 
+    private Camera targetCamera; 
+    private float fixedXRotation = 70f;
+
+    public int moneyOnDeath = 50;
 
     void Start()
     {
         healthBar.maxValue = totalHealth;
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
-        // ”станавливаем основную камеру, если она не указана вручную
+        
         targetCamera = Camera.main;
 
         if (targetCamera == null)
@@ -25,22 +27,22 @@ public class EnemyHealthController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         if (targetCamera != null)
         {
-            // ѕолучаем направление к камере
+            
             Vector3 directionToCamera = targetCamera.transform.position - healthBar.transform.position;
 
-            // »гнорируем изменение по оси Y, чтобы мен€ть только горизонтальный поворот
+            
             directionToCamera.y = 0;
 
-            // ѕроверка на наличие направлени€ (вдруг камера точно над или под объектом)
+            
             if (directionToCamera.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(directionToCamera); // ÷елевой поворот по оси Y
-                Quaternion smoothRotation = Quaternion.Slerp(healthBar.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed); // ѕлавна€ интерпол€ци€
+                Quaternion smoothRotation = Quaternion.Slerp(healthBar.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed); 
 
                 // ѕримен€ем только Y-поворот, а по оси X всегда фиксированное значение
                 healthBar.transform.rotation = Quaternion.Euler(fixedXRotation, smoothRotation.eulerAngles.y, 0);
@@ -56,6 +58,8 @@ public class EnemyHealthController : MonoBehaviour
             totalHealth = 0;
 
             Destroy(gameObject);
+
+            MoneyManager.instance.GiveMoney(moneyOnDeath);
         }
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(true);

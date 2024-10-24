@@ -13,7 +13,7 @@ public class ProjectileTower : MonoBehaviour
 
     private Transform target;
     public Transform launcherModel;
-
+    public float rotateSpeed;
     public GameObject shotEffect;
 
     private Animator animator; // добавлено для анимации
@@ -39,7 +39,7 @@ public class ProjectileTower : MonoBehaviour
             
             animator.SetBool(isShooting, true);
             //launcherModel.LookAt(target);
-            launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, Quaternion.LookRotation(target.position - transform.position), 5f * Time.deltaTime);
+            launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, Quaternion.LookRotation(target.position - transform.position), rotateSpeed * Time.deltaTime);
 
             launcherModel.rotation = Quaternion.Euler(0f, launcherModel.rotation.eulerAngles.y, 0f);
             firePoint.LookAt(target);

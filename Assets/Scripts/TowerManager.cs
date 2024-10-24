@@ -18,14 +18,23 @@ public class TowerManager : MonoBehaviour
 
     public LayerMask whatIsPlacement, whatIsObstacle;
 
+    public float topSafePercent = 15f;
+
+    public float towerHeight = 0.1f;
 
     void Update()
     {
+        
         if (isPlacing)
         {
             indicator.position = GetGridPosition();
 
             RaycastHit hit;
+            Debug.Log(Input.mousePosition.y);
+            if(Input.mousePosition.y > Screen.height * (1f - (topSafePercent / 100f)))
+            {
+                indicator.gameObject.SetActive(false);
+            }
             if (Physics.Raycast(indicator.position + new Vector3(0f, -2f, 0f), Vector3.up, out hit, 10f, whatIsObstacle))
             {
                 indicator.gameObject.SetActive(false);
@@ -59,6 +68,9 @@ public class TowerManager : MonoBehaviour
         placeTower.GetComponent<Collider>().enabled = false;
 
         indicator = placeTower.transform;
+
+        placeTower.rangeModel.SetActive(true);
+        placeTower.rangeModel.transform.localScale = new Vector3(placeTower.range, 1f, placeTower.range);
     }
 
     public Vector3 GetGridPosition()
@@ -72,6 +84,7 @@ public class TowerManager : MonoBehaviour
         if(Physics.Raycast(ray, out hit, 200f, whatIsPlacement))
         {
             location = hit.point;
+            location.y += towerHeight;
         }
         location.y = 2.6f;
         return location;

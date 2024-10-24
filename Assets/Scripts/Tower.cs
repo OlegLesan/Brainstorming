@@ -13,7 +13,7 @@ public class Tower : MonoBehaviour
 
     
     public bool enemiesUpdated;
-
+    public GameObject rangeModel;
     void Start()
     {
         checkCounter = checkTime;
@@ -22,6 +22,7 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
+        rangeModel.SetActive(false);
         enemiesUpdated = false;
         checkCounter -= Time.deltaTime;
         if (checkCounter <= 0)
