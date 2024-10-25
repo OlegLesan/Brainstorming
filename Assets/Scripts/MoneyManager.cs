@@ -15,7 +15,7 @@ public class MoneyManager : MonoBehaviour
     
     void Start()
     {
-        
+        UIController.instance.goldText.text = currentMoney.ToString();
     }
 
    
@@ -27,5 +27,22 @@ public class MoneyManager : MonoBehaviour
     public void GiveMoney (int amountToGive)
     {
         currentMoney += amountToGive;
+        UIController.instance.goldText.text = currentMoney.ToString();
+    }
+    public bool SpendMoney(int amountToSpend)
+    {
+        bool canSpend = false;
+
+        if (amountToSpend<= currentMoney)
+        {
+            canSpend = true;
+            Debug.Log("Spent " + amountToSpend);
+            currentMoney -= amountToSpend;
+
+
+        }
+        UIController.instance.goldText.text = currentMoney.ToString();
+
+        return canSpend;
     }
 }

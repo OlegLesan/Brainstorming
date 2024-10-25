@@ -46,10 +46,16 @@ public class TowerManager : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    isPlacing = false;
+                    if (MoneyManager.instance.SpendMoney(activeTower.cost))
+                    {
 
-                    Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
-                    indicator.gameObject.SetActive(false);
+
+
+                        isPlacing = false;
+
+                        Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
+                        indicator.gameObject.SetActive(false);
+                    }
                 }
             }
         }

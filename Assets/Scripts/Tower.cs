@@ -14,6 +14,9 @@ public class Tower : MonoBehaviour
     
     public bool enemiesUpdated;
     public GameObject rangeModel;
+
+    public int cost = 100;
+
     void Start()
     {
         checkCounter = checkTime;
