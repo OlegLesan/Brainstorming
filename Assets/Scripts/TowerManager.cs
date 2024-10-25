@@ -44,6 +44,8 @@ public class TowerManager : MonoBehaviour
 
                 indicator.gameObject.SetActive(true);
 
+                UIController.instance.notEnoughMoneyWarning.SetActive(MoneyManager.instance.currentMoney < activeTower.cost);
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (MoneyManager.instance.SpendMoney(activeTower.cost))
@@ -55,6 +57,8 @@ public class TowerManager : MonoBehaviour
 
                         Instantiate(activeTower, indicator.position, activeTower.transform.rotation);
                         indicator.gameObject.SetActive(false);
+
+                        UIController.instance.notEnoughMoneyWarning.SetActive(false);
                     }
                 }
             }

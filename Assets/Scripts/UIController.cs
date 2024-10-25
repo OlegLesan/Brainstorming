@@ -13,5 +13,6 @@ public class UIController : MonoBehaviour
     }
 
     public TMP_Text goldText;
+    public GameObject notEnoughMoneyWarning;
 }
 
