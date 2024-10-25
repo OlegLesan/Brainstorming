@@ -18,7 +18,9 @@ public class EnemyHealthController : MonoBehaviour
         healthBar.maxValue = totalHealth;
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
-        
+
+        LevelManager.instance.activeEnemies.Add(this);
+
         targetCamera = Camera.main;
 
         if (targetCamera == null)
@@ -60,6 +62,8 @@ public class EnemyHealthController : MonoBehaviour
             Destroy(gameObject);
 
             MoneyManager.instance.GiveMoney(moneyOnDeath);
+
+            LevelManager.instance.activeEnemies.Remove(this);
         }
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(true);

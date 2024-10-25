@@ -3153,7 +3153,7 @@ MonoBehaviour:
   firePoint: {fileID: 1277813990259523588}
   launcherModel: {fileID: 4257430621262373373}
   rotateSpeed: 100
-  shotEffect: {fileID: 7884404044921578080, guid: e8560eaec1fd347449f8323da33788f0, type: 3}
+  shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   animationSpeed: 0.32
 --- !u!114 &2802015581514275002
 MonoBehaviour:
@@ -3175,6 +3175,7 @@ MonoBehaviour:
   checkTime: 0.2
   enemiesUpdated: 0
   rangeModel: {fileID: 8758074069530483338}
+  cost: 100
 --- !u!65 &4045239155307558184
 BoxCollider:
   m_ObjectHideFlags: 0

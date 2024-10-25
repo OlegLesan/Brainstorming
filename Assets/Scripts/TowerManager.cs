@@ -30,7 +30,7 @@ public class TowerManager : MonoBehaviour
             indicator.position = GetGridPosition();
 
             RaycastHit hit;
-            Debug.Log(Input.mousePosition.y);
+            
             if(Input.mousePosition.y > Screen.height * (1f - (topSafePercent / 100f)))
             {
                 indicator.gameObject.SetActive(false);

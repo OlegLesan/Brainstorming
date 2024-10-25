@@ -84,6 +84,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleTimeLabel.cs" />
@@ -137,8 +138,8 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Fonts\SairaCondensed\OFL.txt" />
-    <None Include="Assets\Assets import\Bazooka Animset\Animation List - Bazooka Animset.txt" />
-    <None Include="Assets\Assets import\2Handed Gun Animset\Animation List - 2 Handed Gun Animset.txt" />
+    <None Include="Assets\Assets import\Animation\Bazooka Animset\Animation List - Bazooka Animset.txt" />
+    <None Include="Assets\Assets import\Animation\2Handed Gun Animset\Animation List - 2 Handed Gun Animset.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Assets import\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
@@ -148,7 +149,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Assets import\PolygonApocalypse\Materials\Misc\Shader\SkyGradient.shader" />
     <None Include="Assets\Assets import\PolygonApocalypse\Materials\Misc\Shader\POLYGON_Triplanar.shader" />
-    <None Include="Assets\Assets import\Bow &amp; Arrow Animset\Animation List - Bow&amp;Arrow Animset.txt" />
+    <None Include="Assets\Assets import\Animation\Bow &amp; Arrow Animset\Animation List - Bow&amp;Arrow Animset.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
   </ItemGroup>

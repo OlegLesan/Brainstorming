@@ -7,7 +7,7 @@ using TMPro; // Подключаем TextMeshPro
 public class Base : MonoBehaviour
 {
     public float totalHealth = 100f;
-    private float currentHealth;
+    public float currentHealth;
     public Image healthImage; // Круг для отображения здоровья
     public TextMeshProUGUI healthText; // TextMeshPro для отображения процентов здоровья
 
