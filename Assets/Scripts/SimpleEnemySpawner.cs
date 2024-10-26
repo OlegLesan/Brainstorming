@@ -20,7 +20,7 @@ public class SimpleEnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if (amountToSpawn > 0)
+        if (amountToSpawn > 0 && LevelManager.instance.levelActive)
         {
             spawnCounter -= Time.deltaTime;
             if (spawnCounter <= 0)

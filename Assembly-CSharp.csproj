@@ -67,8 +67,8 @@
     <Compile Include="Assets\Scripts\Tower.cs" />
     <Compile Include="Assets\Scripts\TowerButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\AnimatorActionData.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
@@ -108,6 +108,7 @@
     <Compile Include="Assets\Scripts\Nothing FX.cs" />
     <Compile Include="Assets\Scripts\MoneyManager.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleRadialFillBar.cs" />
+    <Compile Include="Assets\Scripts\PauseOnStart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleLoopAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />

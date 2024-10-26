@@ -35,14 +35,16 @@ public class LevelManager : MonoBehaviour
                 levelActive = false;
                 levelVictory = false;
 
-                Debug.Log("Level Failed");
+                UIController.instance.levelFailScreen.SetActive(true);
+                UIController.instance.towerButtons.SetActive(false);
             }
             if(activeEnemies.Count == 0 && enemySpawner.amountToSpawn == 0)
             {
                 levelActive = false;
                 levelVictory = true;
 
-                Debug.Log("Level Won");
+                UIController.instance.levelCompleteScreen.SetActive(true);
+                UIController.instance.towerButtons.SetActive(false);
             }
         }
     }

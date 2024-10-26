@@ -14,5 +14,9 @@ public class UIController : MonoBehaviour
 
     public TMP_Text goldText;
     public GameObject notEnoughMoneyWarning;
+
+    public GameObject levelCompleteScreen, levelFailScreen;
+
+    public GameObject towerButtons;
 }
 
