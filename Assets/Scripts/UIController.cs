@@ -57,5 +57,15 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenuScene);
     }
+
+    public void TryAgain()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(LevelManager.instance.nextLevel);
+    }
 }
 

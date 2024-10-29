@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyControler : MonoBehaviour
 {
     public float moveSpeed;
+    public float speedMod = 1f;
     public float rotationSpeed = 5f;
     public Transform target;
     private Path thePath;
@@ -38,10 +39,10 @@ public class EnemyControler : MonoBehaviour
 
                 // Вращение к цели
                 Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * speedMod);
 
                 // Движение к цели
-                transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime * speedMod);
 
                 // Проверка достижения цели
                 if (Vector3.Distance(transform.position, target.position) < 0.01f)

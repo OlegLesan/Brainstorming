@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
 
     private SimpleEnemySpawner enemySpawner;
 
+    public string nextLevel;
+
     void Start()
     {
         theBase  = FindObjectOfType<Base>();
@@ -35,7 +37,7 @@ public class LevelManager : MonoBehaviour
                 levelActive = false;
                 levelVictory = false;
 
-                UIController.instance.levelFailScreen.SetActive(true);
+               
                 UIController.instance.towerButtons.SetActive(false);
             }
             if(activeEnemies.Count == 0 && enemySpawner.amountToSpawn == 0)
@@ -43,9 +45,14 @@ public class LevelManager : MonoBehaviour
                 levelActive = false;
                 levelVictory = true;
 
-                UIController.instance.levelCompleteScreen.SetActive(true);
+                
                 UIController.instance.towerButtons.SetActive(false);
             }
+        }
+        if(!levelActive)
+        {
+            UIController.instance.levelFailScreen.SetActive(!levelVictory);
+            UIController.instance.levelCompleteScreen.SetActive(levelVictory);
         }
     }
 }
