@@ -123,7 +123,6 @@
     <Compile Include="Assets\Scripts\Path.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleURL.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleCountdownLabel.cs" />
-    <Compile Include="Assets\Scripts\Systems\SimpleEnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Systems\MoneyManager.cs" />
     <Compile Include="Assets\Scripts\Systems\TowerManager.cs" />
     <Compile Include="Assets\Scripts\EnemyHealthController.cs" />

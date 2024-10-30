@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager instance;  // Singleton для доступа к WaveManager
+
     public Wave[] waves;  // Массив всех волн
     public Transform spawnPoint;  // Точка спавна врагов
     public Button startWaveButton;  // Кнопка для запуска волн
@@ -13,12 +14,61 @@ public class WaveManager : MonoBehaviour
 
     private int currentWaveIndex = 0;  // Индекс текущей волны
     private bool waveInProgress = false;  // Флаг, что волна началась
+    private int totalEnemiesRemaining = 0;  // Общее количество оставшихся врагов во всех волнах
+
+    private void Awake()
+    {
+        // Инициализация Singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
+        // Считаем общее количество врагов из всех волн
+        foreach (Wave wave in waves)
+        {
+            foreach (int count in wave.enemyCounts)
+            {
+                totalEnemiesRemaining += count;
+            }
+        }
+
         // Привязываем кнопку к методу StartWave
         startWaveButton.onClick.AddListener(StartWave);
         startWaveButton.gameObject.SetActive(true);  // Кнопка активна в начале игры
+    }
+
+    // Метод для уменьшения количества оставшихся врагов
+    public void DecreaseEnemyCount()
+    {
+        totalEnemiesRemaining--;  // Уменьшаем общее количество оставшихся врагов
+
+        Debug.Log("Осталось врагов: " + totalEnemiesRemaining);
+
+        if (totalEnemiesRemaining <= 0)
+        {
+            // Если все враги уничтожены, завершаем уровень
+            CheckForLevelCompletion();
+        }
+    }
+
+    private void CheckForLevelCompletion()
+    {
+        Debug.Log("Проверка завершения уровня. Осталось врагов: " + totalEnemiesRemaining);
+
+        // Если врагов не осталось, завершаем уровень
+        if (totalEnemiesRemaining <= 0)
+        {
+            Debug.Log("Уровень завершён! Все враги уничтожены.");
+            LevelManager.instance.LevelComplete();  // Вызов метода для победы
+        }
     }
 
     // Метод запуска волны
@@ -73,14 +123,19 @@ public class WaveManager : MonoBehaviour
         waveInProgress = false;
         currentWaveIndex++;
 
-        // Если это не последняя волна, показываем кнопку для следующей волны
+        Debug.Log("Волна завершена. Текущая волна: " + currentWaveIndex);
+
         if (currentWaveIndex < waves.Length)
         {
-            startWaveButton.gameObject.SetActive(true);  // Включаем кнопку для запуска следующей волны
+            // Есть ещё волны — активируем кнопку для следующей волны
+            startWaveButton.gameObject.SetActive(true);
         }
         else
         {
             Debug.Log("Все волны завершены!");
+
+            // Проверяем завершение уровня
+            CheckForLevelCompletion();
         }
     }
 }

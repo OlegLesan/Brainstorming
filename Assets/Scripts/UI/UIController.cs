@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseUnpause();
         }
@@ -33,7 +33,7 @@ public class UIController : MonoBehaviour
 
     public void PauseUnpause()
     {
-        if(pauseScreen.activeSelf == false)
+        if (pauseScreen.activeSelf == false)
         {
             pauseScreen.SetActive(true);
             Time.timeScale = 0f;
@@ -43,7 +43,6 @@ public class UIController : MonoBehaviour
             pauseScreen.SetActive(false);
             Time.timeScale = 1f;
         }
-
     }
 
     public void LevelSelect()
@@ -61,11 +60,18 @@ public class UIController : MonoBehaviour
     public void TryAgain()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
     }
 
     public void NextLevel()
     {
         SceneManager.LoadScene(LevelManager.instance.nextLevel);
     }
-}
 
+    // Новый метод для отображения экрана поражения
+    public void ShowLevelFailScreen()
+    {
+        levelFailScreen.SetActive(true);
+        Time.timeScale = 0f; // Останавливаем игру
+    }
+}

@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  speedMod: 1
+  speedMod: 1.24
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
@@ -384,6 +384,7 @@ MonoBehaviour:
   healthBar: {fileID: 4267896086132291009}
   rotationSpeed: 15
   moneyOnDeath: 50
+  health: 100
 --- !u!65 &-7072230176051210514
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -25,10 +25,13 @@ public class Base : MonoBehaviour
     public void TakeDamage(float damageToTake)
     {
         currentHealth -= damageToTake;
+
         if (currentHealth <= 0)
         {
-            Debug.Log("Game Over");
             currentHealth = 0;
+            Debug.Log("Game Over");
+            // Вызов экрана поражения
+            UIController.instance.ShowLevelFailScreen();
         }
 
         UpdateHealthUI();
