@@ -24,35 +24,36 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        theBase  = FindObjectOfType<Base>();
+        theBase = FindObjectOfType<Base>();
         enemySpawner = FindObjectOfType<SimpleEnemySpawner>();
-                    }
+    }
 
-    void Update()
+   /* void Update()
     {
-        if(levelActive)
+        if (levelActive)
         {
-            if(theBase.currentHealth <= 0)
+            if (theBase.currentHealth <= 0)
             {
                 levelActive = false;
                 levelVictory = false;
 
-               
+
                 UIController.instance.towerButtons.SetActive(false);
             }
-            if(activeEnemies.Count == 0 && enemySpawner.amountToSpawn == 0)
+            if (activeEnemies.Count == 0 && enemySpawner.amountToSpawn == 0)
             {
                 levelActive = false;
                 levelVictory = true;
 
-                
+
                 UIController.instance.towerButtons.SetActive(false);
             }
         }
-        if(!levelActive)
+        if (!levelActive)
         {
             UIController.instance.levelFailScreen.SetActive(!levelVictory);
             UIController.instance.levelCompleteScreen.SetActive(levelVictory);
         }
     }
+    */
 }

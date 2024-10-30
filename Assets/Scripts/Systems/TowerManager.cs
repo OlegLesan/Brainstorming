@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems; // Для работы с EventSystem
+using UnityEngine.UI; // Для GraphicRaycaster
 
 public class TowerManager : MonoBehaviour
 {
@@ -15,56 +16,92 @@ public class TowerManager : MonoBehaviour
     public Transform indicator;
     public bool isPlacing;
 
-    public LayerMask whatIsPlacement, whatIsObstacle;
+    public LayerMask whatIsObstacle, groundLayer; // Убрана переменная whatIsPlacement
     public float topSafePercent = 15f;
 
     public float towerHeight = 0.1f;
-    public float towerPlacementRadius = 2.0f; // Задайте радиус, в котором нельзя ставить другие башни
+
+    // Для работы с UI
+    public GraphicRaycaster uiRaycaster;
+    public EventSystem eventSystem;
 
     void Update()
     {
         if (isPlacing)
         {
-            indicator.position = GetGridPosition();
+            // Проверка, не наведен ли курсор на элемент UI, включая Canvas
+            if (IsPointerOverUIElement())
+            {
+                indicator.gameObject.SetActive(false); // Отключаем индикатор, если курсор над элементом UI
+                return;
+            }
+
+            Vector3 gridPosition = GetGridPosition();
+            indicator.position = gridPosition;
 
             RaycastHit hit;
 
+            // Не показывать индикатор, если мышь в верхней части экрана
             if (Input.mousePosition.y > Screen.height * (1f - (topSafePercent / 100f)))
             {
                 indicator.gameObject.SetActive(false);
+                return; // Прерываем выполнение, если мышь в верхней части экрана
             }
 
-            if (Physics.Raycast(indicator.position + new Vector3(0f, -2f, 0f), Vector3.up, out hit, 10f, whatIsObstacle))
+            // Проверка на наличие препятствий внизу
+            bool obstacleDetected = Physics.Raycast(indicator.position + new Vector3(0f, -2f, 0f), Vector3.up, out hit, 10f, whatIsObstacle);
+            if (obstacleDetected)
             {
                 indicator.gameObject.SetActive(false);
+                return;
             }
             else
             {
                 indicator.gameObject.SetActive(true);
 
+                // Проверка, находится ли объект под указателем мыши на слое groundLayer
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f, groundLayer)) // Используем groundLayer
+                {
+                    // Проверяем, что объект под указателем мыши действительно находится на слое Ground
+                    if (((1 << hit.collider.gameObject.layer) & groundLayer) == 0)
+                    {
+                        Debug.Log("Cannot place tower, the object is not on the Ground layer.");
+                        return;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Not hitting ground layer");
+                    return; // Прерываем выполнение, если под указателем мыши нет объекта на слое Ground
+                }
+
                 // Отладочные сообщения для проверки состояния
                 Debug.Log($"Current Money: {MoneyManager.instance.currentMoney}, Tower Cost: {activeTower.cost}");
 
-                // Проверяем, достаточно ли денег
                 bool notEnoughMoney = MoneyManager.instance.currentMoney < activeTower.cost;
                 UIController.instance.notEnoughMoneyWarning.SetActive(notEnoughMoney);
 
-                // Проверяем, можно ли разместить башню
-                if (CanPlaceTower(indicator.position) && !notEnoughMoney)
+                if (!notEnoughMoney)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        // Если денег достаточно, пытаемся потратить деньги и установить башню
-                        if (MoneyManager.instance.SpendMoney(activeTower.cost))
+                        // Еще раз проверяем, нет ли препятствий
+                        obstacleDetected = Physics.Raycast(indicator.position + new Vector3(0f, -2f, 0f), Vector3.up, out hit, 10f, whatIsObstacle);
+
+                        if (!obstacleDetected && MoneyManager.instance.SpendMoney(activeTower.cost))
                         {
-                            Instantiate(activeTower, indicator.position, indicator.rotation);
+                            // Создаем башню
+                            GameObject placedTower = Instantiate(activeTower.gameObject, indicator.position, indicator.rotation);
+                            SetLayerRecursively(placedTower, LayerMask.NameToLayer("Tower")); // Устанавливаем слой Tower
+
                             isPlacing = false;
                             UIController.instance.notEnoughMoneyWarning.SetActive(false);
+                            Destroy(indicator.gameObject); // Удаляем индикатор
                             Debug.Log("Tower placed successfully!");
                         }
                         else
                         {
-                            Debug.Log("Failed to spend money!");
+                            Debug.Log("Failed to place tower! Either an obstacle is in the way or not enough money!");
                         }
                     }
                 }
@@ -81,15 +118,23 @@ public class TowerManager : MonoBehaviour
         activeTower = towerToPlace;
         isPlacing = true;
 
-        Destroy(indicator.gameObject);
-        Tower placeTower = Instantiate(activeTower);
-        placeTower.enabled = false;
-        placeTower.GetComponent<Collider>().enabled = false;
+        // Удаляем предыдущий индикатор, если он был
+        if (indicator != null)
+        {
+            Destroy(indicator.gameObject);
+        }
 
-        indicator = placeTower.transform;
+        // Создаем индикатор на основе башни, но не саму башню
+        GameObject indicatorInstance = Instantiate(towerToPlace.gameObject);
+        indicator = indicatorInstance.transform;
 
-        placeTower.rangeModel.SetActive(true);
-        placeTower.rangeModel.transform.localScale = new Vector3(placeTower.range, 1f, placeTower.range);
+        // Отключаем все ненужные компоненты у индикатора
+        indicator.GetComponent<Tower>().enabled = false; // Отключаем логику башни
+        indicator.GetComponent<Collider>().enabled = false; // Отключаем коллайдер
+
+        // Включаем модель радиуса действия башни
+        indicator.GetComponent<Tower>().rangeModel.SetActive(true);
+        indicator.GetComponent<Tower>().rangeModel.transform.localScale = new Vector3(towerToPlace.range, 1f, towerToPlace.range);
     }
 
     public Vector3 GetGridPosition()
@@ -100,7 +145,7 @@ public class TowerManager : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * 200f, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200f, whatIsPlacement))
+        if (Physics.Raycast(ray, out hit, 200f, groundLayer)) // Используем groundLayer
         {
             location = hit.point;
             location.y += towerHeight;
@@ -109,10 +154,34 @@ public class TowerManager : MonoBehaviour
         return location;
     }
 
-    // Метод для проверки возможности установки башни
-    private bool CanPlaceTower(Vector3 position)
+    // Метод для проверки, не наведен ли указатель на элемент UI, включая объекты Canvas
+    private bool IsPointerOverUIElement()
     {
-        Collider[] colliders = Physics.OverlapSphere(position, towerPlacementRadius, whatIsPlacement);
-        return colliders.Length == 0; // Если в радиусе нет коллайдеров, можно установить
+        // Создаем список для хранения результатов Raycast
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        // Настраиваем событие для проверки
+        PointerEventData eventData = new PointerEventData(eventSystem);
+        eventData.position = Input.mousePosition;
+
+        // Выполняем Raycast с помощью GraphicRaycaster
+        uiRaycaster.Raycast(eventData, results);
+
+        // Если есть объекты UI под курсором, вернем true
+        return results.Count > 0;
+    }
+
+    // Метод для рекурсивной установки слоя для объекта и всех его дочерних объектов
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (child == null) continue;
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
     }
 }

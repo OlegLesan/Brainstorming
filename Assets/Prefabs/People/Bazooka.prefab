@@ -1013,7 +1013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2888872218933494577}
   - component: {fileID: 5423943828569687667}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Range Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5831,6 +5831,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 645247610392174437}
     m_Modifications:
+    - target: {fileID: -1109152365973065423, guid: 5f73668964f88164aae003225d1f933f, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1183881721114982, guid: 5f73668964f88164aae003225d1f933f, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -5990,12 +5994,24 @@ PrefabInstance:
       value: Tower_Ring
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4de0269a626a6e642a9f027a1d572a63, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4de0269a626a6e642a9f027a1d572a63, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3396913584297481876, guid: 4de0269a626a6e642a9f027a1d572a63, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396913584297481876, guid: 4de0269a626a6e642a9f027a1d572a63, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821623529969584324, guid: 4de0269a626a6e642a9f027a1d572a63, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

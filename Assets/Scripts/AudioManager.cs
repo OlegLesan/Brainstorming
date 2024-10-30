@@ -27,6 +27,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public AudioSource[] sfx;
+
     private void OnEnable()
     {
         // Подписываемся на событие загрузки сцены
@@ -123,5 +125,11 @@ public class AudioManager : MonoBehaviour
 
         // Когда трек закончился, запускаем следующий случайный трек
         PlayRandomBGM();
+    }
+
+    public void PlaySFX(int sfxToPlay )
+    {
+        sfx[sfxToPlay].Stop();
+        sfx[sfxToPlay].Play();
     }
 }
