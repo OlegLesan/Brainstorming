@@ -9,6 +9,7 @@ public class WaveManager : MonoBehaviour
     public Transform spawnPoint;  // Точка спавна врагов
     public Button startWaveButton;  // Кнопка для запуска волн
     public float timeBetweenWaves = 2f;  // Время между волнами (задержка до появления кнопки)
+    public float waveDuration = 10f;  // Продолжительность волны (в секундах)
 
     private int currentWaveIndex = 0;  // Индекс текущей волны
     private bool waveInProgress = false;  // Флаг, что волна началась
@@ -27,8 +28,22 @@ public class WaveManager : MonoBehaviour
         {
             waveInProgress = true;  // Устанавливаем флаг, что волна началась
             startWaveButton.gameObject.SetActive(false);  // Отключаем кнопку, пока идёт волна
-            StartCoroutine(SpawnWave(waves[currentWaveIndex]));  // Запускаем спавн врагов для текущей волны
+
+            // Запускаем корутину для отслеживания времени волны
+            StartCoroutine(WaveTimer());
+
+            // Запускаем корутину для спавна врагов для текущей волны
+            StartCoroutine(SpawnWave(waves[currentWaveIndex]));
         }
+    }
+
+    IEnumerator WaveTimer()
+    {
+        // Ждём завершения времени волны
+        yield return new WaitForSeconds(waveDuration);
+
+        // Волна завершена после таймера
+        WaveCompleted();
     }
 
     IEnumerator SpawnWave(Wave wave)
@@ -50,15 +65,17 @@ public class WaveManager : MonoBehaviour
 
             yield return new WaitForSeconds(wave.spawnInterval);  // Ждём перед спавном следующего врага
         }
+    }
 
-        // Завершение волны
+    // Завершение волны
+    private void WaveCompleted()
+    {
         waveInProgress = false;
         currentWaveIndex++;
 
         // Если это не последняя волна, показываем кнопку для следующей волны
         if (currentWaveIndex < waves.Length)
         {
-            yield return new WaitForSeconds(timeBetweenWaves);  // Задержка перед появлением кнопки
             startWaveButton.gameObject.SetActive(true);  // Включаем кнопку для запуска следующей волны
         }
         else
