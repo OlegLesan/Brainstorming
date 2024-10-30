@@ -2525,7 +2525,7 @@ MonoBehaviour:
   launcherModel: {fileID: 3886663004133466237}
   rotateSpeed: 100
   shotEffect: {fileID: 7884404044921578080, guid: e8560eaec1fd347449f8323da33788f0, type: 3}
-  animationSpeed: 1
+  animationSpeed: 0.1
 --- !u!114 &8329875072962199582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2546,6 +2546,7 @@ MonoBehaviour:
   checkTime: 0.2
   enemiesUpdated: 0
   rangeModel: {fileID: 2036533336808480128}
+  cost: 100
 --- !u!65 &5732287956209662836
 BoxCollider:
   m_ObjectHideFlags: 0

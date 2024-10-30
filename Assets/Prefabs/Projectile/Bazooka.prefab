@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1356914673781726405}
   - component: {fileID: 2700859198707159904}
   - component: {fileID: 189035084091336618}
-  - component: {fileID: 5603937395247974272}
+  - component: {fileID: 5576825655481031600}
   - component: {fileID: 9170835674989367964}
   - component: {fileID: 2544413119891918777}
+  - component: {fileID: -3507586903848070974}
   m_Layer: 12
   m_Name: Bazooka
   m_TagString: Untagged
@@ -86,7 +87,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5603937395247974272
+--- !u!114 &5576825655481031600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,13 +96,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846311025636673151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b416cb66aa5e27c419db830c6b496b67, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ea8b9b568ecc454698e6dec8fb0e8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 9170835674989367964}
-  moveSpeed: 50
-  damageAmount: 1
-  impactEffect: {fileID: 2107064138097909, guid: 84ad4265c32e5c74ca69ec86e5f42f9d, type: 3}
+  moveSpeed: 66.79
+  damageAmount: 10
+  impactEffect: {fileID: 1879769179923522, guid: 642d6b0de68f7e9448d5cb04662fd69b, type: 3}
 --- !u!54 &9170835674989367964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -148,5 +149,17 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05343017, y: 0.061259203, z: 0.87280273}
-  m_Center: {x: 0, y: 0, z: 0.40586853}
+  m_Size: {x: 0.15625763, y: 0.11118841, z: 0.8431549}
+  m_Center: {x: 0.01720047, y: 0.016689539, z: 0.4021988}
+--- !u!114 &-3507586903848070974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846311025636673151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f702421175a2341b77ce6fb7a6869f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
