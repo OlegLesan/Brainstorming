@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SimpleEnemySpawner : MonoBehaviour
 {
-    public EnemyControler enemyToSpawn;
+    public EnemyControler[] enemiesToSpawn;  // Массив различных врагов
     public Transform spawnPoint;
 
     public float timeBetweenSpawns;
@@ -17,7 +17,6 @@ public class SimpleEnemySpawner : MonoBehaviour
         spawnCounter = timeBetweenSpawns;
     }
 
-
     void Update()
     {
         if (amountToSpawn > 0 && LevelManager.instance.levelActive)
@@ -27,7 +26,12 @@ public class SimpleEnemySpawner : MonoBehaviour
             {
                 spawnCounter = timeBetweenSpawns;
 
-                Instantiate(enemyToSpawn, spawnPoint.position, spawnPoint.rotation).Setup(thePath);
+                // Выбор случайного врага из массива
+                int randomIndex = Random.Range(0, enemiesToSpawn.Length);
+                EnemyControler selectedEnemy = enemiesToSpawn[randomIndex];
+
+                // Создаем выбранного врага
+                Instantiate(selectedEnemy, spawnPoint.position, spawnPoint.rotation).Setup(thePath);
                 amountToSpawn--;
             }
         }

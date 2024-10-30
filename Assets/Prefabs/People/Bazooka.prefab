@@ -2500,10 +2500,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'UpperLeg_L'\n\tTransform 'UpperLeg_R'\n\tFrom
-    animation clip 'New Animation'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -2546,7 +2543,7 @@ MonoBehaviour:
   checkTime: 0.2
   enemiesUpdated: 0
   rangeModel: {fileID: 2036533336808480128}
-  cost: 100
+  cost: 200
 --- !u!65 &5732287956209662836
 BoxCollider:
   m_ObjectHideFlags: 0

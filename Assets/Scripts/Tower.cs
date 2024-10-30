@@ -11,7 +11,6 @@ public class Tower : MonoBehaviour
     private float checkCounter;
     public float checkTime = .2f;
 
-    
     public bool enemiesUpdated;
     public GameObject rangeModel;
 
@@ -21,7 +20,6 @@ public class Tower : MonoBehaviour
     {
         checkCounter = checkTime;
     }
-
 
     void Update()
     {
@@ -39,5 +37,11 @@ public class Tower : MonoBehaviour
             }
             enemiesUpdated = true;
         }
+    }
+
+    // ћетод дл€ получени€ форматированной стоимости
+    public string GetFormattedCost()
+    {
+        return $"{cost}G";
     }
 }
