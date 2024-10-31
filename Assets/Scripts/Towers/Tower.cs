@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Tower : MonoBehaviour
 {
@@ -12,17 +12,23 @@ public class Tower : MonoBehaviour
 
     public bool enemiesUpdated;
     public GameObject rangeModel;
-
     public int cost = 100;
 
-    void Start()
+    private void Start()
     {
         checkCounter = checkTime;
+
+        // Устанавливаем масштаб rangeModel только по осям X и Z в соответствии с range
+        if (rangeModel != null)
+        {
+            float scale = range; // Удвоение радиуса для корректного отображения
+            rangeModel.transform.localScale = new Vector3(scale, rangeModel.transform.localScale.y, scale);
+            rangeModel.SetActive(false); // Скрываем по умолчанию
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        rangeModel.SetActive(false);
         enemiesUpdated = false;
         checkCounter -= Time.deltaTime;
         if (checkCounter <= 0)
@@ -31,14 +37,34 @@ public class Tower : MonoBehaviour
             enemiesInRange.Clear();
             foreach (Collider col in colliderInRange)
             {
-                enemiesInRange.Add(col.GetComponent<EnemyControler>());
+                EnemyControler enemy = col.GetComponent<EnemyControler>();
+                if (enemy != null)
+                {
+                    enemiesInRange.Add(enemy);
+                }
             }
             enemiesUpdated = true;
+            checkCounter = checkTime; // Сбрасываем таймер
         }
     }
 
     public string GetFormattedCost()
     {
         return $"{cost}G";
+    }
+
+    // Метод для отображения модели радиуса
+    public void ShowRangeModel(bool show)
+    {
+        if (rangeModel != null)
+        {
+            rangeModel.SetActive(show);
+        }
+    }
+
+    // Проверка клика на башне
+    private void OnMouseDown()
+    {
+        TowerManager.instance.SelectTower(this);
     }
 }

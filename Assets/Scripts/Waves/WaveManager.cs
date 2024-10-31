@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // Подключаем TextMeshPro
 
 public class WaveManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class WaveManager : MonoBehaviour
     public Wave[] waves;  // Массив всех волн
     public Transform spawnPoint;  // Точка спавна врагов
     public Button startWaveButton;  // Кнопка для запуска волн
+    public TMP_Text waveText;  // Текст для отображения номера волны
     public float timeBetweenWaves = 2f;  // Время между волнами (задержка до появления кнопки)
     public float waveDuration = 10f;  // Продолжительность волны (в секундах)
 
@@ -43,6 +45,15 @@ public class WaveManager : MonoBehaviour
         // Привязываем кнопку к методу StartWave
         startWaveButton.onClick.AddListener(StartWave);
         startWaveButton.gameObject.SetActive(true);  // Кнопка активна в начале игры
+
+        // Отображаем номер первой волны
+        UpdateWaveText();
+    }
+
+    // Метод для обновления текста волны
+    private void UpdateWaveText()
+    {
+        waveText.text = "Wave: " + (currentWaveIndex + 1);
     }
 
     // Метод для уменьшения количества оставшихся врагов
@@ -76,6 +87,9 @@ public class WaveManager : MonoBehaviour
     {
         if (!waveInProgress && currentWaveIndex < waves.Length)
         {
+            // Обновляем текст номера волны перед запуском
+            UpdateWaveText();
+
             waveInProgress = true;  // Устанавливаем флаг, что волна началась
             startWaveButton.gameObject.SetActive(false);  // Отключаем кнопку, пока идёт волна
 
@@ -129,6 +143,9 @@ public class WaveManager : MonoBehaviour
         {
             // Есть ещё волны — активируем кнопку для следующей волны
             startWaveButton.gameObject.SetActive(true);
+
+            // Обновляем текст для следующей волны
+            UpdateWaveText();
         }
         else
         {

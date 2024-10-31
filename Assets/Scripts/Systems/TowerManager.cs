@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour
 {
     public static TowerManager instance;
 
-    private GameObject placementObject; // Ссылка на объект Placement
+    private GameObject placementObject;
     public Tower activeTower;
-    public ParticleSystem placementFX; // Particle System для размещения башни
-    public float fxOffsetY = 1.5f; // Смещение по высоте для FX
+    public ParticleSystem placementFX;
+    public float fxOffsetY = 1.5f;
 
     public GraphicRaycaster uiRaycaster;
     public EventSystem eventSystem;
+
+    private Tower selectedTower;
 
     private void Awake()
     {
@@ -24,30 +27,69 @@ public class TowerManager : MonoBehaviour
         placementObject = placementObj;
     }
 
-    // Метод для начала размещения башни
     public void StartTowerPlacement(Tower towerToPlace)
     {
         activeTower = towerToPlace;
 
-        // Удаляем объект Placement и размещаем башню на его месте
         if (placementObject != null)
         {
             Vector3 placementPosition = placementObject.transform.position;
             Destroy(placementObject);
 
-            // Создаем башню на позиции объекта Placement
             Instantiate(activeTower.gameObject, placementPosition, Quaternion.identity);
 
-            // Запускаем Particle FX на уровне башни
             if (placementFX != null)
             {
-                // Создаем FX на позиции установки башни с учетом смещения по Y
                 Vector3 fxPosition = placementPosition + new Vector3(0, fxOffsetY, 0);
                 Instantiate(placementFX, fxPosition, Quaternion.identity).Play();
             }
 
-            // Скрываем панель с кнопками после размещения башни
             UIController.instance.HideTowerButtons();
         }
+    }
+
+    // Метод для выбора башни и отображения ее rangeModel
+    public void SelectTower(Tower tower)
+    {
+        if (selectedTower != null && selectedTower != tower)
+        {
+            selectedTower.ShowRangeModel(false); // Скрываем предыдущую башню
+        }
+
+        selectedTower = tower;
+        selectedTower.ShowRangeModel(true); // Показываем модель радиуса выбранной башни
+    }
+
+    private void Update()
+    {
+        // Скрываем rangeModel при клике на другом объекте
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (selectedTower != null && !IsPointerOverUIObject() && !IsTowerClicked())
+            {
+                selectedTower.ShowRangeModel(false);
+                selectedTower = null;
+            }
+        }
+    }
+
+    // Проверка, наведен ли указатель на UI элемент
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventData = new PointerEventData(eventSystem) { position = Input.mousePosition };
+        var results = new List<RaycastResult>();
+        uiRaycaster.Raycast(eventData, results);
+        return results.Count > 0;
+    }
+
+    // Проверка, был ли клик на башне
+    private bool IsTowerClicked()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            return hit.collider.GetComponent<Tower>() != null;
+        }
+        return false;
     }
 }
