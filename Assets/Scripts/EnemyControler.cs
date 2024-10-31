@@ -9,13 +9,14 @@ public class EnemyControler : MonoBehaviour
     public float rotationSpeed = 5f;
     public Transform target;
     private Path thePath;
-    private int currentPoint = 0;  // Инициализация с первой точки
+    private int currentPoint = 0; // Инициализация с первой точки
     private bool reachedEnd;
 
     public float damage = 5;
     private Base theBase;
 
     private AudioSource audioSource; // Добавляем AudioSource переменную
+    private EnemyHealthController healthController; // Ссылка на контроллер здоровья
 
     void Start()
     {
@@ -42,11 +43,15 @@ public class EnemyControler : MonoBehaviour
 
         // Устанавливаем первую точку пути
         target = thePath.points[currentPoint];
+
+        // Получаем ссылку на EnemyHealthController
+        healthController = GetComponent<EnemyHealthController>();
     }
 
     void Update()
     {
-        if (LevelManager.instance.levelActive && !reachedEnd && target != null)
+        // Проверка, чтобы враг двигался только если он жив
+        if (LevelManager.instance.levelActive && !reachedEnd && target != null && healthController.totalHealth > 0)
         {
             MoveAlongPath();
         }

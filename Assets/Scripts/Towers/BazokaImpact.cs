@@ -5,7 +5,7 @@ using UnityEngine;
 public class BazokaImpact : MonoBehaviour
 {
     private float damageAmount;
-    private bool hasPlayedSound = false; // Флаг для отслеживания воспроизведения звука
+    
     
 
     // Метод для установки значения урона

@@ -75,8 +75,8 @@ public class TowerManager : MonoBehaviour
                     return; // Прерываем выполнение, если под указателем мыши нет объекта на слое Ground
                 }
 
-                // Отладочные сообщения для проверки состояния
-                Debug.Log($"Current Money: {MoneyManager.instance.currentMoney}, Tower Cost: {activeTower.cost}");
+              
+                
 
                 bool notEnoughMoney = MoneyManager.instance.currentMoney < activeTower.cost;
                 UIController.instance.notEnoughMoneyWarning.SetActive(notEnoughMoney);
