@@ -107,6 +107,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Nothing FX.cs" />
+    <Compile Include="Assets\Scripts\Towers\Placement.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleRadialFillBar.cs" />
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />

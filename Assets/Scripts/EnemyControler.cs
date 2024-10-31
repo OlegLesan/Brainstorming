@@ -41,11 +41,11 @@ public class EnemyControler : MonoBehaviour
             return;
         }
 
-        // Устанавливаем первую точку пути
-        target = thePath.points[currentPoint];
-
         // Получаем ссылку на EnemyHealthController
         healthController = GetComponent<EnemyHealthController>();
+
+        // Устанавливаем первую случайную точку пути
+        SetRandomTargetFromPoint(currentPoint);
     }
 
     void Update()
@@ -75,16 +75,30 @@ public class EnemyControler : MonoBehaviour
             }
             else
             {
-                SetNewTarget();
+                // Устанавливаем случайную точку из дочерних для следующего узла пути
+                SetRandomTargetFromPoint(currentPoint);
             }
         }
     }
 
-    private void SetNewTarget()
+    private void SetRandomTargetFromPoint(int pointIndex)
     {
-        if (currentPoint < thePath.points.Length)
+        if (pointIndex < thePath.points.Length)
         {
-            target = thePath.points[currentPoint];
+            Transform pathPoint = thePath.points[pointIndex];
+
+            // Проверяем, есть ли дочерние объекты у точки пути
+            if (pathPoint.childCount > 0)
+            {
+                // Выбираем случайного ребенка
+                int randomChildIndex = Random.Range(0, pathPoint.childCount);
+                target = pathPoint.GetChild(randomChildIndex);
+            }
+            else
+            {
+                // Если нет дочерних объектов, переходим к самой точке пути
+                target = pathPoint;
+            }
         }
         else
         {
@@ -104,7 +118,7 @@ public class EnemyControler : MonoBehaviour
         currentPoint = 0;
         if (thePath.points.Length > 0)
         {
-            target = thePath.points[currentPoint];
+            SetRandomTargetFromPoint(currentPoint);
         }
     }
 }
