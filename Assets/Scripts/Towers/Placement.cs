@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Placement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnMouseDown()
     {
-        
-    }
+        if (TowerManager.instance != null)
+        {
+            // Показываем панель с кнопками выбора башен
+            UIController.instance.ShowTowerButtons();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            // Передаем текущий объект в TowerManager для последующего удаления после установки башни
+            TowerManager.instance.SetPlacementObject(this.gameObject);
+        }
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,14 +22,12 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        
         rangeModel.SetActive(false);
         enemiesUpdated = false;
         checkCounter -= Time.deltaTime;
         if (checkCounter <= 0)
         {
             colliderInRange = Physics.OverlapSphere(transform.position, range, whatIsEnemy);
-
             enemiesInRange.Clear();
             foreach (Collider col in colliderInRange)
             {
@@ -40,7 +37,6 @@ public class Tower : MonoBehaviour
         }
     }
 
-    // ћетод дл€ получени€ форматированной стоимости
     public string GetFormattedCost()
     {
         return $"{cost}G";

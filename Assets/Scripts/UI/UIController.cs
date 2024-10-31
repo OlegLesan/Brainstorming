@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -17,11 +15,16 @@ public class UIController : MonoBehaviour
     public GameObject notEnoughMoneyWarning;
 
     public GameObject levelCompleteScreen, levelFailScreen;
-
     public GameObject towerButtons;
 
     public string levelSelectScene, mainMenuScene;
     public GameObject pauseScreen;
+
+    void Start()
+    {
+        // Убедимся, что панель выбора башен изначально отключена
+        HideTowerButtons();
+    }
 
     void Update()
     {
@@ -68,10 +71,21 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene(LevelManager.instance.nextLevel);
     }
 
-    // Новый метод для отображения экрана поражения
     public void ShowLevelFailScreen()
     {
         levelFailScreen.SetActive(true);
-        Time.timeScale = 0f; // Останавливаем игру
+        Time.timeScale = 0f;
+    }
+
+    // Показываем панель с кнопками выбора башен
+    public void ShowTowerButtons()
+    {
+        towerButtons.SetActive(true);
+    }
+
+    // Скрываем панель с кнопками после выбора башни
+    public void HideTowerButtons()
+    {
+        towerButtons.SetActive(false);
     }
 }
