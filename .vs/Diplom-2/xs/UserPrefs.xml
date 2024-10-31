@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{44D0A098-4B05-459F-5E84-E90C14500D4D}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1a3b3adb-2801-487c-acbf-008b5753b531" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/EnemyControler.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Path.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/EnemyControler.cs" Line="63" Column="10" />
+      <File FileName="Assets/Scripts/SimpleEnemySpawner.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Base.cs" Line="13" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Diplom-2">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="EnemyControler.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

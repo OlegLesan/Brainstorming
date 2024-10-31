@@ -29,40 +29,53 @@ public class TowerManager : MonoBehaviour
 
     public void StartTowerPlacement(Tower towerToPlace)
     {
-        activeTower = towerToPlace;
-
-        if (placementObject != null)
+        // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РґРµРЅРµРі
+        if (MoneyManager.instance.SpendMoney(towerToPlace.cost))
         {
-            Vector3 placementPosition = placementObject.transform.position;
-            Destroy(placementObject);
+            activeTower = towerToPlace;
 
-            Instantiate(activeTower.gameObject, placementPosition, Quaternion.identity);
-
-            if (placementFX != null)
+            if (placementObject != null)
             {
-                Vector3 fxPosition = placementPosition + new Vector3(0, fxOffsetY, 0);
-                Instantiate(placementFX, fxPosition, Quaternion.identity).Play();
-            }
+                Vector3 placementPosition = placementObject.transform.position;
+                Destroy(placementObject);
 
-            UIController.instance.HideTowerButtons();
+                Instantiate(activeTower.gameObject, placementPosition, Quaternion.identity);
+
+                if (placementFX != null)
+                {
+                    Vector3 fxPosition = placementPosition + new Vector3(0, fxOffsetY, 0);
+                    Instantiate(placementFX, fxPosition, Quaternion.identity).Play();
+                }
+
+                UIController.instance.HideTowerButtons();
+            }
+        }
+        else
+        {
+            // Р•СЃР»Рё РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РґРµРЅРµРі, РїРѕРєР°Р·Р°С‚СЊ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
+            UIController.instance.notEnoughMoneyWarning.SetActive(true);
+            Invoke("HideWarning", 2f); // РЎРєСЂС‹С‚СЊ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ С‡РµСЂРµР· 2 СЃРµРєСѓРЅРґС‹
         }
     }
 
-    // Метод для выбора башни и отображения ее rangeModel
+    private void HideWarning()
+    {
+        UIController.instance.notEnoughMoneyWarning.SetActive(false);
+    }
+
     public void SelectTower(Tower tower)
     {
         if (selectedTower != null && selectedTower != tower)
         {
-            selectedTower.ShowRangeModel(false); // Скрываем предыдущую башню
+            selectedTower.ShowRangeModel(false);
         }
 
         selectedTower = tower;
-        selectedTower.ShowRangeModel(true); // Показываем модель радиуса выбранной башни
+        selectedTower.ShowRangeModel(true);
     }
 
     private void Update()
     {
-        // Скрываем rangeModel при клике на другом объекте
         if (Input.GetMouseButtonDown(0))
         {
             if (selectedTower != null && !IsPointerOverUIObject() && !IsTowerClicked())
@@ -73,7 +86,6 @@ public class TowerManager : MonoBehaviour
         }
     }
 
-    // Проверка, наведен ли указатель на UI элемент
     private bool IsPointerOverUIObject()
     {
         PointerEventData eventData = new PointerEventData(eventSystem) { position = Input.mousePosition };
@@ -82,7 +94,6 @@ public class TowerManager : MonoBehaviour
         return results.Count > 0;
     }
 
-    // Проверка, был ли клик на башне
     private bool IsTowerClicked()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
