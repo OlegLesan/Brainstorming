@@ -15,8 +15,17 @@ public class EnemyControler : MonoBehaviour
     public float damage = 5;
     private Base theBase;
 
+    private AudioSource audioSource; // Добавляем AudioSource переменную
+
     void Start()
     {
+        // Инициализация AudioSource и запуск звука
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
         // Находим путь, если он не был установлен
         if (thePath == null)
         {
@@ -45,25 +54,19 @@ public class EnemyControler : MonoBehaviour
 
     private void MoveAlongPath()
     {
-        // Направление к текущей цели
         Vector3 directionToTarget = (target.position - transform.position).normalized;
-
-        // Вращение к цели
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * speedMod);
-
-        // Движение к цели
         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime * speedMod);
 
-        // Проверка достижения цели
-        if (Vector3.Distance(transform.position, target.position) < 0.1f)  // Увеличил допуск для достижения цели
+        if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
             currentPoint++;
 
             if (currentPoint >= thePath.points.Length)
             {
                 reachedEnd = true;
-                DealDamageToBase(); // Нанести урон базе при достижении конца пути
+                DealDamageToBase();
             }
             else
             {
@@ -76,7 +79,6 @@ public class EnemyControler : MonoBehaviour
     {
         if (currentPoint < thePath.points.Length)
         {
-            // Устанавливаем следующую точку пути
             target = thePath.points[currentPoint];
         }
         else
@@ -87,17 +89,17 @@ public class EnemyControler : MonoBehaviour
 
     private void DealDamageToBase()
     {
-        theBase.TakeDamage(damage); // Наносим урон базе
-        Destroy(gameObject); // Удаляем врага после нанесения урона
+        theBase.TakeDamage(damage);
+        Destroy(gameObject);
     }
 
     public void Setup(Path newPath)
     {
         thePath = newPath;
-        currentPoint = 0;  // Сброс индекса пути
+        currentPoint = 0;
         if (thePath.points.Length > 0)
         {
-            target = thePath.points[currentPoint];  // Установка первой точки
+            target = thePath.points[currentPoint];
         }
     }
 }

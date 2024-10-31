@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ProjectileTower : MonoBehaviour
 {
-    
 
+    private AudioSource audioSource;
     private Tower theTower;
 
     public GameObject projectile;
@@ -23,6 +23,7 @@ public class ProjectileTower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         theTower = GetComponent<Tower>();
         animator = GetComponent<Animator>(); // инициализация аниматора
         animator.speed = animationSpeed;
@@ -79,9 +80,10 @@ public class ProjectileTower : MonoBehaviour
     
     public void FireProjectile()
     {
-       
+        audioSource.Play();
         Instantiate(projectile, firePoint.position, firePoint.rotation);
         Instantiate(shotEffect, firePoint.position, firePoint.rotation);
+        
     }
 
    

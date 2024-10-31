@@ -31,6 +31,7 @@ public class EnemyHealthController : MonoBehaviour
 
     void Update()
     {
+        
         if (targetCamera != null)
         {
             Vector3 directionToCamera = targetCamera.transform.position - healthBar.transform.position;

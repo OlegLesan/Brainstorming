@@ -23,6 +23,7 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
+        
         rangeModel.SetActive(false);
         enemiesUpdated = false;
         checkCounter -= Time.deltaTime;

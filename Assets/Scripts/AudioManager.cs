@@ -127,9 +127,5 @@ public class AudioManager : MonoBehaviour
         PlayRandomBGM();
     }
 
-    public void PlaySFX(int sfxToPlay )
-    {
-        sfx[sfxToPlay].Stop();
-        sfx[sfxToPlay].Play();
-    }
+   
 }
