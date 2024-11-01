@@ -10,7 +10,7 @@ public class Cameracontroller : MonoBehaviour
     public float maxYPosition = 76f;
     public float heightSmoothTime = 0.1f;
     public float rotationStep = 90f; // Шаг поворота (90 градусов)
-    public float borderThickness = 10f; // Это поле можно удалить, если оно больше не нужно
+    public float scrollSpeed = 5f; // Скорость изменения высоты с колесиком мыши
 
     private CharacterController characterController;
     private float targetYPosition;
@@ -45,6 +45,11 @@ public class Cameracontroller : MonoBehaviour
 
         // Рассчитываем движение по осям с учетом скорости перемещения
         move = (forward * v + right * h) * moveSpeed * Time.deltaTime;
+
+        // Получаем входные данные от колесика мыши и изменяем целевую высоту
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        targetYPosition += scroll * scrollSpeed;
+        targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
 
         // Контролируем вертикальное положение камеры с использованием SmoothDamp
         float newYPosition = Mathf.SmoothDamp(transform.position.y, targetYPosition, ref currentYVelocity, heightSmoothTime);
