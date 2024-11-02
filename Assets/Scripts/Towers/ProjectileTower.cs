@@ -1,57 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileTower : MonoBehaviour
 {
-
     private AudioSource audioSource;
     private Tower theTower;
-
-    public GameObject projectile;
-    public Transform firePoint;
-
     private Transform target;
+
+    public Transform firePoint;
     public Transform launcherModel;
     public float rotateSpeed;
     public GameObject shotEffect;
 
-    private Animator animator; // добавлено для анимации
-    private static readonly int isShooting = Animator.StringToHash("IsShooting"); // хэш параметра анимации
-
+    private Animator animator;
+    private static readonly int isShooting = Animator.StringToHash("IsShooting");
     public float animationSpeed = 1f;
-    // Start is called before the first frame update
+
+    public ProjectilePool projectilePool; // ссылка на пул для снарядов
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         theTower = GetComponent<Tower>();
-        animator = GetComponent<Animator>(); // инициализация аниматора
+        animator = GetComponent<Animator>();
         animator.speed = animationSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        // Проверяем наличие цели (врага)
-      
-        if (target != null  )
+        if (target != null)
         {
-            
             animator.SetBool(isShooting, true);
-            //launcherModel.LookAt(target);
             launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, Quaternion.LookRotation(target.position - transform.position), rotateSpeed * Time.deltaTime);
-
             launcherModel.rotation = Quaternion.Euler(0f, launcherModel.rotation.eulerAngles.y, 0f);
             firePoint.LookAt(target);
-
-
         }
         else
         {
-            
-                animator.SetBool(isShooting, false);
-            
+            animator.SetBool(isShooting, false);
         }
 
         if (theTower.enemiesInRange.Count > 0)
@@ -74,17 +60,26 @@ public class ProjectileTower : MonoBehaviour
         {
             target = null;
         }
-
     }
 
-    
     public void FireProjectile()
     {
-        audioSource.Play();
-        Instantiate(projectile, firePoint.position, firePoint.rotation);
-        Instantiate(shotEffect, firePoint.position, firePoint.rotation);
-        
+        if (projectilePool != null)
+        {
+            audioSource.Play();
+            GameObject projectile = projectilePool.GetProjectile();
+            projectile.transform.position = firePoint.position;
+            projectile.transform.rotation = firePoint.rotation;
+
+            Instantiate(shotEffect, firePoint.position, firePoint.rotation);
+        }
     }
 
-   
+    public void ReturnProjectileToPool(GameObject projectile)
+    {
+        if (projectilePool != null)
+        {
+            projectilePool.ReturnProjectile(projectile);
+        }
+    }
 }
