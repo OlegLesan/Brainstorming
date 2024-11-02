@@ -11,7 +11,7 @@ public class Tower : MonoBehaviour
     public float checkTime = .2f;
 
     public bool enemiesUpdated;
-    public GameObject rangeModel;
+    public GameObject rangeModel, light;
     public int cost = 100;
 
     private void Start()
@@ -21,9 +21,15 @@ public class Tower : MonoBehaviour
         // Устанавливаем масштаб rangeModel только по осям X и Z в соответствии с range
         if (rangeModel != null)
         {
-            float scale = range; // Удвоение радиуса для корректного отображения
+            float scale = range;
             rangeModel.transform.localScale = new Vector3(scale, rangeModel.transform.localScale.y, scale);
             rangeModel.SetActive(false); // Скрываем по умолчанию
+        }
+
+        // Делаем то же самое для light, но без изменения масштаба
+        if (light != null)
+        {
+            light.SetActive(false); // Скрываем по умолчанию
         }
     }
 
@@ -53,12 +59,16 @@ public class Tower : MonoBehaviour
         return $"{cost}G";
     }
 
-    // Метод для отображения модели радиуса
+    // Метод для отображения/скрытия модели радиуса и света
     public void ShowRangeModel(bool show)
     {
         if (rangeModel != null)
         {
             rangeModel.SetActive(show);
+        }
+        if (light != null)
+        {
+            light.SetActive(show);
         }
     }
 

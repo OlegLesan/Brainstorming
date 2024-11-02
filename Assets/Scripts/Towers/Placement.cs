@@ -37,6 +37,35 @@ public class Placement : MonoBehaviour
             // Вращаем только по оси Y
             arrow.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0, Space.World);
         }
+
+        // Проверка на клик в пустом месте
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleClickOutside();
+        }
+    }
+
+    private void HandleClickOutside()
+    {
+        // Определяем, был ли клик по объекту `Placement`
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Placement placement = hit.collider.GetComponent<Placement>();
+
+            // Если клик был не по объекту `Placement`, скрываем стрелку и показываем FX у текущего активного объекта
+            if (placement == null && currentActivePlacement != null)
+            {
+                currentActivePlacement.HideArrowAndShowFX();
+                currentActivePlacement = null;
+            }
+        }
+        else if (currentActivePlacement != null)
+        {
+            // Если клик вообще в пустое место, также скрываем стрелку и показываем FX у текущего активного объекта
+            currentActivePlacement.HideArrowAndShowFX();
+            currentActivePlacement = null;
+        }
     }
 
     public void ShowArrowAndHideFX()

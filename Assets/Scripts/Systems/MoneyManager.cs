@@ -36,7 +36,7 @@ public class MoneyManager : MonoBehaviour
         if (amountToSpend<= currentMoney)
         {
             canSpend = true;
-            Debug.Log("Spent " + amountToSpend);
+          
             currentMoney -= amountToSpend;
 
 
