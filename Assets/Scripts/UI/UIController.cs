@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -13,17 +14,19 @@ public class UIController : MonoBehaviour
 
     public TMP_Text goldText;
     public GameObject notEnoughMoneyWarning;
-
     public GameObject levelCompleteScreen, levelFailScreen;
     public GameObject towerButtons;
+    public GameObject upgradePanel; // Панель улучшений
+    public Button upgradeButton; // Кнопка улучшения
+    public TMP_Text upgradeCostText; // Текст для отображения стоимости улучшения
 
     public string levelSelectScene, mainMenuScene;
     public GameObject pauseScreen;
 
     void Start()
     {
-        // ��������, ��� ������ ������ ����� ���������� ���������
         HideTowerButtons();
+        HideUpgradePanel(); // Скрыть панель улучшений по умолчанию
     }
 
     void Update()
@@ -77,15 +80,40 @@ public class UIController : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    // ���������� ������ � �������� ������ �����
     public void ShowTowerButtons()
     {
         towerButtons.SetActive(true);
     }
 
-    // �������� ������ � �������� ����� ������ �����
     public void HideTowerButtons()
     {
         towerButtons.SetActive(false);
+    }
+
+    // Показать панель улучшений
+    public void ShowUpgradePanel(Tower tower)
+    {
+        upgradePanel.SetActive(true);
+        upgradeCostText.text = $"{tower.upgradeCost}G"; // Отображаем стоимость улучшения
+
+        // Проверяем, хватает ли денег на улучшение
+        bool canAffordUpgrade = MoneyManager.instance.currentMoney >= tower.upgradeCost;
+        upgradeButton.interactable = canAffordUpgrade; // Включаем или отключаем кнопку
+    }
+
+    // Скрыть панель улучшений
+    public void HideUpgradePanel()
+    {
+        upgradePanel.SetActive(false);
+    }
+
+    // Улучшить выбранную башню
+    public void UpgradeSelectedTower()
+    {
+        if (TowerManager.instance.selectedTower != null)
+        {
+            TowerManager.instance.selectedTower.UpgradeTower(); // Улучшить башню
+            HideUpgradePanel(); // Скрыть панель после улучшения
+        }
     }
 }

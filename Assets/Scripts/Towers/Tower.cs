@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
@@ -13,23 +13,24 @@ public class Tower : MonoBehaviour
     public bool enemiesUpdated;
     public GameObject rangeModel, light;
     public int cost = 100;
+    public int upgradeCost = 150; // Стоимость улучшения башни
+
+    public GameObject upgradedTowerPrefab; // Префаб улучшенной башни
 
     private void Start()
     {
         checkCounter = checkTime;
 
-        // Устанавливаем масштаб rangeModel только по осям X и Z в соответствии с range
         if (rangeModel != null)
         {
             float scale = range;
             rangeModel.transform.localScale = new Vector3(scale, rangeModel.transform.localScale.y, scale);
-            rangeModel.SetActive(false); // Скрываем по умолчанию
+            rangeModel.SetActive(false);
         }
 
-        // Делаем то же самое для light, но без изменения масштаба
         if (light != null)
         {
-            light.SetActive(false); // Скрываем по умолчанию
+            light.SetActive(false);
         }
     }
 
@@ -50,7 +51,7 @@ public class Tower : MonoBehaviour
                 }
             }
             enemiesUpdated = true;
-            checkCounter = checkTime; // Сбрасываем таймер
+            checkCounter = checkTime;
         }
     }
 
@@ -59,7 +60,6 @@ public class Tower : MonoBehaviour
         return $"{cost}G";
     }
 
-    // Метод для отображения/скрытия модели радиуса и света
     public void ShowRangeModel(bool show)
     {
         if (rangeModel != null)
@@ -72,9 +72,20 @@ public class Tower : MonoBehaviour
         }
     }
 
-    // Проверка клика на башне
     private void OnMouseDown()
     {
         TowerManager.instance.SelectTower(this);
+    }
+
+    // Метод для улучшения башни
+    public void UpgradeTower()
+    {
+        if (upgradedTowerPrefab != null && MoneyManager.instance.SpendMoney(upgradeCost))
+        {
+            Vector3 position = transform.position;
+            Quaternion rotation = transform.rotation;
+            Destroy(gameObject); // Удаляем текущий объект
+            Instantiate(upgradedTowerPrefab, position, rotation); // Создаём новый префаб на том же месте
+        }
     }
 }

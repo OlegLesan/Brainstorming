@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class TowerManager : MonoBehaviour
     public GraphicRaycaster uiRaycaster;
     public EventSystem eventSystem;
 
-    private Tower selectedTower;
+    public Tower selectedTower; // Добавлено для доступа из UIController
 
     private void Awake()
     {
@@ -29,7 +29,6 @@ public class TowerManager : MonoBehaviour
 
     public void StartTowerPlacement(Tower towerToPlace)
     {
-        // Проверка наличия достаточного количества денег
         if (MoneyManager.instance.SpendMoney(towerToPlace.cost))
         {
             activeTower = towerToPlace;
@@ -52,9 +51,8 @@ public class TowerManager : MonoBehaviour
         }
         else
         {
-            // Если недостаточно денег, показать предупреждение
             UIController.instance.notEnoughMoneyWarning.SetActive(true);
-            Invoke("HideWarning", 2f); // Скрыть предупреждение через 2 секунды
+            Invoke("HideWarning", 2f);
         }
     }
 
@@ -72,6 +70,8 @@ public class TowerManager : MonoBehaviour
 
         selectedTower = tower;
         selectedTower.ShowRangeModel(true);
+
+        UIController.instance.ShowUpgradePanel(selectedTower); // Показать панель улучшений
     }
 
     private void Update()
@@ -82,6 +82,8 @@ public class TowerManager : MonoBehaviour
             {
                 selectedTower.ShowRangeModel(false);
                 selectedTower = null;
+
+                UIController.instance.HideUpgradePanel(); // Скрыть панель улучшений при клике на пустое место
             }
         }
     }
