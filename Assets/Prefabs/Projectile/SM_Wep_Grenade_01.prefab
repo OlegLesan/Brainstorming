@@ -101,9 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 3531434709250162969}
-  moveSpeed: 5
-  damageAmount: 3
-  impactEffect: {fileID: 1829163952570794, guid: b4b04a6d675988f4fa10bc9f5ddb22b7, type: 3}
+  moveSpeed: 10
+  damageAmount: 1
+  impactEffect: {fileID: 1879769179923522, guid: 642d6b0de68f7e9448d5cb04662fd69b, type: 3}
 --- !u!54 &3531434709250162969
 Rigidbody:
   m_ObjectHideFlags: 0
