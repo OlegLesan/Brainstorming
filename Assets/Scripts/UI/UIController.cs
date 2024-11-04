@@ -7,34 +7,48 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    public GameObject hotbar; // Панель выбора башен
+    public TMP_Text goldText;
+    public GameObject notEnoughMoneyWarning;
+    public GameObject levelCompleteScreen, levelFailScreen;
+    public GameObject towerButtons;
+    public GameObject upgradePanel;
+    public Button upgradeButton;
+    public TMP_Text upgradeCostText;
+    public Button sellButton;
+    public TMP_Text sellValueText;
+
+    // Звуковые эффекты
+    public AudioClip upgradeSound;
+    public AudioClip sellSound;
+    private AudioSource audioSource;
+
+    public string levelSelectScene, mainMenuScene;
+    public GameObject pauseScreen;
+
     private void Awake()
     {
         instance = this;
     }
 
-    public TMP_Text goldText;
-    public GameObject notEnoughMoneyWarning;
-    public GameObject levelCompleteScreen, levelFailScreen;
-    public GameObject towerButtons;
-    public GameObject upgradePanel; // Панель улучшений
-    public Button upgradeButton; // Кнопка улучшения
-    public TMP_Text upgradeCostText; // Текст для отображения стоимости улучшения
-
-    public string levelSelectScene, mainMenuScene;
-    public GameObject pauseScreen;
-
     void Start()
     {
         HideTowerButtons();
-        HideUpgradePanel(); // Скрыть панель улучшений по умолчанию
+        HideUpgradePanel();
+        HideHotbar(); // Скрываем hotbar по умолчанию
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    void Update()
+    public void ShowHotbar()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseUnpause();
-        }
+        if (hotbar != null)
+            hotbar.SetActive(true);
+    }
+
+    public void HideHotbar()
+    {
+        if (hotbar != null)
+            hotbar.SetActive(false);
     }
 
     public void PauseUnpause()
@@ -90,30 +104,49 @@ public class UIController : MonoBehaviour
         towerButtons.SetActive(false);
     }
 
-    // Показать панель улучшений
+    // Показать панель улучшений и обновить стоимость продажи
     public void ShowUpgradePanel(Tower tower)
     {
         upgradePanel.SetActive(true);
         upgradeCostText.text = $"{tower.upgradeCost}G"; // Отображаем стоимость улучшения
 
-        // Проверяем, хватает ли денег на улучшение
-        bool canAffordUpgrade = MoneyManager.instance.currentMoney >= tower.upgradeCost;
-        upgradeButton.interactable = canAffordUpgrade; // Включаем или отключаем кнопку
+        bool canUpgrade = tower.upgradedTowerPrefab != null && MoneyManager.instance.currentMoney >= tower.upgradeCost;
+        upgradeButton.interactable = canUpgrade; // Включаем или отключаем кнопку улучшения
+
+        sellButton.interactable = true; // Включаем кнопку продажи
+        sellValueText.text = $"Sell: {tower.sellValue}G"; // Отображаем стоимость продажи
     }
 
-    // Скрыть панель улучшений
     public void HideUpgradePanel()
     {
         upgradePanel.SetActive(false);
     }
 
-    // Улучшить выбранную башню
     public void UpgradeSelectedTower()
     {
         if (TowerManager.instance.selectedTower != null)
         {
-            TowerManager.instance.selectedTower.UpgradeTower(); // Улучшить башню
-            HideUpgradePanel(); // Скрыть панель после улучшения
+            TowerManager.instance.selectedTower.UpgradeTower();
+            PlaySound(upgradeSound);
+            HideUpgradePanel();
+        }
+    }
+
+    public void SellSelectedTower()
+    {
+        if (TowerManager.instance.selectedTower != null)
+        {
+            TowerManager.instance.selectedTower.SellTower();
+            PlaySound(sellSound);
+            HideUpgradePanel();
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }

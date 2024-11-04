@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Placement : MonoBehaviour
 {
@@ -22,8 +23,8 @@ public class Placement : MonoBehaviour
         // Включаем стрелку и отключаем FX для текущего объекта
         ShowArrowAndHideFX();
 
-        // Показать кнопки башни
-        UIController.instance.ShowTowerButtons();
+        // Показать панель выбора башен (hotbar)
+        UIController.instance.ShowHotbar();
 
         // Установить объект размещения в TowerManager
         TowerManager.instance.SetPlacementObject(this.gameObject);
@@ -31,7 +32,7 @@ public class Placement : MonoBehaviour
 
     private void Update()
     {
-        // Если стрелка активна, вращаем ее вокруг оси Y
+        // Если стрелка активна, вращаем её вокруг оси Y
         if (arrow != null && arrow.activeSelf)
         {
             // Вращаем только по оси Y
@@ -47,6 +48,12 @@ public class Placement : MonoBehaviour
 
     private void HandleClickOutside()
     {
+        // Проверяем, был ли клик по элементу UI, чтобы не скрывать hotbar
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return; // Если клик по UI, не скрываем hotbar
+        }
+
         // Определяем, был ли клик по объекту `Placement`
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
@@ -57,6 +64,7 @@ public class Placement : MonoBehaviour
             if (placement == null && currentActivePlacement != null)
             {
                 currentActivePlacement.HideArrowAndShowFX();
+                UIController.instance.HideHotbar(); // Скрыть панель выбора башен (hotbar)
                 currentActivePlacement = null;
             }
         }
@@ -64,6 +72,7 @@ public class Placement : MonoBehaviour
         {
             // Если клик вообще в пустое место, также скрываем стрелку и показываем FX у текущего активного объекта
             currentActivePlacement.HideArrowAndShowFX();
+            UIController.instance.HideHotbar(); // Скрыть панель выбора башен (hotbar)
             currentActivePlacement = null;
         }
     }
