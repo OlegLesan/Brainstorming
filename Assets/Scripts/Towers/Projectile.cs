@@ -12,7 +12,6 @@ public class Projectile : MonoBehaviour
     public GameObject impactEffect;
 
     private bool hasDamaged;
-    
 
     void Start()
     {
@@ -21,26 +20,34 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy" && !hasDamaged)
+        // Проверяем, является ли объект врагом и еще не был ли нанесен урон
+        if (other.CompareTag("Enemy") && !hasDamaged)
         {
-            other.GetComponent<EnemyHealthController>().TakeDamage(damageAmount);
-            hasDamaged = true;
-           
+            // Проверяем, есть ли у объекта компонент EnemyHealthController
+            EnemyHealthController enemyHealth = other.GetComponent<EnemyHealthController>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damageAmount);
+                hasDamaged = true;
+            }
         }
-        Instantiate(impactEffect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
 
+        // Создаём эффект удара, если он задан
+        if (impactEffect != null)
+        {
+            Instantiate(impactEffect, transform.position, Quaternion.identity);
+        }
+
+        // Уничтожаем снаряд после столкновения
+        Destroy(gameObject);
     }
 
     void Update()
     {
-
-        if ((transform.position.y <= -10) || (transform.position.y >= 10))
+        // Удаляем снаряд, если он выходит за пределы допустимых координат
+        if (transform.position.y <= -10 || transform.position.y >= 10)
         {
-            Destroy(gameObject);  
+            Destroy(gameObject);
         }
     }
-
-
-
 }

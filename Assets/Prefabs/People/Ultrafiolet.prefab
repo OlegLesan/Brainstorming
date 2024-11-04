@@ -3839,7 +3839,7 @@ GameObject:
   - component: {fileID: 5307405004798299186}
   - component: {fileID: 5318637016087144328}
   - component: {fileID: 5324494561875713794}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: SM_Prop_Flashlight_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6271,7 +6271,7 @@ GameObject:
   - component: {fileID: 6738185033131059976}
   - component: {fileID: 8830293880967760656}
   - component: {fileID: 2940751819964235069}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6305,13 +6305,13 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.2080946, g: 0, b: 1, a: 1}
-  m_Intensity: 67.48
-  m_Range: 8
-  m_SpotAngle: 57
+  m_Intensity: 19.8
+  m_Range: 10.761987
+  m_SpotAngle: 27.854986
   m_InnerSpotAngle: 17.1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -6374,8 +6374,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.9534335, y: 5.15, z: 8.221428}
-  m_Center: {x: -0.31674123, y: 0.059999954, z: 4.090574}
+  m_Size: {x: 1, y: 1, z: 7}
+  m_Center: {x: 0.008282517, y: 0.20979656, z: 5.3892508}
 --- !u!114 &2940751819964235069
 MonoBehaviour:
   m_ObjectHideFlags: 0

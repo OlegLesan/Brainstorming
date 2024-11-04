@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 603290858959384625}
   - component: {fileID: 2935777206863255249}
   - component: {fileID: 4640669934630329010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SM_Prop_SupplyPile_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 1014252301174022, guid: fdca45a9f6f10704e93e0dbf15261f4a, type: 3}
       propertyPath: m_Name
       value: FX_Smoke_White_Small_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014252301174022, guid: fdca45a9f6f10704e93e0dbf15261f4a, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4456855540096558, guid: fdca45a9f6f10704e93e0dbf15261f4a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -285,6 +289,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9d9b0c48d859d8b45b4a87384465f9ea, type: 3}
       propertyPath: m_Name
       value: 3D RightArrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d9b0c48d859d8b45b4a87384465f9ea, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9d9b0c48d859d8b45b4a87384465f9ea, type: 3}
       propertyPath: m_IsActive

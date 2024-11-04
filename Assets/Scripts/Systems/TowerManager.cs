@@ -17,9 +17,12 @@ public class TowerManager : MonoBehaviour
 
     public Tower selectedTower; // Добавлено для доступа из UIController
 
+    private LayerMask towerLayerMask; // Добавлено для маски слоя
+
     private void Awake()
     {
         instance = this;
+        towerLayerMask = ~LayerMask.GetMask("IgnoreRaycast"); // Установить маску, исключающую слой IgnoreRaycast
     }
 
     public void SetPlacementObject(GameObject placementObj)
@@ -99,9 +102,18 @@ public class TowerManager : MonoBehaviour
     private bool IsTowerClicked()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        foreach (RaycastHit hit in hits)
         {
-            return hit.collider.GetComponent<Tower>() != null;
+            // Игнорируем слой "Flashlight"
+            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ignore" + "Raycast"))
+            {
+                if (hit.collider.GetComponent<Tower>() != null)
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }
