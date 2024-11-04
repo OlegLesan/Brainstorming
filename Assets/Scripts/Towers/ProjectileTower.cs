@@ -18,12 +18,16 @@ public class ProjectileTower : MonoBehaviour
 
     public ProjectilePool projectilePool; // ссылка на пул для снарядов
 
+    private Vector3 initialLauncherPosition; // начальная позиция launcherModel
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         theTower = GetComponent<Tower>();
         animator = GetComponent<Animator>();
         animator.speed = animationSpeed;
+
+        initialLauncherPosition = launcherModel.position; // сохраняем начальную позицию
     }
 
     void Update()
@@ -31,14 +35,21 @@ public class ProjectileTower : MonoBehaviour
         if (target != null)
         {
             animator.SetBool(isShooting, true);
-            launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, Quaternion.LookRotation(target.position - transform.position), rotateSpeed * Time.deltaTime);
-            launcherModel.rotation = Quaternion.Euler(0f, launcherModel.rotation.eulerAngles.y, 0f);
+
+            // Поворачиваем launcherModel только по оси Y в сторону цели
+            Quaternion targetRotation = Quaternion.LookRotation(target.position - launcherModel.position);
+            targetRotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
+            launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
             firePoint.LookAt(target);
         }
         else
         {
             animator.SetBool(isShooting, false);
         }
+
+        // Обновляем позицию launcherModel, чтобы она оставалась фиксированной
+        launcherModel.position = initialLauncherPosition;
 
         if (theTower.enemiesInRange.Count > 0)
         {
