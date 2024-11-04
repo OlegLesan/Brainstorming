@@ -4059,7 +4059,7 @@ MonoBehaviour:
   cost: 100
   upgradeCost: 150
   sellValue: 75
-  upgradedTowerPrefab: {fileID: 0}
+  upgradedTowerPrefab: {fileID: 179035858591051937, guid: 8fdc16349abf7c944be20ca4c13f4157, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &4458187846012469570
 BoxCollider:
