@@ -666,6 +666,7 @@ Transform:
   - {fileID: 7509264000778580344}
   - {fileID: 7425136615999872257}
   - {fileID: 5498317813654449526}
+  - {fileID: 5967310019947744917}
   m_Father: {fileID: 5620106608905309807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1363412612341823416
@@ -3706,7 +3707,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: deeb3b67f97ecce46b14722f9cde4e99, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3731,7 +3732,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300004, guid: ffdfcb810f2918b4f8fe9f917f07bc78, type: 3}
+  m_Mesh: {fileID: 4300026, guid: b3a849229c6faea448cb1f0200840e8d, type: 3}
   m_Bones:
   - {fileID: 1283305070239649534}
   - {fileID: 7852594085685893032}
@@ -6089,6 +6090,72 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4285322397440598, guid: dd404c768a9323b4fb42bd3f8ea5c2fe, type: 3}
   m_PrefabInstance: {fileID: 5779876560052748648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5971671435621893915
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5319603611815508783}
+    m_Modifications:
+    - target: {fileID: 1844905017368202, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_Name
+      value: SM_Chr_Attach_Bombsuit_Helmet_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23432868554690912, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: deeb3b67f97ecce46b14722f9cde4e99, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+--- !u!4 &5967310019947744917 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4370905942346126, guid: 3ebcb640bef0c88488d7bbe55fc92b92, type: 3}
+  m_PrefabInstance: {fileID: 5971671435621893915}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8656479238105645837
 PrefabInstance:
