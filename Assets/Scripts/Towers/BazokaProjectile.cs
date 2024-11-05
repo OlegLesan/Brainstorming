@@ -7,56 +7,80 @@ public class BazokaProjectile : MonoBehaviour
     public float damageAmount;
     public GameObject impactEffect;
 
-    private ProjectileTower tower; // Ссылка на башню, чтобы вернуть снаряд в пул
-    private bool hasCollided = false; // Флаг для отслеживания первого столкновения
-
-    void Start()
-    {
-        theRB.velocity = transform.forward * moveSpeed;
-    }
+    private ProjectileTower tower;
+    private Transform target;
+    private bool hasCollided = false;
 
     public void SetTower(ProjectileTower towerRef)
     {
         tower = towerRef;
     }
 
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+
+    private void OnEnable()
+    {
+        hasCollided = false;
+    }
+
+    private void Update()
+    {
+        if (target != null && !hasCollided)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            theRB.velocity = direction * moveSpeed;
+
+            if (Vector3.Distance(transform.position, target.position) < 0.5f)
+            {
+                ImpactTarget();
+            }
+        }
+        else
+        {
+            ReturnToPool();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!hasCollided && other.CompareTag("Enemy"))
         {
-            hasCollided = true; // Устанавливаем флаг, чтобы предотвратить повторное срабатывание
-
-            // Создаем эффект взрыва
-            GameObject impact = Instantiate(impactEffect, transform.position, Quaternion.identity);
-            BazokaImpact impactScript = impact.GetComponent<BazokaImpact>();
-            if (impactScript != null)
-            {
-                impactScript.SetDamageAmount(damageAmount);
-            }
-
-            // Возвращаем снаряд в пул
-            if (tower != null)
-            {
-                tower.ReturnProjectileToPool(gameObject);
-            }
+            ImpactTarget();
         }
     }
 
-    void Update()
+    private void ImpactTarget()
     {
-        // Проверяем, вышел ли снаряд за допустимые границы, и возвращаем в пул, если нужно
-        if ((transform.position.y <= -10) || (transform.position.y >= 10))
+        hasCollided = true;
+
+        GameObject impact = Instantiate(impactEffect, transform.position, Quaternion.identity);
+        BazokaImpact impactScript = impact.GetComponent<BazokaImpact>();
+        if (impactScript != null)
         {
-            if (tower != null)
-            {
-                tower.ReturnProjectileToPool(gameObject);
-            }
+            impactScript.SetDamageAmount(damageAmount);
+        }
+
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        if (tower != null)
+        {
+            hasCollided = false;
+            tower.ReturnProjectileToPool(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
-        // Сбрасываем флаг при отключении снаряда, чтобы он снова мог срабатывать при следующем запуске
         hasCollided = false;
     }
 }

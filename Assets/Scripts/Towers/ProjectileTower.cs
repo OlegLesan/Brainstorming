@@ -75,14 +75,34 @@ public class ProjectileTower : MonoBehaviour
 
     public void FireProjectile()
     {
-        if (projectilePool != null)
+        if (projectilePool != null && target != null) // Убедимся, что есть цель
         {
             audioSource.Play();
             GameObject projectile = projectilePool.GetProjectile();
-            projectile.transform.position = firePoint.position;
-            projectile.transform.rotation = firePoint.rotation;
 
-            Instantiate(shotEffect, firePoint.position, firePoint.rotation);
+            if (projectile != null) // Проверяем, что снаряд был получен из пула
+            {
+                projectile.transform.position = firePoint.position;
+                projectile.transform.rotation = firePoint.rotation;
+                projectile.SetActive(true); // Активируем снаряд при необходимости
+
+                // Настраиваем цель для снаряда
+                Projectile projectileScript = projectile.GetComponent<Projectile>();
+                if (projectileScript != null)
+                {
+                    projectileScript.SetTarget(target);
+                    projectileScript.projectileTower = this; // Устанавливаем ссылку на башню для возврата
+                }
+
+                BazokaProjectile bazokaProjectile = projectile.GetComponent<BazokaProjectile>();
+                if (bazokaProjectile != null)
+                {
+                    bazokaProjectile.SetTarget(target);
+                    bazokaProjectile.SetTower(this); // Устанавливаем ссылку на башню для возврата
+                }
+
+                Instantiate(shotEffect, firePoint.position, firePoint.rotation);
+            }
         }
     }
 

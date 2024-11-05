@@ -1,53 +1,73 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     public Rigidbody theRB;
     public float moveSpeed;
-
     public float damageAmount;
-
     public GameObject impactEffect;
 
     private bool hasDamaged;
+    public ProjectileTower projectileTower;
+    private Transform target; // ссылка на цель врага
 
-    void Start()
+    private void OnEnable()
     {
-        theRB.velocity = transform.forward * moveSpeed;
+        hasDamaged = false;
+    }
+
+    private void Update()
+    {
+        if (target != null)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            theRB.velocity = direction * moveSpeed;
+
+            if (Vector3.Distance(transform.position, target.position) < 0.5f)
+            {
+                DamageTarget();
+            }
+        }
+        else
+        {
+            ResetProjectile();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Проверяем, является ли объект врагом и еще не был ли нанесен урон
         if (other.CompareTag("Enemy") && !hasDamaged)
         {
-            // Проверяем, есть ли у объекта компонент EnemyHealthController
-            EnemyHealthController enemyHealth = other.GetComponent<EnemyHealthController>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damageAmount);
-                hasDamaged = true;
-            }
+            DamageTarget();
         }
-
-        // Создаём эффект удара, если он задан
-        if (impactEffect != null)
-        {
-            Instantiate(impactEffect, transform.position, Quaternion.identity);
-        }
-
-        // Уничтожаем снаряд после столкновения
-        Destroy(gameObject);
     }
 
-    void Update()
+    private void DamageTarget()
     {
-        // Удаляем снаряд, если он выходит за пределы допустимых координат
-        if (transform.position.y <= -10 || transform.position.y >= 10)
+        EnemyHealthController enemyHealth = target.GetComponent<EnemyHealthController>();
+        if (enemyHealth != null && !hasDamaged)
         {
-            Destroy(gameObject);
+            enemyHealth.TakeDamage(damageAmount);
+            hasDamaged = true;
+
+            if (impactEffect != null)
+            {
+                Instantiate(impactEffect, transform.position, Quaternion.identity);
+            }
+
+            ResetProjectile();
         }
+    }
+
+    private void ResetProjectile()
+    {
+        hasDamaged = false;
+        target = null;
+        projectileTower.ReturnProjectileToPool(gameObject);
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 }

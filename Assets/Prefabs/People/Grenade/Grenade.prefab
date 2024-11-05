@@ -2537,7 +2537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
+  range: 10
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -3424,7 +3424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 7123056012935694286, guid: 242708173af973840a6c8941bd878fef, type: 3}
-  poolSize: 1
+  poolSize: 2
 --- !u!1 &6518455140174990523
 GameObject:
   m_ObjectHideFlags: 0
