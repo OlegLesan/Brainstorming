@@ -38,12 +38,15 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && !hasDamaged)
         {
+            target = other.transform; // Убедимся, что target установлен перед вызовом DamageTarget
             DamageTarget();
         }
     }
 
     private void DamageTarget()
     {
+        if (target == null) return; // Проверка, чтобы избежать ошибки
+
         EnemyHealthController enemyHealth = target.GetComponent<EnemyHealthController>();
         if (enemyHealth != null && !hasDamaged)
         {
