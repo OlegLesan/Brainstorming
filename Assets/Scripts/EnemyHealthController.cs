@@ -33,7 +33,6 @@ public class EnemyHealthController : MonoBehaviour
             Debug.LogError("Камера не найдена! Убедитесь, что в сцене есть Main Camera.");
         }
 
-        // Получаем компоненты коллайдера, аниматора и аудиосорса
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -41,24 +40,6 @@ public class EnemyHealthController : MonoBehaviour
         if (animator == null)
         {
             Debug.LogError("Аниматор не найден! Убедитесь, что на объекте есть компонент Animator.");
-        }
-    }
-
-    void Update()
-    {
-        if (targetCamera != null)
-        {
-            Vector3 directionToCamera = targetCamera.transform.position - healthBar.transform.position;
-            directionToCamera.y = 0;
-
-            if (directionToCamera.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
-                Quaternion smoothRotation = Quaternion.Slerp(healthBar.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-
-                // Применяем только Y-поворот, а по оси X всегда фиксированное значение
-                healthBar.transform.rotation = Quaternion.Euler(fixedXRotation, smoothRotation.eulerAngles.y, 0);
-            }
         }
     }
 
@@ -79,36 +60,31 @@ public class EnemyHealthController : MonoBehaviour
 
     private void HandleDeath()
     {
-        // Отключаем коллайдер
         if (enemyCollider != null)
         {
             enemyCollider.enabled = false;
         }
 
-        // Отключаем индикатор здоровья
         healthBar.gameObject.SetActive(false);
 
-        // Останавливаем и отключаем аудио
         if (audioSource != null)
         {
             audioSource.Stop();
             audioSource.enabled = false;
         }
 
-        // Запускаем анимацию смерти
         if (animator != null)
         {
             animator.SetTrigger("Death");
         }
 
-        // Увеличиваем деньги и уменьшаем количество врагов
         MoneyManager.instance.GiveMoney(moneyOnDeath);
         LevelManager.instance.activeEnemies.Remove(this);
 
         Debug.Log("Враг уничтожен. Осталось активных врагов: " + LevelManager.instance.activeEnemies.Count);
+
         WaveManager.instance.DecreaseEnemyCount();
 
-        // Удаляем объект через 30 секунд
         StartCoroutine(DestroyAfterDelay(destroyTime));
     }
 

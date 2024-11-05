@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
 
     private int currentWaveIndex = 0;  // Индекс текущей волны
     private bool waveInProgress = false;  // Флаг, что волна началась
-    private int totalEnemiesRemaining = 0;  // Общее количество оставшихся врагов во всех волнах
+    public int totalEnemiesRemaining = 0;  // Общее количество оставшихся врагов во всех волнах
 
     private void Awake()
     {
@@ -72,10 +72,8 @@ public class WaveManager : MonoBehaviour
 
     private void CheckForLevelCompletion()
     {
-        Debug.Log("Проверка завершения уровня. Осталось врагов: " + totalEnemiesRemaining);
-
-        // Если врагов не осталось, завершаем уровень
-        if (totalEnemiesRemaining <= 0)
+        // Убедимся, что список активных врагов пуст
+        if (LevelManager.instance.activeEnemies.Count == 0 && totalEnemiesRemaining <= 0)
         {
             Debug.Log("Уровень завершён! Все враги уничтожены.");
             LevelManager.instance.LevelComplete();  // Вызов метода для победы

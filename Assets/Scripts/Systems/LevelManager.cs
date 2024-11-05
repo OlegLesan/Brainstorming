@@ -34,9 +34,13 @@ public class LevelManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        levelActive = false;
-        levelVictory = true;
-        ShowEndScreen();
+        // ѕровер€ем, что все враги действительно уничтожены
+        if (activeEnemies.Count == 0 && WaveManager.instance.totalEnemiesRemaining <= 0)
+        {
+            levelActive = false;
+            levelVictory = true;
+            ShowEndScreen();
+        }
     }
 
     private void ShowEndScreen()
