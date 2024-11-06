@@ -3094,7 +3094,7 @@ GameObject:
   - component: {fileID: 5119567338290655740}
   - component: {fileID: 1748628255836232437}
   m_Layer: 11
-  m_Name: Pistol3
+  m_Name: AutomaticRIfle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3218,7 +3218,7 @@ MonoBehaviour:
   cost: 100
   upgradeCost: 150
   sellValue: 75
-  upgradedTowerPrefab: {fileID: 0}
+  upgradedTowerPrefab: {fileID: 4552638790437930363, guid: d15d28e37d3723545a8810766285e368, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &4045239155307558184
 BoxCollider:
