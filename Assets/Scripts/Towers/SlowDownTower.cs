@@ -4,29 +4,84 @@ using UnityEngine;
 
 public class SlowDownTower : MonoBehaviour
 {
-    public float slowDownMultiplier = 0.5f; // Коэффициент замедления
+    public Light spotlight; // Ссылка на Spot Light фонарика
+    public float slowDownAmount = 0.5f; // Количество замедления, которое вычитается из скорости врага
+    public float checkInterval = 0.2f; // Интервал проверки для производительности
 
-    private void OnTriggerEnter(Collider other)
+    private List<EnemyControler> affectedEnemies = new List<EnemyControler>();
+
+    private void Start()
     {
-        if (other.CompareTag("Enemy")) // Проверяем, что это объект врага
+        if (spotlight == null)
         {
-            EnemyControler enemy = other.GetComponent<EnemyControler>();
+            spotlight = GetComponent<Light>(); // Автоматически находим компонент света, если он не назначен
+        }
+
+        // Запускаем проверку через определенные интервалы времени
+        InvokeRepeating(nameof(CheckEnemiesInLightCone), 0f, checkInterval);
+    }
+
+    private void CheckEnemiesInLightCone()
+    {
+        // Находим всех врагов в сцене
+        EnemyControler[] allEnemies = FindObjectsOfType<EnemyControler>();
+
+        // Проходим по всем врагам и проверяем их расстояние и угол до фонарика
+        foreach (EnemyControler enemy in allEnemies)
+        {
             if (enemy != null)
             {
-                enemy.speedMod = slowDownMultiplier; // Применяем замедление
+                Vector3 directionToEnemy = enemy.transform.position - spotlight.transform.position;
+                float distanceToEnemy = directionToEnemy.magnitude;
+
+                // Проверяем, находится ли враг в пределах радиуса света
+                if (distanceToEnemy <= spotlight.range)
+                {
+                    // Проверяем, находится ли враг внутри угла освещения Spot Light
+                    float angleToEnemy = Vector3.Angle(spotlight.transform.forward, directionToEnemy);
+
+                    if (angleToEnemy <= spotlight.spotAngle / 2)
+                    {
+                        // Враг находится в конусе света, уменьшаем скорость
+                        if (!affectedEnemies.Contains(enemy))
+                        {
+                            enemy.speedMod -= slowDownAmount;
+                            affectedEnemies.Add(enemy);
+                        }
+                    }
+                    else
+                    {
+                        // Враг вне конуса света, восстанавливаем скорость
+                        if (affectedEnemies.Contains(enemy))
+                        {
+                            enemy.speedMod += slowDownAmount;
+                            affectedEnemies.Remove(enemy);
+                        }
+                    }
+                }
+                else
+                {
+                    // Враг вне радиуса света, восстанавливаем скорость
+                    if (affectedEnemies.Contains(enemy))
+                    {
+                        enemy.speedMod += slowDownAmount;
+                        affectedEnemies.Remove(enemy);
+                    }
+                }
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnDisable()
     {
-        if (other.CompareTag("Enemy")) // Проверяем, что это объект врага
+        // Восстанавливаем скорость для всех врагов при отключении фонарика
+        foreach (EnemyControler enemy in affectedEnemies)
         {
-            EnemyControler enemy = other.GetComponent<EnemyControler>();
             if (enemy != null)
             {
-                enemy.speedMod = 1f; // Восстанавливаем нормальную скорость
+                enemy.speedMod += slowDownAmount;
             }
         }
+        affectedEnemies.Clear();
     }
 }

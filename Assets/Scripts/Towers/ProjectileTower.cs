@@ -69,7 +69,7 @@ public class ProjectileTower : MonoBehaviour
 
     public void FireProjectile()
     {
-        if (target != null && projectileTag != null)
+        if (target != null && !string.IsNullOrEmpty(projectileTag))
         {
             audioSource.Play();
             GameObject projectile = ProjectilePoolManager.instance.GetProjectile(projectileTag);
@@ -80,11 +80,22 @@ public class ProjectileTower : MonoBehaviour
                 projectile.transform.rotation = firePoint.rotation;
                 projectile.SetActive(true);
 
-                Projectile projectileScript = projectile.GetComponent<Projectile>();
-                if (projectileScript != null)
+                // Проверка для компонента BazokaProjectile
+                BazokaProjectile bazokaProjectile = projectile.GetComponent<BazokaProjectile>();
+                if (bazokaProjectile != null)
                 {
-                    projectileScript.SetTarget(target);
-                    projectileScript.projectileTower = this;
+                    bazokaProjectile.SetTarget(target);
+                    bazokaProjectile.SetTower(this);
+                }
+                else
+                {
+                    // Если это обычный снаряд, используем компонент Projectile
+                    Projectile projectileScript = projectile.GetComponent<Projectile>();
+                    if (projectileScript != null)
+                    {
+                        projectileScript.SetTarget(target);
+                        projectileScript.projectileTower = this;
+                    }
                 }
 
                 Instantiate(shotEffect, firePoint.position, firePoint.rotation);
