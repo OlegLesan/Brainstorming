@@ -2382,7 +2382,7 @@ GameObject:
   - component: {fileID: 189783293512501555}
   - component: {fileID: 2522609449129291048}
   m_Layer: 11
-  m_Name: Ultrafiolet
+  m_Name: UltraViolet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2474,8 +2474,8 @@ MonoBehaviour:
   launcherModel: {fileID: 7646403069561976521}
   rotateSpeed: 100
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
+  projectileTag: 
   animationSpeed: 1
-  projectilePool: {fileID: 0}
 --- !u!114 &189783293512501555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6306,9 +6306,9 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.2080946, g: 0, b: 1, a: 1}
   m_Intensity: 19.8
-  m_Range: 10.761987
-  m_SpotAngle: 27.854986
-  m_InnerSpotAngle: 17.1
+  m_Range: 9.79
+  m_SpotAngle: 20
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
