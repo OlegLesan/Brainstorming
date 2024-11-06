@@ -13,11 +13,11 @@ public class Tower : MonoBehaviour
     public bool enemiesUpdated;
     public GameObject rangeModel, light;
     public int cost = 100;
-    public int upgradeCost = 150; // Стоимость улучшения башни
-    public int sellValue = 50; // Стоимость продажи башни
+    public int upgradeCost = 150;
+    public int sellValue = 50;
 
-    public GameObject upgradedTowerPrefab; // Префаб улучшенной башни
-    public GameObject placementPrefab; // Префаб объекта с компонентом Placement
+    public GameObject upgradedTowerPrefab;
+    public GameObject placementPrefab;
 
     private void Start()
     {
@@ -79,30 +79,27 @@ public class Tower : MonoBehaviour
         TowerManager.instance.SelectTower(this);
     }
 
-    // Метод для улучшения башни
     public void UpgradeTower()
     {
         if (upgradedTowerPrefab != null && MoneyManager.instance.SpendMoney(upgradeCost))
         {
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
-            Destroy(gameObject); // Удаляем текущий объект
-            Instantiate(upgradedTowerPrefab, position, rotation); // Создаём новый префаб на том же месте
+            Destroy(gameObject);
+            Instantiate(upgradedTowerPrefab, position, rotation);
         }
     }
 
-    // Метод для продажи башни
     public void SellTower()
     {
-        MoneyManager.instance.GiveMoney(sellValue); // Возвращаем деньги
-        UIController.instance.HideUpgradePanel(); // Скрыть панель улучшений
+        MoneyManager.instance.GiveMoney(sellValue);
+        UIController.instance.HideUpgradePanel();
 
-        // Создаем объект размещения на месте проданной башни
         if (placementPrefab != null)
         {
             Instantiate(placementPrefab, transform.position, Quaternion.identity);
         }
 
-        Destroy(gameObject); // Удаляем башню
+        Destroy(gameObject);
     }
 }

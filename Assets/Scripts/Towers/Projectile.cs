@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
 
     private bool hasDamaged;
     public ProjectileTower projectileTower;
-    private Transform target; // ссылка на цель врага
+    private Transform target;
 
     private void OnEnable()
     {
@@ -38,14 +38,14 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && !hasDamaged)
         {
-            target = other.transform; // Убедимся, что target установлен перед вызовом DamageTarget
+            target = other.transform;
             DamageTarget();
         }
     }
 
     private void DamageTarget()
     {
-        if (target == null) return; // Проверка, чтобы избежать ошибки
+        if (target == null) return;
 
         EnemyHealthController enemyHealth = target.GetComponent<EnemyHealthController>();
         if (enemyHealth != null && !hasDamaged)

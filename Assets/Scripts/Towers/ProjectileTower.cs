@@ -11,14 +11,12 @@ public class ProjectileTower : MonoBehaviour
     public Transform launcherModel;
     public float rotateSpeed;
     public GameObject shotEffect;
+    public string projectileTag; // “ег дл€ снар€да, чтобы выбрать пул
 
     private Animator animator;
     private static readonly int isShooting = Animator.StringToHash("IsShooting");
     public float animationSpeed = 1f;
-
-    public ProjectilePool projectilePool; // ссылка на пул дл€ снар€дов
-
-    private Vector3 initialLauncherPosition; // начальна€ позици€ launcherModel
+    private Vector3 initialLauncherPosition;
 
     void Start()
     {
@@ -26,8 +24,7 @@ public class ProjectileTower : MonoBehaviour
         theTower = GetComponent<Tower>();
         animator = GetComponent<Animator>();
         animator.speed = animationSpeed;
-
-        initialLauncherPosition = launcherModel.position; // сохран€ем начальную позицию
+        initialLauncherPosition = launcherModel.position;
     }
 
     void Update()
@@ -35,8 +32,6 @@ public class ProjectileTower : MonoBehaviour
         if (target != null)
         {
             animator.SetBool(isShooting, true);
-
-            // ѕоворачиваем launcherModel только по оси Y в сторону цели
             Quaternion targetRotation = Quaternion.LookRotation(target.position - launcherModel.position);
             targetRotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
             launcherModel.rotation = Quaternion.Slerp(launcherModel.rotation, targetRotation, rotateSpeed * Time.deltaTime);
@@ -48,7 +43,6 @@ public class ProjectileTower : MonoBehaviour
             animator.SetBool(isShooting, false);
         }
 
-        // ќбновл€ем позицию launcherModel, чтобы она оставалась фиксированной
         launcherModel.position = initialLauncherPosition;
 
         if (theTower.enemiesInRange.Count > 0)
@@ -75,30 +69,22 @@ public class ProjectileTower : MonoBehaviour
 
     public void FireProjectile()
     {
-        if (projectilePool != null && target != null) // ”бедимс€, что есть цель
+        if (target != null && projectileTag != null)
         {
             audioSource.Play();
-            GameObject projectile = projectilePool.GetProjectile();
+            GameObject projectile = ProjectilePoolManager.instance.GetProjectile(projectileTag);
 
-            if (projectile != null) // ѕровер€ем, что снар€д был получен из пула
+            if (projectile != null)
             {
                 projectile.transform.position = firePoint.position;
                 projectile.transform.rotation = firePoint.rotation;
-                projectile.SetActive(true); // јктивируем снар€д при необходимости
+                projectile.SetActive(true);
 
-                // Ќастраиваем цель дл€ снар€да
                 Projectile projectileScript = projectile.GetComponent<Projectile>();
                 if (projectileScript != null)
                 {
                     projectileScript.SetTarget(target);
-                    projectileScript.projectileTower = this; // ”станавливаем ссылку на башню дл€ возврата
-                }
-
-                BazokaProjectile bazokaProjectile = projectile.GetComponent<BazokaProjectile>();
-                if (bazokaProjectile != null)
-                {
-                    bazokaProjectile.SetTarget(target);
-                    bazokaProjectile.SetTower(this); // ”станавливаем ссылку на башню дл€ возврата
+                    projectileScript.projectileTower = this;
                 }
 
                 Instantiate(shotEffect, firePoint.position, firePoint.rotation);
@@ -108,9 +94,9 @@ public class ProjectileTower : MonoBehaviour
 
     public void ReturnProjectileToPool(GameObject projectile)
     {
-        if (projectilePool != null)
+        if (projectileTag != null)
         {
-            projectilePool.ReturnProjectile(projectile);
+            ProjectilePoolManager.instance.ReturnProjectile(projectileTag, projectile);
         }
     }
 }

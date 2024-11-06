@@ -862,52 +862,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8940485515607172958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1385797422945406012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8865659093380042275}
-  - component: {fileID: 7595484878438417852}
-  m_Layer: 0
-  m_Name: Pool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8865659093380042275
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385797422945406012}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.70591486, z: -0, w: 0.7082968}
-  m_LocalPosition: {x: -0.82335883, y: 2.0724103, z: 1.6111734}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1313858905526868439}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7595484878438417852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385797422945406012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cf214e1670352409783a1bf6c0ba1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1846311025636673151, guid: b796253577ccefc4d99e491409438138, type: 3}
-  poolSize: 1
 --- !u!1 &1394188909720026305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3939,7 +3893,6 @@ GameObject:
   - component: {fileID: 7212895349178791549}
   - component: {fileID: 4458187846012469570}
   - component: {fileID: -6583889344741937446}
-  - component: {fileID: 3672843899196202819}
   m_Layer: 11
   m_Name: Bow
   m_TagString: Untagged
@@ -3992,7 +3945,6 @@ Transform:
   - {fileID: 8521190371915729158}
   - {fileID: 5695248980704611672}
   - {fileID: 8369083933927496524}
-  - {fileID: 8865659093380042275}
   - {fileID: 3191319234434617047}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 74.742, z: 0}
@@ -4033,8 +3985,8 @@ MonoBehaviour:
   launcherModel: {fileID: 1313858905526868439}
   rotateSpeed: 100
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
+  projectileTag: Arrow
   animationSpeed: 1
-  projectilePool: {fileID: 7595484878438417852}
 --- !u!114 &7212895349178791549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4178,20 +4130,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3672843899196202819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6219501672966566426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cf214e1670352409783a1bf6c0ba1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1846311025636673151, guid: b796253577ccefc4d99e491409438138, type: 3}
-  poolSize: 10
 --- !u!1 &6298552530621197977
 GameObject:
   m_ObjectHideFlags: 0

@@ -203,7 +203,6 @@ Transform:
   - {fileID: 1420429756826999090}
   - {fileID: 8331960934483644123}
   - {fileID: 6434534774375981039}
-  - {fileID: 9045533130169005834}
   - {fileID: 1376392439352211599}
   - {fileID: 2144502455498000105}
   m_Father: {fileID: 0}
@@ -224,11 +223,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Elbow_L'\n\tTransform 'Thumb_01'\n\tTransform
-    'Shoulder_L'\n\tTransform 'Elbow_L'\n\tTransform 'Thumb_01'\n\tTransform 'Shoulder_L'\n\tTransform
-    'Elbow_L'\n\tTransform 'Thumb_01'\n\tTransform 'Shoulder_L'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -249,8 +244,8 @@ MonoBehaviour:
   launcherModel: {fileID: 5356965336812144787}
   rotateSpeed: 100
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+  projectileTag: Bullet
   animationSpeed: 0.5
-  projectilePool: {fileID: 992666168551452956}
 --- !u!114 &6755093523625685373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3772,52 +3767,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000010311604, y: 0.8460974, z: -0.034343384}
     m_Extent: {x: 1.0227411, y: 0.9413081, z: 0.20675012}
   m_DirtyAABB: 0
---- !u!1 &5509120085579577362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9045533130169005834}
-  - component: {fileID: 992666168551452956}
-  m_Layer: 0
-  m_Name: Pool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9045533130169005834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5509120085579577362}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.70591486, z: -0, w: 0.7082968}
-  m_LocalPosition: {x: -0.82335883, y: 2.0724103, z: 1.6111734}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5356965336812144787}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &992666168551452956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5509120085579577362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cf214e1670352409783a1bf6c0ba1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1846311025636673151, guid: 94ce5f75107109540bf346debbca04f9, type: 3}
-  poolSize: 1
 --- !u!1 &5574295786111461794
 GameObject:
   m_ObjectHideFlags: 0
