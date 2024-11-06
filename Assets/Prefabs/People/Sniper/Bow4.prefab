@@ -244,7 +244,7 @@ MonoBehaviour:
   launcherModel: {fileID: 5356965336812144787}
   rotateSpeed: 100
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
-  projectileTag: Bullet
+  projectileTag: Bullet2
   animationSpeed: 0.5
 --- !u!114 &6755093523625685373
 MonoBehaviour:

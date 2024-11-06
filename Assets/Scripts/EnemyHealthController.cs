@@ -15,7 +15,7 @@ public class EnemyHealthController : MonoBehaviour
     public float health = 100f;
     private Collider enemyCollider;
     private Animator animator;
-    private AudioSource audioSource; // Ссылка на AudioSource
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -40,6 +40,17 @@ public class EnemyHealthController : MonoBehaviour
         if (animator == null)
         {
             Debug.LogError("Аниматор не найден! Убедитесь, что на объекте есть компонент Animator.");
+        }
+    }
+
+    void Update()
+    {
+        // Проверяем, что камера установлена, и поворачиваем healthBar к камере
+        if (targetCamera != null && healthBar != null)
+        {
+            Vector3 direction = (targetCamera.transform.position - healthBar.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            healthBar.transform.rotation = Quaternion.Slerp(healthBar.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
