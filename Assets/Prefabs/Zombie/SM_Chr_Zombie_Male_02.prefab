@@ -3168,7 +3168,9 @@ MonoBehaviour:
   rotationSpeed: 15
   moneyOnDeath: 50
   destroyTime: 10
-  health: 100
+  resistances:
+  - damageType: armor_piercing
+    resistanceLevel: 1
 --- !u!65 &2683463765152808156
 BoxCollider:
   m_ObjectHideFlags: 0
