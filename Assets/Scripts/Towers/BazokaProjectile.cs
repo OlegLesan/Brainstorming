@@ -5,6 +5,7 @@ public class BazokaProjectile : MonoBehaviour
     public Rigidbody theRB;
     public float moveSpeed;
     public float damageAmount;
+    public string damageType; // Переменная для хранения типа урона
     public GameObject impactEffect;
 
     private ProjectileTower tower;
@@ -56,11 +57,13 @@ public class BazokaProjectile : MonoBehaviour
     {
         hasCollided = true;
 
+        // Создаем эффект взрыва
         GameObject impact = Instantiate(impactEffect, transform.position, Quaternion.identity);
         BazokaImpact impactScript = impact.GetComponent<BazokaImpact>();
         if (impactScript != null)
         {
-            impactScript.SetDamageAmount(damageAmount);
+            // Передаем урон и тип урона
+            impactScript.SetDamageAmount(damageAmount, damageType);
         }
 
         ReturnToPool();

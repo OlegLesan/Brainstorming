@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,23 @@ public class EnemyHealthController : MonoBehaviour
     public Slider healthBar;
     public float rotationSpeed = 5f;
     private Camera targetCamera;
-    private float fixedXRotation = 70f;
     public int moneyOnDeath = 50;
     public float destroyTime;
 
-    public float health = 100f;
     private Collider enemyCollider;
     private Animator animator;
     private AudioSource audioSource;
+
+    // Структура для хранения типа урона и уровня защиты
+    [System.Serializable]
+    public struct DamageResistance
+    {
+        public string damageType;
+        public int resistanceLevel; // 1 - 25%, 2 - 50%, 3 - 75%
+    }
+
+    // Список защит врага
+    public List<DamageResistance> resistances;
 
     void Start()
     {
@@ -24,39 +34,20 @@ public class EnemyHealthController : MonoBehaviour
         healthBar.gameObject.SetActive(false);
 
         LevelManager.instance.activeEnemies.Add(this);
-        Debug.Log("Добавлен враг. Активных врагов: " + LevelManager.instance.activeEnemies.Count);
-
         targetCamera = Camera.main;
-
-        if (targetCamera == null)
-        {
-            Debug.LogError("Камера не найдена! Убедитесь, что в сцене есть Main Camera.");
-        }
 
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-        if (animator == null)
-        {
-            Debug.LogError("Аниматор не найден! Убедитесь, что на объекте есть компонент Animator.");
-        }
     }
 
-    void Update()
+    // Метод для получения урона с учетом типа урона
+    public void TakeDamage(float damageAmount, string damageType)
     {
-        // Проверяем, что камера установлена, и поворачиваем healthBar к камере
-        if (targetCamera != null && healthBar != null)
-        {
-            Vector3 direction = (targetCamera.transform.position - healthBar.transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            healthBar.transform.rotation = Quaternion.Slerp(healthBar.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-        }
-    }
+        float resistanceFactor = GetResistanceFactor(damageType);
+        float effectiveDamage = damageAmount * (1 - resistanceFactor);
 
-    public void TakeDamage(float damageAmount)
-    {
-        totalHealth -= damageAmount;
+        totalHealth -= effectiveDamage;
         if (totalHealth <= 0)
         {
             totalHealth = 0;
@@ -67,6 +58,24 @@ public class EnemyHealthController : MonoBehaviour
             healthBar.value = totalHealth;
             healthBar.gameObject.SetActive(true);
         }
+    }
+
+    // Метод для получения фактора поглощения урона
+    private float GetResistanceFactor(string damageType)
+    {
+        foreach (var resistance in resistances)
+        {
+            if (resistance.damageType == damageType)
+            {
+                switch (resistance.resistanceLevel)
+                {
+                    case 1: return 0.25f;
+                    case 2: return 0.50f;
+                    case 3: return 0.75f;
+                }
+            }
+        }
+        return 0f; // Нет защиты от этого типа урона
     }
 
     private void HandleDeath()
@@ -91,8 +100,6 @@ public class EnemyHealthController : MonoBehaviour
 
         MoneyManager.instance.GiveMoney(moneyOnDeath);
         LevelManager.instance.activeEnemies.Remove(this);
-
-        Debug.Log("Враг уничтожен. Осталось активных врагов: " + LevelManager.instance.activeEnemies.Count);
 
         WaveManager.instance.DecreaseEnemyCount();
 

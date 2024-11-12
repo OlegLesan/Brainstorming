@@ -643,7 +643,9 @@ MonoBehaviour:
   rotationSpeed: 15
   moneyOnDeath: 50
   destroyTime: 10
-  health: 100
+  resistances:
+  - damageType: Simple_Bullet
+    resistanceLevel: 3
 --- !u!65 &2382380630837414111
 BoxCollider:
   m_ObjectHideFlags: 0

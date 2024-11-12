@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
     public Rigidbody theRB;
     public float moveSpeed;
     public float damageAmount;
+    public string damageType; // Тип урона для проверки защиты
     public GameObject impactEffect;
 
     private bool hasDamaged;
@@ -50,7 +51,7 @@ public class Projectile : MonoBehaviour
         EnemyHealthController enemyHealth = target.GetComponent<EnemyHealthController>();
         if (enemyHealth != null && !hasDamaged)
         {
-            enemyHealth.TakeDamage(damageAmount);
+            enemyHealth.TakeDamage(damageAmount, damageType);
             hasDamaged = true;
 
             if (impactEffect != null)

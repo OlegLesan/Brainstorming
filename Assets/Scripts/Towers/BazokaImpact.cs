@@ -5,8 +5,9 @@ using UnityEngine;
 public class BazokaImpact : MonoBehaviour
 {
     private float damageAmount;
+    private string damageType; // Переменная для хранения типа урона
     private Collider impactCollider;
-    private AudioSource explosionSound; // Ссылка на AudioSource для воспроизведения звука
+    private AudioSource explosionSound; // Ссылка на AudioSource для звука
 
     private void Awake()
     {
@@ -15,10 +16,11 @@ public class BazokaImpact : MonoBehaviour
         explosionSound = GetComponent<AudioSource>();
     }
 
-    // Метод для установки значения урона
-    public void SetDamageAmount(float amount)
+    // Метод для установки значения урона и типа урона
+    public void SetDamageAmount(float amount, string type)
     {
         damageAmount = amount;
+        damageType = type;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +52,8 @@ public class BazokaImpact : MonoBehaviour
                 EnemyHealthController enemyHealth = enemyCollider.GetComponent<EnemyHealthController>();
                 if (enemyHealth != null)
                 {
-                    enemyHealth.TakeDamage(damageAmount);
+                    // Передаем и урон, и тип урона
+                    enemyHealth.TakeDamage(damageAmount, damageType);
                 }
             }
         }
