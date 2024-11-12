@@ -6394,6 +6394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Chr_Bombsuit_Male_01
       objectReference: {fileID: 0}
+    - target: {fileID: 8104386385241782007, guid: 704a4637706ec254e97b7058fda939b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8183778996505764981, guid: 704a4637706ec254e97b7058fda939b3, type: 3}
       propertyPath: m_RootBone
       value: 
