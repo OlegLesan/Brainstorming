@@ -2623,7 +2623,7 @@ MonoBehaviour:
   rangeModel: {fileID: 2036533336808480128}
   light: {fileID: 8152686535286515830}
   cost: 200
-  upgradeCost: 140
+  upgradeCost: 145
   sellValue: 75
   upgradedTowerPrefab: {fileID: 0}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

@@ -2790,7 +2790,6 @@ MonoBehaviour:
   firePoint: {fileID: 620607300814165991}
   launcherModel: {fileID: 3886663004133466237}
   rotateSpeed: 100
-  shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: Grenade2
   animationSpeed: 1
   targetFarthestEnemy: 0
@@ -2816,7 +2815,7 @@ MonoBehaviour:
   rangeModel: {fileID: 2036533336808480128}
   light: {fileID: 8152686535286515830}
   cost: 200
-  upgradeCost: 240
+  upgradeCost: 245
   sellValue: 75
   upgradedTowerPrefab: {fileID: 3706318339412650984, guid: 0602ebc69e1c7ae46a230c403cb8b735, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
