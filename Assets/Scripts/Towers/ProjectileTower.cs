@@ -10,7 +10,6 @@ public class ProjectileTower : MonoBehaviour
     public Transform firePoint;
     public Transform launcherModel;
     public float rotateSpeed;
-    public GameObject shotEffect;
     public string projectileTag;
 
     private Animator animator;
@@ -103,8 +102,6 @@ public class ProjectileTower : MonoBehaviour
                         projectileScript.projectileTower = this;
                     }
                 }
-
-                Instantiate(shotEffect, firePoint.position, firePoint.rotation);
             }
         }
     }
