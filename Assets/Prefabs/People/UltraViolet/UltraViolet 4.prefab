@@ -2588,12 +2588,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3f3f4fa3ce3124bb934487650e59be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 7883648121026668101}
   launcherModel: {fileID: 7646403069561976521}
   rotateSpeed: 100
   projectileTag: 
   animationSpeed: 1
-  targetFarthestEnemy: 1
+  targetFarthestEnemy: 0
 --- !u!114 &189783293512501555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2606,7 +2606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 30
+  range: 28
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -2616,8 +2616,8 @@ MonoBehaviour:
   rangeModel: {fileID: 198399376216090456}
   light: {fileID: 115610255885248174}
   cost: 100
-  upgradeCost: 150
-  sellValue: 75
+  upgradeCost: 205
+  sellValue: 125
   upgradedTowerPrefab: {fileID: 0}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &2522609449129291048
@@ -3370,7 +3370,7 @@ Transform:
   m_GameObject: {fileID: 4709386468475495514}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0, z: -0.165}
+  m_LocalPosition: {x: -0, y: 0.12, z: 0.574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3389,8 +3389,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.2080946, g: 0, b: 1, a: 1}
   m_Intensity: 30.7
-  m_Range: 50.7
-  m_SpotAngle: 71.3
+  m_Range: 45
+  m_SpotAngle: 59
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:

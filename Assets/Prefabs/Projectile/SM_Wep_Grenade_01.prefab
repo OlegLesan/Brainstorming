@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 3531434709250162969}
-  moveSpeed: 7
-  damageAmount: 3
+  moveSpeed: 10
+  damageAmount: 2.9
   damageType: Explosive
   impactEffect: {fileID: 1879769179923522, guid: 642d6b0de68f7e9448d5cb04662fd69b, type: 3}
 --- !u!54 &3531434709250162969

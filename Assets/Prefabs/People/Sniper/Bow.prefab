@@ -4176,7 +4176,6 @@ MonoBehaviour:
   firePoint: {fileID: 8369083933927496524}
   launcherModel: {fileID: 1313858905526868439}
   rotateSpeed: 100
-  shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: Arrow
   animationSpeed: 1
   targetFarthestEnemy: 0
@@ -4201,8 +4200,8 @@ MonoBehaviour:
   enemiesUpdated: 0
   rangeModel: {fileID: 4521222800835082040}
   light: {fileID: 2999104439874626918}
-  cost: 110
-  upgradeCost: 130
+  cost: 105
+  upgradeCost: 155
   sellValue: 75
   upgradedTowerPrefab: {fileID: 179035858591051937, guid: 8fdc16349abf7c944be20ca4c13f4157, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

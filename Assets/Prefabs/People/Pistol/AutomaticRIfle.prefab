@@ -3358,11 +3358,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform
-    'Shoulder_L'\n\tTransform 'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform 'Shoulder_L'\n\tTransform
-    'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform 'Shoulder_L'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -3397,7 +3393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 13
+  range: 14
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -3406,8 +3402,8 @@ MonoBehaviour:
   enemiesUpdated: 0
   rangeModel: {fileID: 8758074069530483338}
   light: {fileID: 4169375294976138908}
-  cost: 100
-  upgradeCost: 170
+  cost: 105
+  upgradeCost: 255
   sellValue: 100
   upgradedTowerPrefab: {fileID: 4552638790437930363, guid: d15d28e37d3723545a8810766285e368, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

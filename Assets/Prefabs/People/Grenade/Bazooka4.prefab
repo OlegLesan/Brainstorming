@@ -2613,7 +2613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 13
+  range: 14
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -2623,8 +2623,8 @@ MonoBehaviour:
   rangeModel: {fileID: 2036533336808480128}
   light: {fileID: 8152686535286515830}
   cost: 200
-  upgradeCost: 145
-  sellValue: 75
+  upgradeCost: 0
+  sellValue: 110
   upgradedTowerPrefab: {fileID: 0}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &5732287956209662836
