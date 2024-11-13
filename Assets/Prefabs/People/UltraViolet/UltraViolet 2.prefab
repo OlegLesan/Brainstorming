@@ -4033,7 +4033,7 @@ GameObject:
   - component: {fileID: 5318637016087144328}
   - component: {fileID: 5324494561875713794}
   m_Layer: 2
-  m_Name: SM_Prop_Flashlight_04
+  m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

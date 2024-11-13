@@ -63,7 +63,7 @@ public class WaveManager : MonoBehaviour
     public void DecreaseEnemyCount()
     {
         totalEnemiesRemaining--;
-        Debug.Log("Осталось врагов: " + totalEnemiesRemaining);
+        
 
         if (totalEnemiesRemaining <= 0)
         {
@@ -75,7 +75,7 @@ public class WaveManager : MonoBehaviour
     {
         if (LevelManager.instance.activeEnemies.Count == 0 && totalEnemiesRemaining <= 0)
         {
-            Debug.Log("Уровень завершён! Все враги уничтожены.");
+            
             LevelManager.instance.LevelComplete();
         }
     }
