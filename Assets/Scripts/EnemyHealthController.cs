@@ -40,6 +40,16 @@ public class EnemyHealthController : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
+    void Update()
+    {
+        if (healthBar != null && targetCamera != null)
+        {
+            // Поворачиваем здоровье врага к камере
+            Vector3 direction = targetCamera.transform.position - healthBar.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            healthBar.transform.rotation = Quaternion.Lerp(healthBar.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        }
+    }
 
     // Метод для получения урона с учетом типа урона
     public void TakeDamage(float damageAmount, string damageType)

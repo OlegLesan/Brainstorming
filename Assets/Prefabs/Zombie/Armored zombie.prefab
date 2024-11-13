@@ -641,7 +641,7 @@ MonoBehaviour:
   totalHealth: 15
   healthBar: {fileID: 7282315966395358402}
   rotationSpeed: 15
-  moneyOnDeath: 50
+  moneyOnDeath: 15
   destroyTime: 10
   resistances:
   - damageType: Simple_Bullet

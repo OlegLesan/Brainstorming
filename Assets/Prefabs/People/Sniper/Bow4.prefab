@@ -246,7 +246,7 @@ MonoBehaviour:
   rotateSpeed: 100
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet2
-  animationSpeed: 0.5
+  animationSpeed: 1.5
 --- !u!114 &6755093523625685373
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -244,7 +244,7 @@ MonoBehaviour:
   rotateSpeed: 100
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: Arrow
-  animationSpeed: 2
+  animationSpeed: 3.3667
 --- !u!114 &6755093523625685373
 MonoBehaviour:
   m_ObjectHideFlags: 0

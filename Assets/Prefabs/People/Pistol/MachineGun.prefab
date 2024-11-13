@@ -3270,7 +3270,7 @@ MonoBehaviour:
   rotateSpeed: 100
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet
-  animationSpeed: 1.33
+  animationSpeed: 1.2
 --- !u!114 &2802015581514275002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3293,8 +3293,8 @@ MonoBehaviour:
   rangeModel: {fileID: 8758074069530483338}
   light: {fileID: 4169375294976138908}
   cost: 100
-  upgradeCost: 150
-  sellValue: 75
+  upgradeCost: 180
+  sellValue: 100
   upgradedTowerPrefab: {fileID: 0}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &4045239155307558184

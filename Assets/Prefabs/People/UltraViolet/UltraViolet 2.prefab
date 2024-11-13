@@ -2501,7 +2501,7 @@ MonoBehaviour:
   rangeModel: {fileID: 198399376216090456}
   light: {fileID: 115610255885248174}
   cost: 100
-  upgradeCost: 150
+  upgradeCost: 120
   sellValue: 75
   upgradedTowerPrefab: {fileID: 3620335873944236855, guid: 0a68a0aa632c1ac4d8d63c5030cad2d1, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
@@ -6500,8 +6500,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.2080946, g: 0, b: 1, a: 1}
   m_Intensity: 30.7
-  m_Range: 15
-  m_SpotAngle: 24.3
+  m_Range: 21.5
+  m_SpotAngle: 31.3
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:

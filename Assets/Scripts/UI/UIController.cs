@@ -36,7 +36,15 @@ public class UIController : MonoBehaviour
         HideTowerButtons();
         HideUpgradePanel();
         HideHotbar(); // Скрываем hotbar по умолчанию
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseUnpause();
+        }
     }
 
     public void ShowHotbar()
