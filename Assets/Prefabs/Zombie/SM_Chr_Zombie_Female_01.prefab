@@ -1701,7 +1701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3414659972880772223}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.002538085, z: -0, w: 0.9999968}
+  m_LocalRotation: {x: 0, y: 0.0025394356, z: 0, w: 0.99999684}
   m_LocalPosition: {x: -3.05, y: 0.014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1739,7 +1739,7 @@ Transform:
   - {fileID: 892832116965805580}
   - {fileID: 1365484179763139034}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -88.738, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.291, z: 0}
 --- !u!95 &8094497159800293990
 Animator:
   serializedVersion: 5
@@ -1789,13 +1789,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 15
+  totalHealth: 17
   healthBar: {fileID: 6571238416197897747}
   rotationSpeed: 15
-  moneyOnDeath: 15
+  moneyOnDeath: 25
   destroyTime: 10
   resistances:
   - damageType: armor_piercing
+    resistanceLevel: 1
+  - damageType: Explosive
     resistanceLevel: 1
 --- !u!65 &8816034619195404858
 BoxCollider:

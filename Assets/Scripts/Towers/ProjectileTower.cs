@@ -11,12 +11,15 @@ public class ProjectileTower : MonoBehaviour
     public Transform launcherModel;
     public float rotateSpeed;
     public GameObject shotEffect;
-    public string projectileTag; // Тег для снаряда, чтобы выбрать пул
+    public string projectileTag;
 
     private Animator animator;
     private static readonly int isShooting = Animator.StringToHash("IsShooting");
     public float animationSpeed = 1f;
     private Vector3 initialLauncherPosition;
+
+    [Tooltip("Прицеливаться в самого дальнего врага вместо ближайшего")]
+    public bool targetFarthestEnemy = false; // Новый булево поле для переключения цели
 
     void Start()
     {
@@ -47,19 +50,24 @@ public class ProjectileTower : MonoBehaviour
 
         if (theTower.enemiesInRange.Count > 0)
         {
-            float minDistance = theTower.range + 1f;
+            float bestDistance = targetFarthestEnemy ? 0f : theTower.range + 1f; // Начальное значение в зависимости от режима
+            Transform bestTarget = null;
+
             foreach (EnemyControler enemy in theTower.enemiesInRange)
             {
                 if (enemy != null)
                 {
                     float distance = Vector3.Distance(transform.position, enemy.transform.position);
-                    if (distance < minDistance)
+
+                    // Условие на выбор цели в зависимости от настройки
+                    if ((targetFarthestEnemy && distance > bestDistance) || (!targetFarthestEnemy && distance < bestDistance))
                     {
-                        minDistance = distance;
-                        target = enemy.transform;
+                        bestDistance = distance;
+                        bestTarget = enemy.transform;
                     }
                 }
             }
+            target = bestTarget;
         }
         else
         {
@@ -80,7 +88,6 @@ public class ProjectileTower : MonoBehaviour
                 projectile.transform.rotation = firePoint.rotation;
                 projectile.SetActive(true);
 
-                // Проверка для компонента BazokaProjectile
                 BazokaProjectile bazokaProjectile = projectile.GetComponent<BazokaProjectile>();
                 if (bazokaProjectile != null)
                 {
@@ -89,7 +96,6 @@ public class ProjectileTower : MonoBehaviour
                 }
                 else
                 {
-                    // Если это обычный снаряд, используем компонент Projectile
                     Projectile projectileScript = projectile.GetComponent<Projectile>();
                     if (projectileScript != null)
                     {

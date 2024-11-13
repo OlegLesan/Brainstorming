@@ -530,7 +530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069217425750644}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d2407cc89b067409d6f283f6c23dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMod: 0.7
+  speedMod: 1
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
@@ -638,13 +638,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 15
+  totalHealth: 32
   healthBar: {fileID: 7282315966395358402}
   rotationSpeed: 15
-  moneyOnDeath: 15
+  moneyOnDeath: 25
   destroyTime: 10
   resistances:
   - damageType: Simple_Bullet
+    resistanceLevel: 3
+  - damageType: Explosive
     resistanceLevel: 3
 --- !u!65 &2382380630837414111
 BoxCollider:

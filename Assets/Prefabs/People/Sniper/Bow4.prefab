@@ -247,6 +247,7 @@ MonoBehaviour:
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet2
   animationSpeed: 1.5
+  targetFarthestEnemy: 0
 --- !u!114 &6755093523625685373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 22
+  range: 23
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -269,7 +270,7 @@ MonoBehaviour:
   rangeModel: {fileID: 3414186894460907628}
   light: {fileID: 5276305996030095891}
   cost: 100
-  upgradeCost: 150
+  upgradeCost: 190
   sellValue: 75
   upgradedTowerPrefab: {fileID: 179035858591051937, guid: 94a143c9aeca2a147b59299012027a10, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

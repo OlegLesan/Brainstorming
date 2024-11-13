@@ -2479,6 +2479,7 @@ MonoBehaviour:
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: 
   animationSpeed: 1
+  targetFarthestEnemy: 1
 --- !u!114 &189783293512501555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2501,7 +2502,7 @@ MonoBehaviour:
   rangeModel: {fileID: 198399376216090456}
   light: {fileID: 115610255885248174}
   cost: 100
-  upgradeCost: 120
+  upgradeCost: 110
   sellValue: 75
   upgradedTowerPrefab: {fileID: 3620335873944236855, guid: 0a68a0aa632c1ac4d8d63c5030cad2d1, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

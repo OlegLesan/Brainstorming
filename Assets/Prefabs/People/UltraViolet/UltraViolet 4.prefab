@@ -2595,6 +2595,7 @@ MonoBehaviour:
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: 
   animationSpeed: 1
+  targetFarthestEnemy: 1
 --- !u!114 &189783293512501555
 MonoBehaviour:
   m_ObjectHideFlags: 0

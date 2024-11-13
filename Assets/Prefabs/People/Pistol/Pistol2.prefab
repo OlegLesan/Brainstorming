@@ -3046,6 +3046,7 @@ Transform:
   - {fileID: 3024435678034314269}
   - {fileID: 9007399471035830702}
   - {fileID: 1277813990259523588}
+  - {fileID: 8058880165901182776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 152.174, z: 0}
 --- !u!95 &1301806650223898916
@@ -3087,6 +3088,7 @@ MonoBehaviour:
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet
   animationSpeed: 1
+  targetFarthestEnemy: 0
 --- !u!114 &2802015581514275002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3109,7 +3111,7 @@ MonoBehaviour:
   rangeModel: {fileID: 8758074069530483338}
   light: {fileID: 4169375294976138908}
   cost: 100
-  upgradeCost: 110
+  upgradeCost: 100
   sellValue: 80
   upgradedTowerPrefab: {fileID: 4552638790437930363, guid: 918ee5bc5d0c3084297588a6822d795a, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
@@ -5272,6 +5274,37 @@ Transform:
   m_Children:
   - {fileID: 217995037991364684}
   m_Father: {fileID: 4192677819624935356}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7969904214934665906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8058880165901182776}
+  m_Layer: 11
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8058880165901182776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7969904214934665906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4257430621262373373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8033544485254509896
 GameObject:

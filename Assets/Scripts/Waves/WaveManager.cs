@@ -1,26 +1,31 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Подключаем TextMeshPro
+using TMPro;
 
 public class WaveManager : MonoBehaviour
 {
-    public static WaveManager instance;  // Singleton для доступа к WaveManager
+    public static WaveManager instance;
 
-    public Wave[] waves;  // Массив всех волн
-    public Transform spawnPoint;  // Точка спавна врагов
-    public Button startWaveButton;  // Кнопка для запуска волн
-    public TMP_Text waveText;  // Текст для отображения номера волны
-    public float timeBetweenWaves = 2f;  // Время между волнами (задержка до появления кнопки)
-    public float waveDuration = 10f;  // Продолжительность волны (в секундах)
+    public Wave[] waves;
+    public Transform spawnPoint;
+    public Button startWaveButton;
+    public TMP_Text waveText; // Основной текст волны
+    public TMP_Text waveCounterText; // Новый текст для отображения текущей волны из общего количества
+    public float timeBetweenWaves = 2f;
+    public float waveDuration = 10f;
+    public int rewardForEarlyStart = 50;
+    public float fillAmountDecreaseRate = 1f;
 
-    private int currentWaveIndex = 0;  // Индекс текущей волны
-    private bool waveInProgress = false;  // Флаг, что волна началась
-    public int totalEnemiesRemaining = 0;  // Общее количество оставшихся врагов во всех волнах
+    private int currentWaveIndex = 0;
+    private bool waveInProgress = false;
+    private bool firstWaveStarted = false;
+    public int totalEnemiesRemaining = 0;
+
+    private Image buttonImage;
 
     private void Awake()
     {
-        // Инициализация Singleton
         if (instance == null)
         {
             instance = this;
@@ -33,7 +38,6 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        // Считаем общее количество врагов из всех волн
         foreach (Wave wave in waves)
         {
             foreach (int count in wave.enemyCounts)
@@ -42,70 +46,60 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        // Привязываем кнопку к методу StartWave
-        startWaveButton.onClick.AddListener(StartWave);
-        startWaveButton.gameObject.SetActive(true);  // Кнопка активна в начале игры
-
-        // Отображаем номер первой волны
+        buttonImage = startWaveButton.GetComponent<Image>();
+        startWaveButton.onClick.AddListener(OnWaveButtonPressed);
+        startWaveButton.gameObject.SetActive(true);
         UpdateWaveText();
     }
 
-    // Метод для обновления текста волны
     private void UpdateWaveText()
     {
         waveText.text = "Wave: " + (currentWaveIndex + 1);
+
+        // Обновляем новый текст, показывающий текущую волну из общего количества
+        waveCounterText.text = $"Wave {currentWaveIndex + 1} / {waves.Length}";
     }
 
-    // Метод для уменьшения количества оставшихся врагов
     public void DecreaseEnemyCount()
     {
-        totalEnemiesRemaining--;  // Уменьшаем общее количество оставшихся врагов
-
+        totalEnemiesRemaining--;
         Debug.Log("Осталось врагов: " + totalEnemiesRemaining);
 
         if (totalEnemiesRemaining <= 0)
         {
-            // Если все враги уничтожены, завершаем уровень
             CheckForLevelCompletion();
         }
     }
 
     private void CheckForLevelCompletion()
     {
-        // Убедимся, что список активных врагов пуст
         if (LevelManager.instance.activeEnemies.Count == 0 && totalEnemiesRemaining <= 0)
         {
             Debug.Log("Уровень завершён! Все враги уничтожены.");
-            LevelManager.instance.LevelComplete();  // Вызов метода для победы
+            LevelManager.instance.LevelComplete();
         }
     }
 
-    // Метод запуска волны
     public void StartWave()
     {
         if (!waveInProgress && currentWaveIndex < waves.Length)
         {
-            // Обновляем текст номера волны перед запуском
+            waveInProgress = true;
+            startWaveButton.gameObject.SetActive(false);
             UpdateWaveText();
 
-            waveInProgress = true;  // Устанавливаем флаг, что волна началась
-            startWaveButton.gameObject.SetActive(false);  // Отключаем кнопку, пока идёт волна
-
-            // Запускаем корутину для отслеживания времени волны
-            StartCoroutine(WaveTimer());
-
-            // Запускаем корутину для спавна врагов для текущей волны
             StartCoroutine(SpawnWave(waves[currentWaveIndex]));
         }
     }
 
-    IEnumerator WaveTimer()
+    private void OnWaveButtonPressed()
     {
-        // Ждём завершения времени волны
-        yield return new WaitForSeconds(waveDuration);
+        if (firstWaveStarted)
+        {
+            MoneyManager.instance.GiveMoney(rewardForEarlyStart);
+        }
 
-        // Волна завершена после таймера
-        WaveCompleted();
+        StartWave();
     }
 
     IEnumerator SpawnWave(Wave wave)
@@ -113,23 +107,20 @@ public class WaveManager : MonoBehaviour
         int totalEnemies = 0;
         for (int i = 0; i < wave.enemyCounts.Length; i++)
         {
-            totalEnemies += wave.enemyCounts[i];  // Подсчёт общего количества врагов в волне
+            totalEnemies += wave.enemyCounts[i];
         }
 
-        // Цикл для спавна всех врагов
         for (int i = 0; i < totalEnemies; i++)
         {
-            // Случайно выбираем врага из массива префабов
             int randomIndex = Random.Range(0, wave.enemyPrefabs.Length);
-
-            // Спавним выбранного врага
             Instantiate(wave.enemyPrefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
-
-            yield return new WaitForSeconds(wave.spawnInterval);  // Ждём перед спавном следующего врага
+            yield return new WaitForSeconds(wave.spawnInterval);
         }
+
+        yield return new WaitForSeconds(waveDuration);
+        WaveCompleted();
     }
 
-    // Завершение волны
     private void WaveCompleted()
     {
         waveInProgress = false;
@@ -139,18 +130,31 @@ public class WaveManager : MonoBehaviour
 
         if (currentWaveIndex < waves.Length)
         {
-            // Есть ещё волны — активируем кнопку для следующей волны
+            firstWaveStarted = true;
             startWaveButton.gameObject.SetActive(true);
-
-            // Обновляем текст для следующей волны
             UpdateWaveText();
+            StartCoroutine(WaveTimer());
         }
         else
         {
             Debug.Log("Все волны завершены!");
-
-            // Проверяем завершение уровня
             CheckForLevelCompletion();
+        }
+    }
+
+    IEnumerator WaveTimer()
+    {
+        buttonImage.fillAmount = 1f;
+
+        while (buttonImage.fillAmount > 0)
+        {
+            buttonImage.fillAmount -= Time.deltaTime / fillAmountDecreaseRate;
+            yield return null;
+        }
+
+        if (!waveInProgress)
+        {
+            StartWave();
         }
     }
 }

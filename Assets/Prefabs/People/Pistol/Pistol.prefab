@@ -3118,6 +3118,7 @@ Transform:
   - {fileID: 3024435678034314269}
   - {fileID: 9007399471035830702}
   - {fileID: 1277813990259523588}
+  - {fileID: 7578032777017258674}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 152.174, z: 0}
 --- !u!95 &1301806650223898916
@@ -3159,6 +3160,7 @@ MonoBehaviour:
   shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet
   animationSpeed: 1
+  targetFarthestEnemy: 0
 --- !u!114 &2802015581514275002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3180,8 +3182,8 @@ MonoBehaviour:
   enemiesUpdated: 0
   rangeModel: {fileID: 8758074069530483338}
   light: {fileID: 4169375294976138908}
-  cost: 90
-  upgradeCost: 100
+  cost: 80
+  upgradeCost: 90
   sellValue: 75
   upgradedTowerPrefab: {fileID: 4552638790437930363, guid: 0709bd4745ecf9742a1018316e14b2df, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
@@ -4540,6 +4542,37 @@ Transform:
   - {fileID: 6783110406384997006}
   m_Father: {fileID: 3628054426452215481}
   m_LocalEulerAnglesHint: {x: -180.899, y: 4.403, z: -17.528015}
+--- !u!1 &6985289733385632322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7578032777017258674}
+  m_Layer: 11
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7578032777017258674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6985289733385632322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4257430621262373373}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7006208457552405537
 GameObject:
   m_ObjectHideFlags: 0

@@ -4099,7 +4099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6219501672966566426}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.606973, z: -0, w: 0.7947225}
+  m_LocalRotation: {x: 0, y: 0.6069736, z: 0, w: 0.794722}
   m_LocalPosition: {x: 67.96, y: 2.91, z: -136.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4179,6 +4179,7 @@ MonoBehaviour:
   shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: Arrow
   animationSpeed: 1
+  targetFarthestEnemy: 0
 --- !u!114 &7212895349178791549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4191,7 +4192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297b196a643fcb46b9cb69bf5edcb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
+  range: 17
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 512
@@ -4200,8 +4201,8 @@ MonoBehaviour:
   enemiesUpdated: 0
   rangeModel: {fileID: 4521222800835082040}
   light: {fileID: 2999104439874626918}
-  cost: 120
-  upgradeCost: 150
+  cost: 110
+  upgradeCost: 130
   sellValue: 75
   upgradedTowerPrefab: {fileID: 179035858591051937, guid: 8fdc16349abf7c944be20ca4c13f4157, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
