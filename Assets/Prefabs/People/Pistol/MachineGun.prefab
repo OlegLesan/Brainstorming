@@ -3230,6 +3230,7 @@ Transform:
   - {fileID: 3024435678034314269}
   - {fileID: 9007399471035830702}
   - {fileID: 8964805331218388516}
+  - {fileID: 6531923099017267518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 152.174, z: 0}
 --- !u!95 &1301806650223898916
@@ -3248,7 +3249,11 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform
+    'Shoulder_L'\n\tTransform 'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform 'Shoulder_L'\n\tTransform
+    'Elbow_L'\n\tTransform 'Hand_L'\n\tTransform 'Shoulder_L'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -3268,7 +3273,6 @@ MonoBehaviour:
   firePoint: {fileID: 3745065240360562498}
   launcherModel: {fileID: 4257430621262373373}
   rotateSpeed: 100
-  shotEffect: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
   projectileTag: Bullet
   animationSpeed: 1.2
   targetFarthestEnemy: 0
@@ -3331,7 +3335,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 696c1fa569cb19540952abf6efaa1717, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.04
+  m_Volume: 0.018
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7102,4 +7106,70 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4443897713614376, guid: 2b07180b9f32bb847bef91859b2dbac4, type: 3}
   m_PrefabInstance: {fileID: 6174534053864748619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6532582159250781010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4257430621262373373}
+    m_Modifications:
+    - target: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_Name
+      value: FX_Gunshot_01 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320275964731592, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.266
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.397
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.9278
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+--- !u!4 &6531923099017267518 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4056852919073388, guid: fa06d92052ff6184092e37bd8a88387e, type: 3}
+  m_PrefabInstance: {fileID: 6532582159250781010}
   m_PrefabAsset: {fileID: 0}

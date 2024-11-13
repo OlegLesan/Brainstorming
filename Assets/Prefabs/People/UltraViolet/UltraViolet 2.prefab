@@ -2476,7 +2476,6 @@ MonoBehaviour:
   firePoint: {fileID: 2462980785378727331}
   launcherModel: {fileID: 7646403069561976521}
   rotateSpeed: 100
-  shotEffect: {fileID: 5238256273263140038, guid: f128fa8ccd0c4534fb314a671422daf2, type: 3}
   projectileTag: 
   animationSpeed: 1
   targetFarthestEnemy: 1
@@ -6506,7 +6505,7 @@ Light:
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

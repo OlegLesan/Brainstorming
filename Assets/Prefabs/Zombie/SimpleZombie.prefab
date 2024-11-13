@@ -1709,11 +1709,7 @@ MonoBehaviour:
   rotationSpeed: 15
   moneyOnDeath: 20
   destroyTime: 10
-  resistances:
-  - damageType: armor_piercing
-    resistanceLevel: 1
-  - damageType: Simple_Bullet
-    resistanceLevel: 0
+  resistances: []
 --- !u!65 &5249884335073472275
 BoxCollider:
   m_ObjectHideFlags: 0
