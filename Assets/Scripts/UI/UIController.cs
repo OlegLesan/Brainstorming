@@ -61,6 +61,13 @@ public class UIController : MonoBehaviour
 
     public void PauseUnpause()
     {
+        // Проверяем, включен ли экран завершения уровня
+        if (levelCompleteScreen.activeSelf)
+        {
+            return; // Если включен, выходим из метода, чтобы не включать экран паузы
+        }
+
+        // Переключение паузы, если экран завершения уровня не активен
         if (pauseScreen.activeSelf == false)
         {
             pauseScreen.SetActive(true);

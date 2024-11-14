@@ -130,6 +130,7 @@
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleCountdownLabel.cs" />
     <Compile Include="Assets\Scripts\Systems\MoneyManager.cs" />
     <Compile Include="Assets\Scripts\Systems\TowerManager.cs" />
+    <Compile Include="Assets\Scripts\Waves\EnemyPool.cs" />
     <Compile Include="Assets\Scripts\EnemyHealthController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
   </ItemGroup>

@@ -749,10 +749,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 17
+  totalHealth: 14
   healthBar: {fileID: 1138220069922649733}
   rotationSpeed: 15
-  moneyOnDeath: 20
+  moneyOnDeath: 23
   destroyTime: 10
   resistances: []
 --- !u!65 &4553221162077221642

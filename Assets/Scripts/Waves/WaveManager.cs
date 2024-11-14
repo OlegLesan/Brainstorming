@@ -7,11 +7,19 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
 
+    [System.Serializable]
+    public class Wave
+    {
+        public string[] enemyNames;  // Имена врагов из пула
+        public int totalEnemyCount;  // Общее количество врагов в волне
+        public float spawnInterval;  // Интервал спауна врагов
+    }
+
     public Wave[] waves;
     public Transform spawnPoint;
     public Button startWaveButton;
-    public TMP_Text waveText; // Основной текст волны
-    public TMP_Text waveCounterText; // Новый текст для отображения текущей волны из общего количества
+    public TMP_Text waveText;
+    public TMP_Text waveCounterText;
     public float timeBetweenWaves = 2f;
     public float waveDuration = 10f;
     public int rewardForEarlyStart = 50;
@@ -23,6 +31,7 @@ public class WaveManager : MonoBehaviour
     public int totalEnemiesRemaining = 0;
 
     private Image buttonImage;
+    private EnemyPool enemyPool;
 
     private void Awake()
     {
@@ -34,16 +43,16 @@ public class WaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        enemyPool = FindObjectOfType<EnemyPool>();  // Получаем ссылку на пул врагов
     }
 
     private void Start()
     {
+        // Подсчитываем общее количество врагов в волнах
         foreach (Wave wave in waves)
         {
-            foreach (int count in wave.enemyCounts)
-            {
-                totalEnemiesRemaining += count;
-            }
+            totalEnemiesRemaining += wave.totalEnemyCount;
         }
 
         buttonImage = startWaveButton.GetComponent<Image>();
@@ -55,15 +64,12 @@ public class WaveManager : MonoBehaviour
     private void UpdateWaveText()
     {
         waveText.text = "Wave: " + (currentWaveIndex + 1);
-
-        // Обновляем новый текст, показывающий текущую волну из общего количества
         waveCounterText.text = $"Wave {currentWaveIndex + 1} / {waves.Length}";
     }
 
     public void DecreaseEnemyCount()
     {
         totalEnemiesRemaining--;
-        
 
         if (totalEnemiesRemaining <= 0)
         {
@@ -75,7 +81,6 @@ public class WaveManager : MonoBehaviour
     {
         if (LevelManager.instance.activeEnemies.Count == 0 && totalEnemiesRemaining <= 0)
         {
-            
             LevelManager.instance.LevelComplete();
         }
     }
@@ -104,16 +109,16 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-        int totalEnemies = 0;
-        for (int i = 0; i < wave.enemyCounts.Length; i++)
+        // Спауним врагов по общему количеству врагов в волне
+        for (int i = 0; i < wave.totalEnemyCount; i++)
         {
-            totalEnemies += wave.enemyCounts[i];
-        }
+            // Выбираем случайное имя врага из массива `enemyNames`
+            string enemyName = wave.enemyNames[Random.Range(0, wave.enemyNames.Length)];
 
-        for (int i = 0; i < totalEnemies; i++)
-        {
-            int randomIndex = Random.Range(0, wave.enemyPrefabs.Length);
-            Instantiate(wave.enemyPrefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
+            GameObject enemy = enemyPool.GetEnemy(enemyName);
+            enemy.transform.position = spawnPoint.position;
+            enemy.transform.rotation = spawnPoint.rotation;
+
             yield return new WaitForSeconds(wave.spawnInterval);
         }
 
@@ -126,8 +131,6 @@ public class WaveManager : MonoBehaviour
         waveInProgress = false;
         currentWaveIndex++;
 
-        Debug.Log("Волна завершена. Текущая волна: " + currentWaveIndex);
-
         if (currentWaveIndex < waves.Length)
         {
             firstWaveStarted = true;
@@ -137,7 +140,6 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Все волны завершены!");
             CheckForLevelCompletion();
         }
     }

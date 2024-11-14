@@ -3451,7 +3451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotlight: {fileID: 4821855992968618441}
-  slowDownAmount: 0.17
+  slowDownAmount: 0.32
   checkInterval: 0.5
 --- !u!1 &4827558091663331946
 GameObject:

@@ -15,8 +15,8 @@ public class EnemyHealthController : MonoBehaviour
     private Collider enemyCollider;
     private Animator animator;
     private AudioSource audioSource;
+    private EnemyPool enemyPool;
 
-    // Структура для хранения типа урона и уровня защиты
     [System.Serializable]
     public struct DamageResistance
     {
@@ -24,7 +24,6 @@ public class EnemyHealthController : MonoBehaviour
         public int resistanceLevel; // 1 - 25%, 2 - 50%, 3 - 75%
     }
 
-    // Список защит врага
     public List<DamageResistance> resistances;
 
     void Start()
@@ -35,23 +34,22 @@ public class EnemyHealthController : MonoBehaviour
 
         LevelManager.instance.activeEnemies.Add(this);
         targetCamera = Camera.main;
-
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        enemyPool = FindObjectOfType<EnemyPool>(); // Найдем пул в сцене
     }
+
     void Update()
     {
         if (healthBar != null && targetCamera != null)
         {
-            // Поворачиваем здоровье врага к камере
             Vector3 direction = targetCamera.transform.position - healthBar.transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
             healthBar.transform.rotation = Quaternion.Lerp(healthBar.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         }
     }
 
-    // Метод для получения урона с учетом типа урона
     public void TakeDamage(float damageAmount, string damageType)
     {
         float resistanceFactor = GetResistanceFactor(damageType);
@@ -70,7 +68,6 @@ public class EnemyHealthController : MonoBehaviour
         }
     }
 
-    // Метод для получения фактора поглощения урона
     private float GetResistanceFactor(string damageType)
     {
         foreach (var resistance in resistances)
@@ -113,12 +110,13 @@ public class EnemyHealthController : MonoBehaviour
 
         WaveManager.instance.DecreaseEnemyCount();
 
-        StartCoroutine(DestroyAfterDelay(destroyTime));
+        // Запускаем корутину для задержки перед возвратом врага в пул
+        StartCoroutine(ReturnToPoolAfterDelay());
     }
 
-    private IEnumerator DestroyAfterDelay(float delay)
+    private IEnumerator ReturnToPoolAfterDelay()
     {
-        yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
+        yield return new WaitForSeconds(10f); // Ждем 10 секунд
+        enemyPool.ReturnEnemy(gameObject); // Возвращаем врага в пул
     }
 }

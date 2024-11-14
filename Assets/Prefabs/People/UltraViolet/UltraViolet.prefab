@@ -6559,5 +6559,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spotlight: {fileID: 6738185033131059976}
-  slowDownAmount: 0.23
+  slowDownAmount: 0.3
   checkInterval: 0.2
