@@ -14,6 +14,7 @@ public class EnemyPool : MonoBehaviour
     public int poolSize = 10;
 
     private Dictionary<string, Queue<GameObject>> enemyPools;
+    private Path globalPath; // Ссылка на объект Path в сцене
 
     void Awake()
     {
@@ -31,6 +32,12 @@ public class EnemyPool : MonoBehaviour
             }
             enemyPools.Add(enemyType.name, poolQueue);
         }
+
+        globalPath = FindObjectOfType<Path>(); // Ищем объект Path в сцене
+        if (globalPath == null)
+        {
+            Debug.LogError("Path не найден в сцене!");
+        }
     }
 
     public GameObject GetEnemy(string enemyTypeName)
@@ -38,6 +45,14 @@ public class EnemyPool : MonoBehaviour
         if (enemyPools.ContainsKey(enemyTypeName) && enemyPools[enemyTypeName].Count > 0)
         {
             GameObject enemy = enemyPools[enemyTypeName].Dequeue();
+            var enemyController = enemy.GetComponent<EnemyControler>();
+
+            if (enemyController != null && globalPath != null)
+            {
+                enemyController.Setup(globalPath); // Устанавливаем путь для врага
+            }
+
+            enemy.GetComponent<EnemyHealthController>().ResetEnemy(); // Сбрасываем состояние врага
             enemy.SetActive(true);
             return enemy;
         }
@@ -46,6 +61,13 @@ public class EnemyPool : MonoBehaviour
             // Если пул пуст, создаем нового врага
             var enemyType = enemyTypes.Find(type => type.name == enemyTypeName);
             GameObject enemy = Instantiate(enemyType.enemyPrefab);
+
+            var enemyController = enemy.GetComponent<EnemyControler>();
+            if (enemyController != null && globalPath != null)
+            {
+                enemyController.Setup(globalPath);
+            }
+
             return enemy;
         }
     }

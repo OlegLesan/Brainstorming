@@ -12,6 +12,7 @@ public class EnemyHealthController : MonoBehaviour
     public int moneyOnDeath = 50;
     public float destroyTime;
 
+    private float initialHealth; // Сохраняет начальное значение здоровья из префаба
     private Collider enemyCollider;
     private Animator animator;
     private AudioSource audioSource;
@@ -26,9 +27,15 @@ public class EnemyHealthController : MonoBehaviour
 
     public List<DamageResistance> resistances;
 
+    void Awake()
+    {
+        // Сохраняем значение здоровья из префаба в initialHealth до начала работы Start
+        initialHealth = totalHealth;
+    }
+
     void Start()
     {
-        healthBar.maxValue = totalHealth;
+        healthBar.maxValue = initialHealth;
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
 
@@ -118,5 +125,37 @@ public class EnemyHealthController : MonoBehaviour
     {
         yield return new WaitForSeconds(10f); // Ждем 10 секунд
         enemyPool.ReturnEnemy(gameObject); // Возвращаем врага в пул
+    }
+
+    public void ResetEnemy()
+    {
+        // Восстанавливаем здоровье до начального значения
+        totalHealth = initialHealth;
+        healthBar.maxValue = initialHealth;
+        healthBar.value = totalHealth;
+        healthBar.gameObject.SetActive(false);
+
+        if (enemyCollider != null)
+        {
+            enemyCollider.enabled = true;
+        }
+
+        if (audioSource != null)
+        {
+            audioSource.enabled = true;
+            audioSource.Play();
+        }
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("Death");
+        }
+
+        // Сбрасываем состояние пути и назначаем цель
+        EnemyControler controller = GetComponent<EnemyControler>();
+        if (controller != null && controller.thePath != null)
+        {
+            controller.Setup(controller.thePath); // Назначаем новый путь
+        }
     }
 }

@@ -7,7 +7,7 @@ public class EnemyControler : MonoBehaviour
     public float speedMod = 1f; // Скорость движения, которая может быть изменена для замедления
     public float rotationSpeed = 5f;
     public Transform target;
-    private Path thePath;
+    internal Path thePath; // Убрали public, так как он будет находиться в Start
     private int currentPoint = 0;
     private bool reachedEnd;
 
@@ -24,6 +24,7 @@ public class EnemyControler : MonoBehaviour
             audioSource.Play();
         }
 
+        // Найдём объект Path в сцене, если он ещё не установлен
         if (thePath == null)
         {
             thePath = FindObjectOfType<Path>();
