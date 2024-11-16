@@ -22,14 +22,13 @@ public class EnemyHealthController : MonoBehaviour
     public struct DamageResistance
     {
         public string damageType;
-        public int resistanceLevel; // 1 - 25%, 2 - 50%, 3 - 75%
+        [Range(0, 100)] public float resistancePercentage; // Процент сопротивления от 0 до 100
     }
 
     public List<DamageResistance> resistances;
 
     void Awake()
     {
-        // Сохраняем значение здоровья из префаба в initialHealth до начала работы Start
         initialHealth = totalHealth;
     }
 
@@ -39,12 +38,12 @@ public class EnemyHealthController : MonoBehaviour
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
 
-        LevelManager.instance.activeEnemies.Add(this); // Добавляем врага в активные
+        LevelManager.instance.activeEnemies.Add(this); // Добавляем врага в список активных врагов
         targetCamera = Camera.main;
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        enemyPool = FindObjectOfType<EnemyPool>(); // Найдем пул в сцене
+        enemyPool = FindObjectOfType<EnemyPool>();
     }
 
     void Update()
@@ -81,12 +80,7 @@ public class EnemyHealthController : MonoBehaviour
         {
             if (resistance.damageType == damageType)
             {
-                switch (resistance.resistanceLevel)
-                {
-                    case 1: return 0.25f;
-                    case 2: return 0.50f;
-                    case 3: return 0.75f;
-                }
+                return Mathf.Clamp(resistance.resistancePercentage / 100f, 0f, 1f); // Преобразуем процент в коэффициент (0–1)
             }
         }
         return 0f; // Нет защиты от этого типа урона
@@ -112,26 +106,23 @@ public class EnemyHealthController : MonoBehaviour
             animator.SetTrigger("Death");
         }
 
-        // Удаляем врага из списка активных врагов
         LevelManager.instance.RemoveEnemyFromActiveList(this);
 
         MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         WaveManager.instance.DecreaseEnemyCount();
 
-        // Запускаем корутину для возврата врага в пул
         StartCoroutine(ReturnToPoolAfterDelay());
     }
 
     private IEnumerator ReturnToPoolAfterDelay()
     {
-        yield return new WaitForSeconds(10f); // Ждем 10 секунд
-        enemyPool.ReturnEnemy(gameObject); // Возвращаем врага в пул
+        yield return new WaitForSeconds(10f);
+        enemyPool.ReturnEnemy(gameObject);
     }
 
     public void ResetEnemy()
     {
-        // Восстанавливаем здоровье до начального значения
         totalHealth = initialHealth;
         healthBar.maxValue = initialHealth;
         healthBar.value = totalHealth;
@@ -153,11 +144,10 @@ public class EnemyHealthController : MonoBehaviour
             animator.ResetTrigger("Death");
         }
 
-        // Сбрасываем путь и цель
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath); // Назначаем новый путь
+            controller.Setup(controller.thePath);
         }
     }
 }

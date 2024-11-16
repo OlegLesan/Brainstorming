@@ -1773,7 +1773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d2407cc89b067409d6f283f6c23dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMod: 2.1
+  speedMod: 2.3
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
@@ -1789,16 +1789,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 17
+  totalHealth: 20
   healthBar: {fileID: 6571238416197897747}
   rotationSpeed: 15
-  moneyOnDeath: 25
+  moneyOnDeath: 20
   destroyTime: 10
   resistances:
   - damageType: armor_piercing
-    resistanceLevel: 1
+    resistancePercentage: 72.9
   - damageType: Explosive
-    resistanceLevel: 1
+    resistancePercentage: 72.4
 --- !u!65 &8816034619195404858
 BoxCollider:
   m_ObjectHideFlags: 0

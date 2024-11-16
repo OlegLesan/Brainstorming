@@ -9,11 +9,17 @@ public class WaveManager : MonoBehaviour
     public static WaveManager instance;
 
     [System.Serializable]
+    public class EnemyTypeInWave
+    {
+        public string enemyName;   // Имя врага
+        public int enemyCount;     // Количество врагов этого типа
+    }
+
+    [System.Serializable]
     public class Wave
     {
-        public string[] enemyNames;  // Имена врагов из пула
-        public int totalEnemyCount;  // Общее количество врагов в волне
-        public float spawnInterval;  // Интервал спауна врагов
+        public EnemyTypeInWave[] enemyTypes;  // Массив типов врагов и их количества
+        public float spawnInterval;           // Интервал спауна врагов
     }
 
     public Wave[] waves;
@@ -53,7 +59,10 @@ public class WaveManager : MonoBehaviour
         // Подсчитываем общее количество врагов в волнах
         foreach (Wave wave in waves)
         {
-            totalEnemiesRemaining += wave.totalEnemyCount;
+            foreach (var enemyType in wave.enemyTypes)
+            {
+                totalEnemiesRemaining += enemyType.enemyCount;
+            }
         }
 
         buttonImage = startWaveButton.GetComponent<Image>();
@@ -107,25 +116,34 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-        // Количество врагов, которых нужно заспаунить в этой волне
-        int enemiesToSpawn = wave.totalEnemyCount;
+        List<EnemyTypeInWave> enemyTypes = new List<EnemyTypeInWave>(wave.enemyTypes);
 
-        for (int i = 0; i < enemiesToSpawn; i++)
+        while (enemyTypes.Count > 0)
         {
-            // Выбираем случайное имя врага из массива `enemyNames`
-            string enemyName = wave.enemyNames[Random.Range(0, wave.enemyNames.Length)];
+            // Выбираем случайный тип врага
+            int randomIndex = Random.Range(0, enemyTypes.Count);
+            EnemyTypeInWave selectedEnemyType = enemyTypes[randomIndex];
 
-            GameObject enemy = enemyPool.GetEnemy(enemyName);
+            // Спауним врага
+            GameObject enemy = enemyPool.GetEnemy(selectedEnemyType.enemyName);
             if (enemy != null)
             {
                 enemy.transform.position = spawnPoint.position;
                 enemy.transform.rotation = spawnPoint.rotation;
-
                 yield return new WaitForSeconds(wave.spawnInterval);
             }
             else
             {
-                Debug.LogWarning($"Не удалось получить врага из пула: {enemyName}");
+                Debug.LogWarning($"Не удалось получить врага из пула: {selectedEnemyType.enemyName}");
+            }
+
+            // Уменьшаем количество оставшихся врагов данного типа
+            selectedEnemyType.enemyCount--;
+
+            // Если врагов этого типа больше нет, удаляем его из списка
+            if (selectedEnemyType.enemyCount <= 0)
+            {
+                enemyTypes.RemoveAt(randomIndex);
             }
         }
 
