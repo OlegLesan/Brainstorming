@@ -39,7 +39,7 @@ public class EnemyHealthController : MonoBehaviour
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
 
-        LevelManager.instance.activeEnemies.Add(this);
+        LevelManager.instance.activeEnemies.Add(this); // Добавляем врага в активные
         targetCamera = Camera.main;
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
@@ -112,12 +112,14 @@ public class EnemyHealthController : MonoBehaviour
             animator.SetTrigger("Death");
         }
 
+        // Удаляем врага из списка активных врагов
+        LevelManager.instance.RemoveEnemyFromActiveList(this);
+
         MoneyManager.instance.GiveMoney(moneyOnDeath);
-        LevelManager.instance.activeEnemies.Remove(this);
 
         WaveManager.instance.DecreaseEnemyCount();
 
-        // Запускаем корутину для задержки перед возвратом врага в пул
+        // Запускаем корутину для возврата врага в пул
         StartCoroutine(ReturnToPoolAfterDelay());
     }
 
@@ -155,7 +157,7 @@ public class EnemyHealthController : MonoBehaviour
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath); // Назначаем путь заново
+            controller.Setup(controller.thePath); // Назначаем новый путь
         }
     }
 }

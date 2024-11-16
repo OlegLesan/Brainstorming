@@ -50,6 +50,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        // ѕодсчитываем общее количество врагов в волнах
         foreach (Wave wave in waves)
         {
             totalEnemiesRemaining += wave.totalEnemyCount;
@@ -74,12 +75,7 @@ public class WaveManager : MonoBehaviour
             totalEnemiesRemaining--;
         }
 
-        CheckForLevelCompletion();
-    }
-
-    public void CheckForLevelCompletion()
-    {
-        LevelManager.instance.CheckForLevelCompletion();
+        LevelManager.instance.CheckForLevelCompletion(); // ѕровер€ем завершение уровн€
     }
 
     public bool AllWavesCompleted()
@@ -111,10 +107,12 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
+        //  оличество врагов, которых нужно заспаунить в этой волне
         int enemiesToSpawn = wave.totalEnemyCount;
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
+            // ¬ыбираем случайное им€ врага из массива `enemyNames`
             string enemyName = wave.enemyNames[Random.Range(0, wave.enemyNames.Length)];
 
             GameObject enemy = enemyPool.GetEnemy(enemyName);
@@ -149,7 +147,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            CheckForLevelCompletion();
+            LevelManager.instance.CheckForLevelCompletion(); // ѕровер€ем уровень после завершени€ всех волн
         }
     }
 
