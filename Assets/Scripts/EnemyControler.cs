@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
 {
-    public float speedMod = 1f; // Скорость движения, которая может быть изменена для замедления
+    public float speedMod = 1f; // Скорость движения
     public float rotationSpeed = 5f;
     public Transform target;
-    internal Path thePath; // Убрали public, так как он будет находиться в Start
+    internal Path thePath;
     private int currentPoint = 0;
     private bool reachedEnd;
 
     public float damage = 5;
     private Base theBase;
     private AudioSource audioSource;
-    private EnemyHealthController healthController;
-    private EnemyPool enemyPool;
+
+    private float initialSpeedMod; // Для сохранения изначальной скорости
+
+    void Awake()
+    {
+        initialSpeedMod = speedMod; // Сохраняем начальное значение скорости
+    }
 
     void Start()
     {
@@ -25,27 +30,26 @@ public class EnemyControler : MonoBehaviour
             audioSource.Play();
         }
 
+        theBase = FindObjectOfType<Base>();
+
         if (thePath == null)
         {
             thePath = FindObjectOfType<Path>();
         }
 
-        theBase = FindObjectOfType<Base>();
-        enemyPool = FindObjectOfType<EnemyPool>();
-
-        if (thePath == null || thePath.points.Length == 0)
+        if (thePath != null && thePath.points.Length > 0)
+        {
+            SetRandomTargetFromPoint(currentPoint);
+        }
+        else
         {
             Debug.LogError("Путь не найден или не содержит точек!");
-            return;
         }
-
-        healthController = GetComponent<EnemyHealthController>();
-        SetRandomTargetFromPoint(currentPoint);
     }
 
     void Update()
     {
-        if (LevelManager.instance.levelActive && !reachedEnd && target != null && healthController.totalHealth > 0)
+        if (LevelManager.instance.levelActive && !reachedEnd && target != null)
         {
             MoveAlongPath();
         }
@@ -80,7 +84,6 @@ public class EnemyControler : MonoBehaviour
         if (pointIndex < thePath.points.Length)
         {
             Transform pathPoint = thePath.points[pointIndex];
-
             if (pathPoint.childCount > 0)
             {
                 int randomChildIndex = Random.Range(0, pathPoint.childCount);
@@ -91,10 +94,6 @@ public class EnemyControler : MonoBehaviour
                 target = pathPoint;
             }
         }
-        else
-        {
-            Debug.LogWarning("Все точки пути пройдены.");
-        }
     }
 
     private void DealDamageToBase()
@@ -104,35 +103,29 @@ public class EnemyControler : MonoBehaviour
             theBase.TakeDamage(damage);
         }
 
-        if (enemyPool != null)
-        {
-            var healthController = GetComponent<EnemyHealthController>();
-            if (healthController != null)
-            {
-                healthController.ResetEnemy(); // Сбрасываем состояние врага перед возвратом
-            }
+        // Удаляем врага из списка активных врагов
+        LevelManager.instance.RemoveEnemyFromActiveList(GetComponent<EnemyHealthController>());
 
-            enemyPool.ReturnEnemy(gameObject); // Возвращаем врага в пул
-        }
-        else
-        {
-            Destroy(gameObject); // На случай, если пул не был найден
-        }
+        Destroy(gameObject);
     }
 
     public void Setup(Path newPath)
     {
         thePath = newPath;
         currentPoint = 0;
-        reachedEnd = false; // Сбрасываем флаг окончания пути
+        reachedEnd = false;
+
+        // Восстанавливаем изначальную скорость
+        speedMod = initialSpeedMod;
 
         if (thePath.points.Length > 0)
         {
             SetRandomTargetFromPoint(currentPoint);
         }
-        else
-        {
-            Debug.LogError("Путь не содержит точек!");
-        }
+    }
+
+    public void StopMoving()
+    {
+        speedMod = 0; // Останавливаем движение
     }
 }

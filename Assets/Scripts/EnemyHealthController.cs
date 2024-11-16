@@ -106,11 +106,15 @@ public class EnemyHealthController : MonoBehaviour
             animator.SetTrigger("Death");
         }
 
+        // Удаляем врага из списка активных врагов
         LevelManager.instance.RemoveEnemyFromActiveList(this);
 
         MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         WaveManager.instance.DecreaseEnemyCount();
+
+        // Останавливаем движение врага
+        GetComponent<EnemyControler>().StopMoving();
 
         StartCoroutine(ReturnToPoolAfterDelay());
     }
@@ -147,7 +151,7 @@ public class EnemyHealthController : MonoBehaviour
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath);
+            controller.Setup(controller.thePath); // Восстанавливаем путь и скорость
         }
     }
 }
