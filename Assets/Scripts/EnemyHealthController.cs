@@ -151,11 +151,11 @@ public class EnemyHealthController : MonoBehaviour
             animator.ResetTrigger("Death");
         }
 
-        // Сбрасываем состояние пути и назначаем цель
+        // Сбрасываем путь и цель
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath); // Назначаем новый путь
+            controller.Setup(controller.thePath); // Назначаем путь заново
         }
     }
 }

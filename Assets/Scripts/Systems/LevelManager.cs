@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
 
     public bool levelActive = true;
     private bool levelVictory;
-    private Base theBase;
+    public Base theBase;
 
     public List<EnemyHealthController> activeEnemies = new List<EnemyHealthController>();
     public string nextLevel;
@@ -34,12 +34,25 @@ public class LevelManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        // Проверяем, что все враги действительно уничтожены
-        if (activeEnemies.Count == 0 && WaveManager.instance.totalEnemiesRemaining <= 0)
+        // Проверяем, что здоровье базы больше 0
+        if (theBase != null && theBase.currentHealth > 0)
         {
             levelActive = false;
             levelVictory = true;
             ShowEndScreen();
+        }
+    }
+
+    public void CheckForLevelCompletion()
+    {
+        // Уровень завершен, если:
+        // 1. Нет активных врагов
+        // 2. Все волны завершены
+        // 3. Здоровье базы больше 0
+        if (activeEnemies.Count == 0 && WaveManager.instance.totalEnemiesRemaining == 0 &&
+            WaveManager.instance.AllWavesCompleted() && theBase.currentHealth > 0)
+        {
+            LevelComplete();
         }
     }
 

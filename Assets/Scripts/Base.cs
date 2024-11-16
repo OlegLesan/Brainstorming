@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Подключаем TextMeshPro
+using TMPro;
 
 public class Base : MonoBehaviour
 {
@@ -30,8 +30,11 @@ public class Base : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log("Game Over");
-            // Вызов экрана поражения
             UIController.instance.ShowLevelFailScreen();
+        }
+        else
+        {
+            LevelManager.instance.CheckForLevelCompletion(); // Проверка завершения уровня
         }
 
         UpdateHealthUI();

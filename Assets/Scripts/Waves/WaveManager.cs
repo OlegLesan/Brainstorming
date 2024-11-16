@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -49,7 +50,6 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        // ѕодсчитываем общее количество врагов в волнах
         foreach (Wave wave in waves)
         {
             totalEnemiesRemaining += wave.totalEnemyCount;
@@ -69,20 +69,22 @@ public class WaveManager : MonoBehaviour
 
     public void DecreaseEnemyCount()
     {
-        totalEnemiesRemaining--;
-
-        if (totalEnemiesRemaining <= 0)
+        if (totalEnemiesRemaining > 0)
         {
-            CheckForLevelCompletion();
+            totalEnemiesRemaining--;
         }
+
+        CheckForLevelCompletion();
     }
 
-    private void CheckForLevelCompletion()
+    public void CheckForLevelCompletion()
     {
-        if (LevelManager.instance.activeEnemies.Count == 0 && totalEnemiesRemaining <= 0)
-        {
-            LevelManager.instance.LevelComplete();
-        }
+        LevelManager.instance.CheckForLevelCompletion();
+    }
+
+    public bool AllWavesCompleted()
+    {
+        return currentWaveIndex >= waves.Length;
     }
 
     public void StartWave()
@@ -109,17 +111,24 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-        // —пауним врагов по общему количеству врагов в волне
-        for (int i = 0; i < wave.totalEnemyCount; i++)
+        int enemiesToSpawn = wave.totalEnemyCount;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
-            // ¬ыбираем случайное им€ врага из массива `enemyNames`
             string enemyName = wave.enemyNames[Random.Range(0, wave.enemyNames.Length)];
 
             GameObject enemy = enemyPool.GetEnemy(enemyName);
-            enemy.transform.position = spawnPoint.position;
-            enemy.transform.rotation = spawnPoint.rotation;
+            if (enemy != null)
+            {
+                enemy.transform.position = spawnPoint.position;
+                enemy.transform.rotation = spawnPoint.rotation;
 
-            yield return new WaitForSeconds(wave.spawnInterval);
+                yield return new WaitForSeconds(wave.spawnInterval);
+            }
+            else
+            {
+                Debug.LogWarning($"Ќе удалось получить врага из пула: {enemyName}");
+            }
         }
 
         yield return new WaitForSeconds(waveDuration);

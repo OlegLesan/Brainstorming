@@ -15,6 +15,7 @@ public class EnemyControler : MonoBehaviour
     private Base theBase;
     private AudioSource audioSource;
     private EnemyHealthController healthController;
+    private EnemyPool enemyPool;
 
     void Start()
     {
@@ -24,13 +25,13 @@ public class EnemyControler : MonoBehaviour
             audioSource.Play();
         }
 
-        // Найдём объект Path в сцене, если он ещё не установлен
         if (thePath == null)
         {
             thePath = FindObjectOfType<Path>();
         }
 
         theBase = FindObjectOfType<Base>();
+        enemyPool = FindObjectOfType<EnemyPool>();
 
         if (thePath == null || thePath.points.Length == 0)
         {
@@ -56,7 +57,6 @@ public class EnemyControler : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        // Перемещаем врага с учетом скорости, управляемой только speedMod
         transform.position = Vector3.MoveTowards(transform.position, target.position, speedMod * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
@@ -99,17 +99,40 @@ public class EnemyControler : MonoBehaviour
 
     private void DealDamageToBase()
     {
-        theBase.TakeDamage(damage);
-        Destroy(gameObject);
+        if (theBase != null)
+        {
+            theBase.TakeDamage(damage);
+        }
+
+        if (enemyPool != null)
+        {
+            var healthController = GetComponent<EnemyHealthController>();
+            if (healthController != null)
+            {
+                healthController.ResetEnemy(); // Сбрасываем состояние врага перед возвратом
+            }
+
+            enemyPool.ReturnEnemy(gameObject); // Возвращаем врага в пул
+        }
+        else
+        {
+            Destroy(gameObject); // На случай, если пул не был найден
+        }
     }
 
     public void Setup(Path newPath)
     {
         thePath = newPath;
         currentPoint = 0;
+        reachedEnd = false; // Сбрасываем флаг окончания пути
+
         if (thePath.points.Length > 0)
         {
             SetRandomTargetFromPoint(currentPoint);
+        }
+        else
+        {
+            Debug.LogError("Путь не содержит точек!");
         }
     }
 }
