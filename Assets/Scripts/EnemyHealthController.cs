@@ -18,6 +18,8 @@ public class EnemyHealthController : MonoBehaviour
     private AudioSource audioSource;
     private EnemyPool enemyPool;
 
+    private bool isDead = false; // Флаг, чтобы предотвратить повторную обработку смерти
+
     [System.Serializable]
     public struct DamageResistance
     {
@@ -58,6 +60,8 @@ public class EnemyHealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount, string damageType)
     {
+        if (isDead) return; // Игнорируем урон, если враг уже мёртв
+
         float resistanceFactor = GetResistanceFactor(damageType);
         float effectiveDamage = damageAmount * (1 - resistanceFactor);
 
@@ -65,7 +69,7 @@ public class EnemyHealthController : MonoBehaviour
         if (totalHealth <= 0)
         {
             totalHealth = 0;
-            HandleDeath();
+            HandleDeath(); // Обрабатываем смерть только один раз
         }
         else
         {
@@ -88,6 +92,9 @@ public class EnemyHealthController : MonoBehaviour
 
     private void HandleDeath()
     {
+        if (isDead) return; // Предотвращаем повторный вызов
+        isDead = true;
+
         if (enemyCollider != null)
         {
             enemyCollider.enabled = false;
@@ -106,12 +113,11 @@ public class EnemyHealthController : MonoBehaviour
             animator.SetTrigger("Death");
         }
 
-        // Удаляем врага из списка активных врагов
         LevelManager.instance.RemoveEnemyFromActiveList(this);
 
-        MoneyManager.instance.GiveMoney(moneyOnDeath);
-
         WaveManager.instance.DecreaseEnemyCount();
+
+        MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         GetComponent<EnemyControler>().StopMoving();
 
@@ -147,6 +153,7 @@ public class EnemyHealthController : MonoBehaviour
             animator.ResetTrigger("Death");
         }
 
+        isDead = false; // Сбрасываем флаг, чтобы враг мог быть повторно использован
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {

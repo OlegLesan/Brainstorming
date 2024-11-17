@@ -56,7 +56,6 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        // Подсчитываем общее количество врагов в волнах
         foreach (Wave wave in waves)
         {
             foreach (var enemyType in wave.enemyTypes)
@@ -122,11 +121,9 @@ public class WaveManager : MonoBehaviour
 
         while (enemyTypes.Count > 0)
         {
-            // Выбираем случайный тип врага
             int randomIndex = Random.Range(0, enemyTypes.Count);
             EnemyTypeInWave selectedEnemyType = enemyTypes[randomIndex];
 
-            // Спауним врага
             GameObject enemy = enemyPool.GetEnemy(selectedEnemyType.enemyName);
             if (enemy != null)
             {
@@ -139,10 +136,8 @@ public class WaveManager : MonoBehaviour
                 Debug.LogWarning($"Не удалось получить врага из пула: {selectedEnemyType.enemyName}");
             }
 
-            // Уменьшаем количество оставшихся врагов данного типа
             selectedEnemyType.enemyCount--;
 
-            // Если врагов этого типа больше нет, удаляем его из списка
             if (selectedEnemyType.enemyCount <= 0)
             {
                 enemyTypes.RemoveAt(randomIndex);
@@ -167,7 +162,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            LevelManager.instance.CheckForLevelCompletion(); // Проверяем уровень после завершения всех волн
+            LevelManager.instance.CheckForLevelCompletion();
         }
     }
 
