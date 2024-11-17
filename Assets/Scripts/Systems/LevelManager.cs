@@ -17,8 +17,8 @@ public class LevelManager : MonoBehaviour
     public List<EnemyHealthController> activeEnemies = new List<EnemyHealthController>();
     public string nextLevel;
 
-    public GameObject levelFailScreen;     // Экран поражения
-    public GameObject levelCompleteScreen; // Экран победы
+    public GameObject levelFailScreen;
+    public GameObject levelCompleteScreen;
 
     void Start()
     {
@@ -34,44 +34,61 @@ public class LevelManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        // Уровень завершается, если здоровье базы больше 0
         if (theBase != null && theBase.currentHealth > 0)
         {
             levelActive = false;
             levelVictory = true;
+            Debug.Log("Level completed!");
             ShowEndScreen();
+        }
+        else
+        {
+            Debug.LogWarning("Base health is 0, cannot complete level.");
         }
     }
 
     public void CheckForLevelCompletion()
     {
-        // Уровень завершен, если:
-        // 1. Все волны завершены
-        // 2. Нет врагов на сцене
-        // 3. Здоровье базы больше 0
+        Debug.Log($"Checking level completion: WavesCompleted={WaveManager.instance.AllWavesCompleted()}, ActiveEnemies={activeEnemies.Count}, BaseHealth={theBase.currentHealth}");
+
+        // Проверяем условия завершения уровня
         if (WaveManager.instance.AllWavesCompleted() &&
-            activeEnemies.Count == 0 &&
+            GameObject.FindGameObjectsWithTag("Enemy").Length == 0 &&
             theBase.currentHealth > 0)
         {
+            Debug.Log("Conditions for level completion met.");
             LevelComplete();
+        }
+        else
+        {
+            Debug.LogWarning("Conditions not met for level completion.");
         }
     }
 
     private void ShowEndScreen()
     {
-        levelFailScreen.SetActive(!levelVictory);       // Показываем экран поражения, если нет победы
-        levelCompleteScreen.SetActive(levelVictory);    // Показываем экран победы, если победа
+        if (levelVictory)
+        {
+            Debug.Log("Showing Level Complete screen.");
+        }
+        else
+        {
+            Debug.Log("Showing Level Failed screen.");
+        }
 
-        Debug.Log(levelVictory ? "Победа!" : "Поражение!");
+        levelFailScreen.SetActive(!levelVictory);
+        levelCompleteScreen.SetActive(levelVictory);
+
+        Debug.Log(levelVictory ? "Victory!" : "Defeat!");
     }
 
-    // Удаление врагов из списка активных врагов
     public void RemoveEnemyFromActiveList(EnemyHealthController enemy)
     {
         if (activeEnemies.Contains(enemy))
         {
             activeEnemies.Remove(enemy);
-            CheckForLevelCompletion(); // Проверяем уровень после удаления врага
+            Debug.Log($"Enemy removed. Remaining enemies: {activeEnemies.Count}");
+            CheckForLevelCompletion();
         }
     }
 }

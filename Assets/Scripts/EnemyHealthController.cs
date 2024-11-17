@@ -12,7 +12,7 @@ public class EnemyHealthController : MonoBehaviour
     public int moneyOnDeath = 50;
     public float destroyTime;
 
-    private float initialHealth; // Сохраняет начальное значение здоровья из префаба
+    private float initialHealth;
     private Collider enemyCollider;
     private Animator animator;
     private AudioSource audioSource;
@@ -22,7 +22,7 @@ public class EnemyHealthController : MonoBehaviour
     public struct DamageResistance
     {
         public string damageType;
-        [Range(0, 100)] public float resistancePercentage; // Процент сопротивления от 0 до 100
+        [Range(0, 100)] public float resistancePercentage;
     }
 
     public List<DamageResistance> resistances;
@@ -80,10 +80,10 @@ public class EnemyHealthController : MonoBehaviour
         {
             if (resistance.damageType == damageType)
             {
-                return Mathf.Clamp(resistance.resistancePercentage / 100f, 0f, 1f); // Преобразуем процент в коэффициент (0–1)
+                return Mathf.Clamp(resistance.resistancePercentage / 100f, 0f, 1f);
             }
         }
-        return 0f; // Нет защиты от этого типа урона
+        return 0f;
     }
 
     private void HandleDeath()
@@ -113,7 +113,6 @@ public class EnemyHealthController : MonoBehaviour
 
         WaveManager.instance.DecreaseEnemyCount();
 
-        // Останавливаем движение врага
         GetComponent<EnemyControler>().StopMoving();
 
         StartCoroutine(ReturnToPoolAfterDelay());
@@ -151,7 +150,7 @@ public class EnemyHealthController : MonoBehaviour
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath); // Восстанавливаем путь и скорость
+            controller.Setup(controller.thePath);
         }
     }
 }

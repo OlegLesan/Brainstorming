@@ -84,7 +84,9 @@ public class WaveManager : MonoBehaviour
             totalEnemiesRemaining--;
         }
 
-        LevelManager.instance.CheckForLevelCompletion(); // Проверяем завершение уровня
+        Debug.Log($"Total enemies remaining: {totalEnemiesRemaining}");
+
+        LevelManager.instance.CheckForLevelCompletion();
     }
 
     public bool AllWavesCompleted()
