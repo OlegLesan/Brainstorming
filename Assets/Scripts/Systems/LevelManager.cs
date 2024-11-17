@@ -52,8 +52,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log($"Checking level completion: WavesCompleted={WaveManager.instance.AllWavesCompleted()}, TotalEnemiesRemaining={WaveManager.instance.totalEnemiesRemaining}, BaseHealth={theBase.currentHealth}");
 
         // Проверяем условия завершения уровня
-        if (WaveManager.instance.AllWavesCompleted() &&
-            WaveManager.instance.totalEnemiesRemaining <= 0 &&
+        if (WaveManager.instance.totalEnemiesRemaining <= 0 &&
             theBase.currentHealth > 0)
         {
             Debug.Log("Conditions for level completion met.");

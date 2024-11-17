@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 11
+  totalHealth: 13
   healthBar: {fileID: 2505841575625314513}
   rotationSpeed: 15
   moneyOnDeath: 9
