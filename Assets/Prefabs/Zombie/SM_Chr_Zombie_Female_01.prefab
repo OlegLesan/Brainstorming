@@ -1793,7 +1793,7 @@ MonoBehaviour:
   healthBar: {fileID: 6571238416197897747}
   rotationSpeed: 15
   moneyOnDeath: 20
-  destroyTime: 10
+  destroyTime: 2
   resistances:
   - damageType: armor_piercing
     resistancePercentage: 72.9

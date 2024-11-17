@@ -638,11 +638,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 41
+  totalHealth: 43
   healthBar: {fileID: 7282315966395358402}
   rotationSpeed: 15
   moneyOnDeath: 20
-  destroyTime: 10
+  destroyTime: 2
   resistances:
   - damageType: Simple_Bullet
     resistancePercentage: 72.4

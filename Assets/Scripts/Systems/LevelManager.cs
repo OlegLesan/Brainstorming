@@ -49,11 +49,11 @@ public class LevelManager : MonoBehaviour
 
     public void CheckForLevelCompletion()
     {
-        Debug.Log($"Checking level completion: WavesCompleted={WaveManager.instance.AllWavesCompleted()}, ActiveEnemies={activeEnemies.Count}, BaseHealth={theBase.currentHealth}");
+        Debug.Log($"Checking level completion: WavesCompleted={WaveManager.instance.AllWavesCompleted()}, TotalEnemiesRemaining={WaveManager.instance.totalEnemiesRemaining}, BaseHealth={theBase.currentHealth}");
 
         // Проверяем условия завершения уровня
         if (WaveManager.instance.AllWavesCompleted() &&
-            GameObject.FindGameObjectsWithTag("Enemy").Length == 0 &&
+            WaveManager.instance.totalEnemiesRemaining <= 0 &&
             theBase.currentHealth > 0)
         {
             Debug.Log("Conditions for level completion met.");

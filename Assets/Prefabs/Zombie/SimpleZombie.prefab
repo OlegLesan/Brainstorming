@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d2407cc89b067409d6f283f6c23dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMod: 1
+  speedMod: 1.1
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
@@ -1708,7 +1708,7 @@ MonoBehaviour:
   healthBar: {fileID: 7219887277742519105}
   rotationSpeed: 15
   moneyOnDeath: 9
-  destroyTime: 10
+  destroyTime: 2
   resistances: []
 --- !u!65 &5249884335073472275
 BoxCollider:

@@ -962,7 +962,7 @@ MonoBehaviour:
   healthBar: {fileID: 7094539270222569294}
   rotationSpeed: 15
   moneyOnDeath: 9
-  destroyTime: 10
+  destroyTime: 2
   resistances: []
 --- !u!65 &8673064618905246682
 BoxCollider:
