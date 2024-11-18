@@ -1,116 +1,102 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class TimeControl : MonoBehaviour
+public class Cameracontroller : MonoBehaviour
 {
-    // Ссылки на кнопки
-    public Button pauseButton;
-    public Button normalSpeedButton;
-    public Button doubleSpeedButton;
-    public Button tripleSpeedButton;
+    public float moveSpeed = 10f;            // Скорость движения
+    public float rotateSpeed = 90f;         // Скорость вращения
+    public float minYPosition = 23f;        // Минимальная высота
+    public float maxYPosition = 76f;        // Максимальная высота
+    public float smoothTime = 0.2f;         // Время сглаживания для движения
+    public float rotationStep = 90f;        // Шаг поворота (90 градусов)
+    public float scrollSpeed = 5f;          // Скорость изменения высоты колесиком мыши
 
-    // Цвета для активной и неактивной кнопки
-    private Color activeColor = new Color(1f, 1f, 1f, 0.5f); // Полупрозрачный
-    private Color defaultColor = new Color(1f, 1f, 1f, 1f); // Полностью непрозрачный
+    private Vector3 targetPosition;         // Целевая позиция камеры
+    private float targetYPosition;          // Целевая высота
+    private Quaternion targetRotation;      // Целевое вращение камеры
+    private Vector3 velocity = Vector3.zero;// Скорость для сглаживания движения
+    private bool isRotating = false;        // Флаг для проверки вращения
 
-    // Компонент камеры, на который не влияет Time.timeScale
-    public Camera mainCamera;
-
-    private float defaultCameraTimeScale = 1f;
-
-    private void Start()
+    void Start()
     {
-        // Устанавливаем нормальную скорость как начальное состояние
-        SetNormalSpeed();
+        targetPosition = transform.position;
+        targetYPosition = transform.position.y;
+        targetRotation = transform.rotation; // Изначально целевое вращение равно текущему
     }
 
-    private void Update()
+    void Update()
     {
-        // Обработка горячих клавиш
-        if (Input.GetKeyDown(KeyCode.Space)) SetPause();
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SetNormalSpeed();
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SetDoubleSpeed();
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SetTripleSpeed();
+        // Камера всегда реагирует на управление
+        HandleMovement();
+        HandleRotation();
+        SmoothMove();
     }
 
-    // Установить паузу
-    public void SetPause()
+    void HandleMovement()
     {
-        Time.timeScale = 0f; // Остановка времени
-        UpdateCameraTimeScale(1f); // Камера продолжает работать в нормальном режиме
-        HighlightButton(pauseButton);
+        Vector3 move = Vector3.zero;
+
+        // Получаем ввод пользователя
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        // Рассчитываем направления вперед и вправо
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        // Убираем компонент по оси Y для горизонтального движения
+        forward.y = 0;
+        right.y = 0;
+
+        // Нормализуем направления
+        forward.Normalize();
+        right.Normalize();
+
+        // Обновляем целевую позицию на основе ввода
+        targetPosition += (forward * v + right * h) * moveSpeed * Time.unscaledDeltaTime;
+
+        // Обновляем высоту
+        targetYPosition += scroll * scrollSpeed;
+        targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
+        targetPosition.y = targetYPosition;
     }
 
-    // Установить нормальную скорость (1x)
-    public void SetNormalSpeed()
+    void HandleRotation()
     {
-        Time.timeScale = 1f; // Нормальная скорость
-        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
-        HighlightButton(normalSpeedButton);
-    }
-
-    // Установить удвоенную скорость (2x)
-    public void SetDoubleSpeed()
-    {
-        Time.timeScale = 2f; // Ускорение в 2 раза
-        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
-        HighlightButton(doubleSpeedButton);
-    }
-
-    // Установить утроенную скорость (3x)
-    public void SetTripleSpeed()
-    {
-        Time.timeScale = 3f; // Ускорение в 3 раза
-        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
-        HighlightButton(tripleSpeedButton);
-    }
-
-    // Обновить TimeScale камеры
-    private void UpdateCameraTimeScale(float scale)
-    {
-        if (mainCamera != null)
+        // Проверяем ввод для вращения камеры
+        if (!isRotating)
         {
-            // Камера работает независимо от Time.timeScale
-            mainCamera.GetComponent<Animator>().speed = scale;
-        }
-    }
-
-    // Подсветить выбранную кнопку
-    private void HighlightButton(Button selectedButton)
-    {
-        // Сброс прозрачности для всех кнопок
-        ResetButtonColors();
-
-        // Установить прозрачность для выбранной кнопки
-        if (selectedButton != null)
-        {
-            Image buttonImage = selectedButton.GetComponent<Image>();
-            if (buttonImage != null)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                buttonImage.color = activeColor;
+                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - rotationStep, transform.eulerAngles.z);
+                isRotating = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + rotationStep, transform.eulerAngles.z);
+                isRotating = true;
+            }
+        }
+
+        // Плавное вращение
+        if (isRotating)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.unscaledDeltaTime);
+
+            // Проверяем, достигли ли мы целевого поворота
+            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            {
+                transform.rotation = targetRotation;
+                isRotating = false;
             }
         }
     }
 
-    // Сбросить цвета всех кнопок
-    private void ResetButtonColors()
+    void SmoothMove()
     {
-        SetButtonColor(pauseButton, defaultColor);
-        SetButtonColor(normalSpeedButton, defaultColor);
-        SetButtonColor(doubleSpeedButton, defaultColor);
-        SetButtonColor(tripleSpeedButton, defaultColor);
-    }
-
-    // Установить цвет кнопки
-    private void SetButtonColor(Button button, Color color)
-    {
-        if (button != null)
-        {
-            Image buttonImage = button.GetComponent<Image>();
-            if (buttonImage != null)
-            {
-                buttonImage.color = color;
-            }
-        }
+        // Плавное перемещение камеры
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
     }
 }
