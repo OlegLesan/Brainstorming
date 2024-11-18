@@ -8,9 +8,15 @@ public class Cameracontroller : MonoBehaviour
     public float rotateSpeed = 90f;         // Скорость вращения
     public float minYPosition = 23f;        // Минимальная высота
     public float maxYPosition = 76f;        // Максимальная высота
+    public float minXPosition = -50f;       // Минимальная позиция по X
+    public float maxXPosition = 50f;        // Максимальная позиция по X
+    public float minZPosition = -50f;       // Минимальная позиция по Z
+    public float maxZPosition = 50f;        // Максимальная позиция по Z
     public float smoothTime = 0.2f;         // Время сглаживания для движения
     public float rotationStep = 90f;        // Шаг поворота (90 градусов)
     public float scrollSpeed = 5f;          // Скорость изменения высоты колесиком мыши
+    public float collisionRadius = 1f;      // Радиус для проверки столкновений
+    public LayerMask collisionMask;         // Слой для проверки столкновений
 
     private Vector3 targetPosition;         // Целевая позиция камеры
     private float targetYPosition;          // Целевая высота
@@ -27,7 +33,6 @@ public class Cameracontroller : MonoBehaviour
 
     void Update()
     {
-        // Камера всегда реагирует на управление
         HandleMovement();
         HandleRotation();
         SmoothMove();
@@ -55,12 +60,22 @@ public class Cameracontroller : MonoBehaviour
         right.Normalize();
 
         // Обновляем целевую позицию на основе ввода
-        targetPosition += (forward * v + right * h) * moveSpeed * Time.unscaledDeltaTime;
+        Vector3 desiredPosition = targetPosition + (forward * v + right * h) * moveSpeed * Time.unscaledDeltaTime;
 
-        // Обновляем высоту
+        // Применяем ограничения по высоте
         targetYPosition += scroll * scrollSpeed;
         targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
-        targetPosition.y = targetYPosition;
+        desiredPosition.y = targetYPosition;
+
+        // Применяем ограничения по X и Z
+        desiredPosition.x = Mathf.Clamp(desiredPosition.x, minXPosition, maxXPosition);
+        desiredPosition.z = Mathf.Clamp(desiredPosition.z, minZPosition, maxZPosition);
+
+        // Проверяем столкновение
+        if (!Physics.CheckSphere(desiredPosition, collisionRadius, collisionMask))
+        {
+            targetPosition = desiredPosition; // Обновляем целевую позицию, если нет столкновений
+        }
     }
 
     void HandleRotation()

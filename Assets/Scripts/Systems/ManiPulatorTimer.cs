@@ -17,10 +17,10 @@ public class ManipulatorTimer : MonoBehaviour
     void Start()
     {
         // Назначаем события кнопок
-        pauseButton.onClick.AddListener(() => SetTimeScale(0f, pauseButton));
-        x1Button.onClick.AddListener(() => SetTimeScale(1f, x1Button));
-        x2Button.onClick.AddListener(() => SetTimeScale(2f, x2Button));
-        x3Button.onClick.AddListener(() => SetTimeScale(3f, x3Button));
+        pauseButton.onClick.AddListener(() => TrySetTimeScale(0f, pauseButton));
+        x1Button.onClick.AddListener(() => TrySetTimeScale(1f, x1Button));
+        x2Button.onClick.AddListener(() => TrySetTimeScale(2f, x2Button));
+        x3Button.onClick.AddListener(() => TrySetTimeScale(3f, x3Button));
 
         // Устанавливаем начальное состояние
         SetTimeScale(1f, x1Button);
@@ -28,23 +28,34 @@ public class ManipulatorTimer : MonoBehaviour
 
     void Update()
     {
+        // Если экран паузы включен, ничего не делаем
+        if (UIController.instance.pauseScreen.activeSelf) return;
+
         // Проверяем горячие клавиши
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetTimeScale(0f, pauseButton);
+            TrySetTimeScale(0f, pauseButton);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetTimeScale(1f, x1Button);
+            TrySetTimeScale(1f, x1Button);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SetTimeScale(2f, x2Button);
+            TrySetTimeScale(2f, x2Button);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            SetTimeScale(3f, x3Button);
+            TrySetTimeScale(3f, x3Button);
         }
+    }
+
+    void TrySetTimeScale(float timeScale, Button activeButton)
+    {
+        // Если экран паузы включен, не изменяем таймскейл
+        if (UIController.instance.pauseScreen.activeSelf) return;
+
+        SetTimeScale(timeScale, activeButton);
     }
 
     void SetTimeScale(float timeScale, Button activeButton)
