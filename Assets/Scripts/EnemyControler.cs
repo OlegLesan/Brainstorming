@@ -17,6 +17,9 @@ public class EnemyControler : MonoBehaviour
 
     private float initialSpeedMod; // Для сохранения изначальной скорости
 
+    // Добавлено поле для отслеживания фонарика
+    public SlowDownTower currentSlowingTower;
+
     void Awake()
     {
         initialSpeedMod = speedMod; // Сохраняем начальное значение скорости

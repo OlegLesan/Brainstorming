@@ -934,10 +934,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d2407cc89b067409d6f283f6c23dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMod: 2.5
+  speedMod: 6.14
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
+  currentSlowingTower: {fileID: 0}
 --- !u!114 &8029421291012753070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,9 +956,7 @@ MonoBehaviour:
   rotationSpeed: 15
   moneyOnDeath: 20
   destroyTime: 2
-  resistances:
-  - damageType: armor_piercing
-    resistancePercentage: 72.9
+  resistances: []
 --- !u!65 &8816034619195404858
 BoxCollider:
   m_ObjectHideFlags: 0

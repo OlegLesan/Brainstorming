@@ -172,6 +172,7 @@ MonoBehaviour:
   rotationSpeed: 5
   target: {fileID: 0}
   damage: 5
+  currentSlowingTower: {fileID: 0}
 --- !u!114 &2302905090449465839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,16 +185,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 45
+  totalHealth: 50
   healthBar: {fileID: 7282315966395358402}
   rotationSpeed: 15
   moneyOnDeath: 20
   destroyTime: 2
   resistances:
   - damageType: Simple_Bullet
-    resistancePercentage: 72.4
+    resistancePercentage: 92.2
   - damageType: Explosive
-    resistancePercentage: 20.4
+    resistancePercentage: 55.2
 --- !u!65 &2382380630837414111
 BoxCollider:
   m_ObjectHideFlags: 0

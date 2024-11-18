@@ -5,7 +5,7 @@ using UnityEngine;
 public class SlowDownTower : MonoBehaviour
 {
     public Light spotlight; // —сылка на Spot Light фонарика
-    public float slowDownAmount = 0.5f; //  оличество замедлени€, которое вычитаетс€ из скорости врага
+    public float slowDownAmount = 0.5f; //  оличество замедлени€
     public float checkInterval = 0.2f; // »нтервал проверки дл€ производительности
 
     private List<EnemyControler> affectedEnemies = new List<EnemyControler>();
@@ -42,33 +42,36 @@ public class SlowDownTower : MonoBehaviour
 
                     if (angleToEnemy <= spotlight.spotAngle / 2)
                     {
-                        // ¬раг находитс€ в конусе света, уменьшаем скорость
-                        if (!affectedEnemies.Contains(enemy))
+                        // ≈сли враг еще не замедлен другим фонариком
+                        if (!affectedEnemies.Contains(enemy) && enemy.currentSlowingTower == null)
                         {
                             enemy.speedMod -= slowDownAmount;
+                            enemy.currentSlowingTower = this;
                             affectedEnemies.Add(enemy);
                         }
                     }
                     else
                     {
-                        // ¬раг вне конуса света, восстанавливаем скорость
-                        if (affectedEnemies.Contains(enemy))
-                        {
-                            enemy.speedMod += slowDownAmount;
-                            affectedEnemies.Remove(enemy);
-                        }
+                        // ¬раг вне конуса света, восстанавливаем скорость, если он был под этим фонариком
+                        RemoveEnemyFromEffect(enemy);
                     }
                 }
                 else
                 {
-                    // ¬раг вне радиуса света, восстанавливаем скорость
-                    if (affectedEnemies.Contains(enemy))
-                    {
-                        enemy.speedMod += slowDownAmount;
-                        affectedEnemies.Remove(enemy);
-                    }
+                    // ¬раг вне радиуса света, восстанавливаем скорость, если он был под этим фонариком
+                    RemoveEnemyFromEffect(enemy);
                 }
             }
+        }
+    }
+
+    private void RemoveEnemyFromEffect(EnemyControler enemy)
+    {
+        if (affectedEnemies.Contains(enemy) && enemy.currentSlowingTower == this)
+        {
+            enemy.speedMod += slowDownAmount;
+            enemy.currentSlowingTower = null;
+            affectedEnemies.Remove(enemy);
         }
     }
 
@@ -77,9 +80,10 @@ public class SlowDownTower : MonoBehaviour
         // ¬осстанавливаем скорость дл€ всех врагов при отключении фонарика
         foreach (EnemyControler enemy in affectedEnemies)
         {
-            if (enemy != null)
+            if (enemy != null && enemy.currentSlowingTower == this)
             {
                 enemy.speedMod += slowDownAmount;
+                enemy.currentSlowingTower = null;
             }
         }
         affectedEnemies.Clear();
