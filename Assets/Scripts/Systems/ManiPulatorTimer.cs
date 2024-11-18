@@ -17,10 +17,10 @@ public class ManipulatorTimer : MonoBehaviour
     void Start()
     {
         // Назначаем события кнопок
-        pauseButton.onClick.AddListener(() => TrySetTimeScale(0f, pauseButton));
-        x1Button.onClick.AddListener(() => TrySetTimeScale(1f, x1Button));
-        x2Button.onClick.AddListener(() => TrySetTimeScale(2f, x2Button));
-        x3Button.onClick.AddListener(() => TrySetTimeScale(3f, x3Button));
+        pauseButton.onClick.AddListener(() => SetTimeScale(0f, pauseButton));
+        x1Button.onClick.AddListener(() => SetTimeScale(1f, x1Button));
+        x2Button.onClick.AddListener(() => SetTimeScale(2f, x2Button));
+        x3Button.onClick.AddListener(() => SetTimeScale(3f, x3Button));
 
         // Устанавливаем начальное состояние
         SetTimeScale(1f, x1Button);
@@ -28,38 +28,33 @@ public class ManipulatorTimer : MonoBehaviour
 
     void Update()
     {
-        // Если экран паузы включен, ничего не делаем
-        if (UIController.instance.pauseScreen.activeSelf) return;
+        // Если экран паузы включен, игнорируем нажатия на клавиши
+        if (IsPauseScreenActive()) return;
 
         // Проверяем горячие клавиши
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TrySetTimeScale(0f, pauseButton);
+            SetTimeScale(0f, pauseButton);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            TrySetTimeScale(1f, x1Button);
+            SetTimeScale(1f, x1Button);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            TrySetTimeScale(2f, x2Button);
+            SetTimeScale(2f, x2Button);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            TrySetTimeScale(3f, x3Button);
+            SetTimeScale(3f, x3Button);
         }
-    }
-
-    void TrySetTimeScale(float timeScale, Button activeButton)
-    {
-        // Если экран паузы включен, не изменяем таймскейл
-        if (UIController.instance.pauseScreen.activeSelf) return;
-
-        SetTimeScale(timeScale, activeButton);
     }
 
     void SetTimeScale(float timeScale, Button activeButton)
     {
+        // Если экран паузы включен, не изменяем таймскейл
+        if (IsPauseScreenActive()) return;
+
         Time.timeScale = timeScale;
         IsPaused = timeScale == 0; // Обновляем флаг паузы
 
@@ -75,5 +70,10 @@ public class ManipulatorTimer : MonoBehaviour
         Color color = button.image.color;
         color.a = isActive ? transparentAlpha : normalAlpha;
         button.image.color = color;
+    }
+
+    bool IsPauseScreenActive()
+    {
+        return UIController.instance.pauseScreen.activeSelf;
     }
 }
