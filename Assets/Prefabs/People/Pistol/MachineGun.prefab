@@ -3270,7 +3270,7 @@ MonoBehaviour:
   launcherModel: {fileID: 4257430621262373373}
   rotateSpeed: 100
   projectileTag: Bullet
-  animationSpeed: 1.2
+  animationSpeed: 1.6
   targetFarthestEnemy: 0
 --- !u!114 &2802015581514275002
 MonoBehaviour:

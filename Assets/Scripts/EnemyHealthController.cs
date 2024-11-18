@@ -120,6 +120,7 @@ public class EnemyHealthController : MonoBehaviour
         MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         GetComponent<EnemyControler>().StopMoving();
+        GetComponent<EnemyControler>().target = null; // Сбрасываем цель
 
         StartCoroutine(ReturnToPoolAfterDelay());
     }
@@ -154,10 +155,11 @@ public class EnemyHealthController : MonoBehaviour
         }
 
         isDead = false; // Сбрасываем флаг, чтобы враг мог быть повторно использован
+
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath);
+            controller.Setup(controller.thePath); // Назначаем путь для врага
         }
     }
 }

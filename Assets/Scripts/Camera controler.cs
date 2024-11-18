@@ -1,90 +1,115 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Cameracontroller : MonoBehaviour
+public class TimeControl : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    public float rotateSpeed = 90f;
-    public float minYPosition = 23f;
-    public float maxYPosition = 76f;
-    public float heightSmoothTime = 0.1f;
-    public float rotationStep = 90f; // Шаг поворота (90 градусов)
-    public float scrollSpeed = 5f; // Скорость изменения высоты с колесиком мыши
+    // Ссылки на кнопки
+    public Button pauseButton;
+    public Button normalSpeedButton;
+    public Button doubleSpeedButton;
+    public Button tripleSpeedButton;
 
-    private CharacterController characterController;
-    private float targetYPosition;
-    private float currentYVelocity;
-    private bool isRotating = false;
-    private Quaternion targetRotation;
+    // Цвета для активной и неактивной кнопки
+    private Color activeColor = new Color(1f, 1f, 1f, 0.5f); // Полупрозрачный
+    private Color defaultColor = new Color(1f, 1f, 1f, 1f); // Полностью непрозрачный
 
-    void Start()
+    // Компонент камеры, на который не влияет Time.timeScale
+    public Camera mainCamera;
+
+    private float defaultCameraTimeScale = 1f;
+
+    private void Start()
     {
-        characterController = GetComponent<CharacterController>();
-        targetYPosition = transform.position.y;
-        targetRotation = transform.rotation; // Изначально целевой поворот равен текущему
+        // Устанавливаем нормальную скорость как начальное состояние
+        SetNormalSpeed();
     }
 
-    void Update()
+    private void Update()
     {
-        Vector3 move = Vector3.zero;
+        // Обработка горячих клавиш
+        if (Input.GetKeyDown(KeyCode.Space)) SetPause();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetNormalSpeed();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SetDoubleSpeed();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SetTripleSpeed();
+    }
 
-        // Получаем значения для осей горизонтального и вертикального движения
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+    // Установить паузу
+    public void SetPause()
+    {
+        Time.timeScale = 0f; // Остановка времени
+        UpdateCameraTimeScale(1f); // Камера продолжает работать в нормальном режиме
+        HighlightButton(pauseButton);
+    }
 
-        // Определяем направления вперед и вправо с нормализованными векторами
-        Vector3 forward = transform.forward;
-        Vector3 right = transform.right;
+    // Установить нормальную скорость (1x)
+    public void SetNormalSpeed()
+    {
+        Time.timeScale = 1f; // Нормальная скорость
+        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
+        HighlightButton(normalSpeedButton);
+    }
 
-        forward.y = 0;
-        right.y = 0;
+    // Установить удвоенную скорость (2x)
+    public void SetDoubleSpeed()
+    {
+        Time.timeScale = 2f; // Ускорение в 2 раза
+        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
+        HighlightButton(doubleSpeedButton);
+    }
 
-        forward.Normalize();
-        right.Normalize();
+    // Установить утроенную скорость (3x)
+    public void SetTripleSpeed()
+    {
+        Time.timeScale = 3f; // Ускорение в 3 раза
+        UpdateCameraTimeScale(1f); // Камера остается в нормальном режиме
+        HighlightButton(tripleSpeedButton);
+    }
 
-        // Рассчитываем движение по осям с учетом скорости перемещения
-        move = (forward * v + right * h) * moveSpeed * Time.deltaTime;
-
-        // Получаем входные данные от колесика мыши и изменяем целевую высоту
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        targetYPosition += scroll * scrollSpeed;
-        targetYPosition = Mathf.Clamp(targetYPosition, minYPosition, maxYPosition);
-
-        // Контролируем вертикальное положение камеры с использованием SmoothDamp
-        float newYPosition = Mathf.SmoothDamp(transform.position.y, targetYPosition, ref currentYVelocity, heightSmoothTime);
-        move.y = newYPosition - transform.position.y;
-
-        // Двигаем камеру
-        characterController.Move(move);
-
-        // Проверяем нажатие клавиш Q или E для поворота на 90 градусов
-        if (!isRotating)
+    // Обновить TimeScale камеры
+    private void UpdateCameraTimeScale(float scale)
+    {
+        if (mainCamera != null)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            // Камера работает независимо от Time.timeScale
+            mainCamera.GetComponent<Animator>().speed = scale;
+        }
+    }
+
+    // Подсветить выбранную кнопку
+    private void HighlightButton(Button selectedButton)
+    {
+        // Сброс прозрачности для всех кнопок
+        ResetButtonColors();
+
+        // Установить прозрачность для выбранной кнопки
+        if (selectedButton != null)
+        {
+            Image buttonImage = selectedButton.GetComponent<Image>();
+            if (buttonImage != null)
             {
-                // Поворачиваем на -90 градусов
-                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - rotationStep, transform.eulerAngles.z);
-                isRotating = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                // Поворачиваем на 90 градусов
-                targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + rotationStep, transform.eulerAngles.z);
-                isRotating = true;
+                buttonImage.color = activeColor;
             }
         }
+    }
 
-        // Если запущен процесс поворота, плавно вращаем камеру
-        if (isRotating)
+    // Сбросить цвета всех кнопок
+    private void ResetButtonColors()
+    {
+        SetButtonColor(pauseButton, defaultColor);
+        SetButtonColor(normalSpeedButton, defaultColor);
+        SetButtonColor(doubleSpeedButton, defaultColor);
+        SetButtonColor(tripleSpeedButton, defaultColor);
+    }
+
+    // Установить цвет кнопки
+    private void SetButtonColor(Button button, Color color)
+    {
+        if (button != null)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            // Проверяем, достигли ли мы целевого поворота
-            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            Image buttonImage = button.GetComponent<Image>();
+            if (buttonImage != null)
             {
-                transform.rotation = targetRotation;
-                isRotating = false;
+                buttonImage.color = color;
             }
         }
     }

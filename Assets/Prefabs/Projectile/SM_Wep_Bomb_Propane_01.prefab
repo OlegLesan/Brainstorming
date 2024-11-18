@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRB: {fileID: 4436248136759767379}
   moveSpeed: 10
-  damageAmount: 3.7
+  damageAmount: 4
   damageType: Explosive
   impactEffect: {fileID: 1879769179923522, guid: 642d6b0de68f7e9448d5cb04662fd69b, type: 3}
 --- !u!54 &4436248136759767379

@@ -103,7 +103,6 @@ public class EnemyControler : MonoBehaviour
             theBase.TakeDamage(damage);
         }
 
-        // Удаляем врага из списка активных врагов
         LevelManager.instance.RemoveEnemyFromActiveList(GetComponent<EnemyHealthController>());
 
         Destroy(gameObject);
@@ -118,9 +117,13 @@ public class EnemyControler : MonoBehaviour
         // Восстанавливаем изначальную скорость
         speedMod = initialSpeedMod;
 
-        if (thePath.points.Length > 0)
+        if (thePath != null && thePath.points.Length > 0)
         {
-            SetRandomTargetFromPoint(currentPoint);
+            SetRandomTargetFromPoint(currentPoint); // Назначаем первую точку пути
+        }
+        else
+        {
+            target = null; // Если путь отсутствует, сбрасываем цель
         }
     }
 

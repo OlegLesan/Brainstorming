@@ -3088,7 +3088,7 @@ MonoBehaviour:
   launcherModel: {fileID: 4257430621262373373}
   rotateSpeed: 100
   projectileTag: Bullet
-  animationSpeed: 1
+  animationSpeed: 1.2
   targetFarthestEnemy: 0
 --- !u!114 &2802015581514275002
 MonoBehaviour:
@@ -3112,7 +3112,7 @@ MonoBehaviour:
   rangeModel: {fileID: 8758074069530483338}
   light: {fileID: 4169375294976138908}
   cost: 100
-  upgradeCost: 200
+  upgradeCost: 150
   sellValue: 80
   upgradedTowerPrefab: {fileID: 4552638790437930363, guid: 918ee5bc5d0c3084297588a6822d795a, type: 3}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}

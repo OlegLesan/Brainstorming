@@ -2622,7 +2622,7 @@ MonoBehaviour:
   enemiesUpdated: 0
   rangeModel: {fileID: 2036533336808480128}
   light: {fileID: 8152686535286515830}
-  cost: 200
+  cost: 0
   upgradeCost: 0
   sellValue: 110
   upgradedTowerPrefab: {fileID: 0}

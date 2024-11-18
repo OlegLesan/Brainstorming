@@ -65,7 +65,7 @@ public class EnemyPool : MonoBehaviour
             var enemyController = enemy.GetComponent<EnemyControler>();
             if (enemyController != null && globalPath != null)
             {
-                enemyController.Setup(globalPath);
+                enemyController.Setup(globalPath); // Устанавливаем путь для нового врага
             }
 
             return enemy;
