@@ -192,9 +192,9 @@ MonoBehaviour:
   destroyTime: 2
   resistances:
   - damageType: Simple_Bullet
-    resistancePercentage: 92.2
+    resistancePercentage: 94.9
   - damageType: Explosive
-    resistancePercentage: 55.2
+    resistancePercentage: 57.7
 --- !u!65 &2382380630837414111
 BoxCollider:
   m_ObjectHideFlags: 0
