@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 12
+  totalHealth: 10
   healthBar: {fileID: 8359881697044576326}
   rotationSpeed: 15
   moneyOnDeath: 1

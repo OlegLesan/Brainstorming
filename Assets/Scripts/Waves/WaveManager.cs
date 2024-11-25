@@ -34,8 +34,8 @@ public class WaveManager : MonoBehaviour
     public Button startWaveButton;
     public TMP_Text waveText;
     public TMP_Text waveCounterText;
-    public float timeBetweenWaves = 2f;
-    public float waveDuration = 10f;
+    
+    
     public int rewardForEarlyStart = 50;
     public float fillAmountDecreaseRate = 1f;
 
@@ -88,7 +88,7 @@ public class WaveManager : MonoBehaviour
         if (totalEnemiesRemaining > 0)
         {
             totalEnemiesRemaining--;
-            Debug.Log($"[DecreaseEnemyCount] Total enemies remaining: {totalEnemiesRemaining}");
+           
         }
 
         // Немедленно проверяем завершение уровня
@@ -126,7 +126,7 @@ public class WaveManager : MonoBehaviour
     {
         if (wave == null)
         {
-            Debug.LogWarning("Нет волны для спауна.");
+            
             yield break;
         }
 
@@ -168,7 +168,7 @@ public class WaveManager : MonoBehaviour
         }
 
         // Завершаем волну немедленно
-        Debug.Log("[SpawnWave] Волна завершена.");
+        
         WaveCompleted();
     }
 
@@ -179,7 +179,7 @@ public class WaveManager : MonoBehaviour
 
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("[WaveCompleted] Последняя волна завершена.");
+            
             LevelManager.instance.CheckForLevelCompletion();
         }
         else

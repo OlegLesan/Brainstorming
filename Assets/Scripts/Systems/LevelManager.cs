@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour
         if (activeEnemies.Contains(enemy))
         {
             activeEnemies.Remove(enemy);
-            Debug.Log($"[RemoveEnemyFromActiveList] Enemy removed. Remaining enemies: {activeEnemies.Count}");
+            
         }
 
         // Проверяем завершение уровня
@@ -78,16 +78,16 @@ public class LevelManager : MonoBehaviour
     {
         if (levelVictory)
         {
-            Debug.Log("Showing Level Complete screen.");
+            
         }
         else
         {
-            Debug.Log("Showing Level Failed screen.");
+           
         }
 
         levelFailScreen.SetActive(!levelVictory);
         levelCompleteScreen.SetActive(levelVictory);
 
-        Debug.Log(levelVictory ? "Victory!" : "Defeat!");
+        
     }
 }

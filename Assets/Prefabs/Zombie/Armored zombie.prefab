@@ -185,16 +185,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d581478daf8b9d94cba7e99b09f38960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 50
+  totalHealth: 33
   healthBar: {fileID: 7282315966395358402}
   rotationSpeed: 15
   moneyOnDeath: 20
   destroyTime: 2
   resistances:
   - damageType: Simple_Bullet
-    resistancePercentage: 94.9
+    resistancePercentage: 96.6
   - damageType: Explosive
-    resistancePercentage: 57.7
+    resistancePercentage: 95.7
 --- !u!65 &2382380630837414111
 BoxCollider:
   m_ObjectHideFlags: 0

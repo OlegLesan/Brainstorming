@@ -2599,7 +2599,7 @@ MonoBehaviour:
   launcherModel: {fileID: 3886663004133466237}
   rotateSpeed: 100
   projectileTag: Bazooka
-  animationSpeed: 0.2
+  animationSpeed: 0.3
   targetFarthestEnemy: 0
 --- !u!114 &8329875072962199582
 MonoBehaviour:
@@ -2624,7 +2624,7 @@ MonoBehaviour:
   light: {fileID: 8152686535286515830}
   cost: 0
   upgradeCost: 0
-  sellValue: 110
+  sellValue: 150
   upgradedTowerPrefab: {fileID: 0}
   placementPrefab: {fileID: 868288691085481025, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
 --- !u!65 &5732287956209662836

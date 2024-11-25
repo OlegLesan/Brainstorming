@@ -112,6 +112,8 @@ public class EnemyHealthController : MonoBehaviour
         {
             animator.SetTrigger("Death");
         }
+        // ƒобавл€ем начисление денег за смерть врага
+        MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         LevelManager.instance.RemoveEnemyFromActiveList(this);
         WaveManager.instance.DecreaseEnemyCount();
