@@ -10,7 +10,7 @@ public class EnemyHealthController : MonoBehaviour
     public float rotationSpeed = 5f;
     private Camera targetCamera;
     public int moneyOnDeath = 50;
-    public float destroyTime;
+    public float destroyTime = 10f; // Время перед возвращением в пул
 
     private float initialHealth;
     private Collider enemyCollider;
@@ -92,7 +92,7 @@ public class EnemyHealthController : MonoBehaviour
 
     private void HandleDeath()
     {
-        if (isDead) return; // Предотвращаем повторный вызов
+        if (isDead) return;
         isDead = true;
 
         if (enemyCollider != null)
@@ -114,20 +114,21 @@ public class EnemyHealthController : MonoBehaviour
         }
 
         LevelManager.instance.RemoveEnemyFromActiveList(this);
-
         WaveManager.instance.DecreaseEnemyCount();
 
-        MoneyManager.instance.GiveMoney(moneyOnDeath);
-
-        GetComponent<EnemyControler>().StopMoving();
-        GetComponent<EnemyControler>().target = null; // Сбрасываем цель
+        // Отключаем движение врага
+        EnemyControler enemyController = GetComponent<EnemyControler>();
+        if (enemyController != null)
+        {
+            enemyController.StopMoving(); // Прекращаем движение
+        }
 
         StartCoroutine(ReturnToPoolAfterDelay());
     }
 
     private IEnumerator ReturnToPoolAfterDelay()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(destroyTime);
         enemyPool.ReturnEnemy(gameObject);
     }
 

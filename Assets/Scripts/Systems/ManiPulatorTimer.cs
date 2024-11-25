@@ -52,8 +52,8 @@ public class ManipulatorTimer : MonoBehaviour
 
     void SetTimeScale(float timeScale, Button activeButton)
     {
-        // Если экран паузы включен, не изменяем таймскейл
-        if (IsPauseScreenActive()) return;
+        // Если экран паузы включен или уровень завершён, не изменяем таймскейл
+        if (IsPauseScreenActive() || !LevelManager.instance.levelActive) return;
 
         Time.timeScale = timeScale;
         IsPaused = timeScale == 0; // Обновляем флаг паузы

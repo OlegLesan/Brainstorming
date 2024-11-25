@@ -49,19 +49,29 @@ public class LevelManager : MonoBehaviour
 
     public void CheckForLevelCompletion()
     {
-        Debug.Log($"Checking level completion: WavesCompleted={WaveManager.instance.AllWavesCompleted()}, TotalEnemiesRemaining={WaveManager.instance.totalEnemiesRemaining}, BaseHealth={theBase.currentHealth}");
+        // Проверяем завершение уровня.
+        bool allEnemiesDefeated = activeEnemies.Count == 0 && WaveManager.instance.totalEnemiesRemaining <= 0;
+        bool wavesCompleted = WaveManager.instance.AllWavesCompleted();
+        bool baseIsAlive = theBase.currentHealth > 0;
 
-        // Проверяем условия завершения уровня
-        if (WaveManager.instance.totalEnemiesRemaining <= 0 &&
-            theBase.currentHealth > 0)
+        Debug.Log($"[CheckForLevelCompletion] WavesCompleted={wavesCompleted}, AllEnemiesDefeated={allEnemiesDefeated}, BaseHealth={baseIsAlive}");
+
+        if (allEnemiesDefeated && wavesCompleted && baseIsAlive)
         {
-            Debug.Log("Conditions for level completion met.");
             LevelComplete();
         }
-        else
+    }
+
+    public void RemoveEnemyFromActiveList(EnemyHealthController enemy)
+    {
+        if (activeEnemies.Contains(enemy))
         {
-            Debug.LogWarning("Conditions not met for level completion.");
+            activeEnemies.Remove(enemy);
+            Debug.Log($"[RemoveEnemyFromActiveList] Enemy removed. Remaining enemies: {activeEnemies.Count}");
         }
+
+        // Проверяем завершение уровня
+        CheckForLevelCompletion();
     }
 
     private void ShowEndScreen()
@@ -79,15 +89,5 @@ public class LevelManager : MonoBehaviour
         levelCompleteScreen.SetActive(levelVictory);
 
         Debug.Log(levelVictory ? "Victory!" : "Defeat!");
-    }
-
-    public void RemoveEnemyFromActiveList(EnemyHealthController enemy)
-    {
-        if (activeEnemies.Contains(enemy))
-        {
-            activeEnemies.Remove(enemy);
-            Debug.Log($"Enemy removed. Remaining enemies: {activeEnemies.Count}");
-            CheckForLevelCompletion();
-        }
     }
 }

@@ -9,6 +9,13 @@ public class WaveManager : MonoBehaviour
     public static WaveManager instance;
 
     [System.Serializable]
+    public class SpawnPointWithPath
+    {
+        public Transform spawnPoint; // Точка спавна
+        public Path path;            // Путь, связанный с точкой спавна
+    }
+
+    [System.Serializable]
     public class EnemyTypeInWave
     {
         public string enemyName;   // Имя врага
@@ -23,7 +30,7 @@ public class WaveManager : MonoBehaviour
     }
 
     public Wave[] waves;
-    public Transform spawnPoint;
+    public SpawnPointWithPath[] spawnPointsWithPaths;
     public Button startWaveButton;
     public TMP_Text waveText;
     public TMP_Text waveCounterText;
@@ -51,7 +58,7 @@ public class WaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        enemyPool = FindObjectOfType<EnemyPool>();  // Получаем ссылку на пул врагов
+        enemyPool = FindObjectOfType<EnemyPool>();
     }
 
     private void Start()
@@ -81,10 +88,10 @@ public class WaveManager : MonoBehaviour
         if (totalEnemiesRemaining > 0)
         {
             totalEnemiesRemaining--;
+            Debug.Log($"[DecreaseEnemyCount] Total enemies remaining: {totalEnemiesRemaining}");
         }
 
-        Debug.Log($"Total enemies remaining: {totalEnemiesRemaining}");
-
+        // Немедленно проверяем завершение уровня
         LevelManager.instance.CheckForLevelCompletion();
     }
 
@@ -117,6 +124,12 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
+        if (wave == null)
+        {
+            Debug.LogWarning("Нет волны для спауна.");
+            yield break;
+        }
+
         List<EnemyTypeInWave> enemyTypes = new List<EnemyTypeInWave>(wave.enemyTypes);
 
         while (enemyTypes.Count > 0)
@@ -127,8 +140,18 @@ public class WaveManager : MonoBehaviour
             GameObject enemy = enemyPool.GetEnemy(selectedEnemyType.enemyName);
             if (enemy != null)
             {
-                enemy.transform.position = spawnPoint.position;
-                enemy.transform.rotation = spawnPoint.rotation;
+                int randomSpawnIndex = Random.Range(0, spawnPointsWithPaths.Length);
+                SpawnPointWithPath selectedSpawnPointWithPath = spawnPointsWithPaths[randomSpawnIndex];
+
+                enemy.transform.position = selectedSpawnPointWithPath.spawnPoint.position;
+                enemy.transform.rotation = selectedSpawnPointWithPath.spawnPoint.rotation;
+
+                EnemyControler enemyController = enemy.GetComponent<EnemyControler>();
+                if (enemyController != null)
+                {
+                    enemyController.Setup(selectedSpawnPointWithPath.path);
+                }
+
                 yield return new WaitForSeconds(wave.spawnInterval);
             }
             else
@@ -144,7 +167,8 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(waveDuration);
+        // Завершаем волну немедленно
+        Debug.Log("[SpawnWave] Волна завершена.");
         WaveCompleted();
     }
 
@@ -153,32 +177,36 @@ public class WaveManager : MonoBehaviour
         waveInProgress = false;
         currentWaveIndex++;
 
-        if (currentWaveIndex < waves.Length)
+        if (currentWaveIndex >= waves.Length)
+        {
+            Debug.Log("[WaveCompleted] Последняя волна завершена.");
+            LevelManager.instance.CheckForLevelCompletion();
+        }
+        else
         {
             firstWaveStarted = true;
             startWaveButton.gameObject.SetActive(true);
             UpdateWaveText();
             StartCoroutine(WaveTimer());
         }
-        else
-        {
-            LevelManager.instance.CheckForLevelCompletion();
-        }
     }
 
     IEnumerator WaveTimer()
     {
-        buttonImage.fillAmount = 1f;
-
-        while (buttonImage.fillAmount > 0)
+        if (currentWaveIndex < waves.Length)
         {
-            buttonImage.fillAmount -= Time.deltaTime / fillAmountDecreaseRate;
-            yield return null;
-        }
+            buttonImage.fillAmount = 1f;
 
-        if (!waveInProgress)
-        {
-            StartWave();
+            while (buttonImage.fillAmount > 0)
+            {
+                buttonImage.fillAmount -= Time.deltaTime / fillAmountDecreaseRate;
+                yield return null;
+            }
+
+            if (!waveInProgress)
+            {
+                StartWave();
+            }
         }
     }
 }

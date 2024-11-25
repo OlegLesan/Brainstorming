@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
@@ -17,8 +16,9 @@ public class EnemyControler : MonoBehaviour
 
     private float initialSpeedMod; // Для сохранения изначальной скорости
 
-    // Добавлено поле для отслеживания фонарика
     public SlowDownTower currentSlowingTower;
+
+    private EnemyPool enemyPool; // Добавлено: ссылка на EnemyPool
 
     void Awake()
     {
@@ -47,6 +47,13 @@ public class EnemyControler : MonoBehaviour
         else
         {
             Debug.LogError("Путь не найден или не содержит точек!");
+        }
+
+        // Ищем EnemyPool в сцене
+        enemyPool = FindObjectOfType<EnemyPool>();
+        if (enemyPool == null)
+        {
+            Debug.LogError("EnemyPool не найден в сцене!");
         }
     }
 
@@ -106,9 +113,25 @@ public class EnemyControler : MonoBehaviour
             theBase.TakeDamage(damage);
         }
 
+        // Уменьшаем количество оставшихся врагов
+        WaveManager.instance.DecreaseEnemyCount();
+
         LevelManager.instance.RemoveEnemyFromActiveList(GetComponent<EnemyHealthController>());
 
-        Destroy(gameObject);
+        // Возвращаем врага в пул вместо уничтожения
+        if (enemyPool != null)
+        {
+            EnemyHealthController healthController = GetComponent<EnemyHealthController>();
+            if (healthController != null)
+            {
+                healthController.ResetEnemy(); // Сбрасываем состояние врага
+            }
+            enemyPool.ReturnEnemy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Setup(Path newPath)
@@ -117,21 +140,21 @@ public class EnemyControler : MonoBehaviour
         currentPoint = 0;
         reachedEnd = false;
 
-        // Восстанавливаем изначальную скорость
         speedMod = initialSpeedMod;
 
         if (thePath != null && thePath.points.Length > 0)
         {
-            SetRandomTargetFromPoint(currentPoint); // Назначаем первую точку пути
+            SetRandomTargetFromPoint(currentPoint);
         }
         else
         {
-            target = null; // Если путь отсутствует, сбрасываем цель
+            target = null;
         }
     }
 
     public void StopMoving()
     {
         speedMod = 0; // Останавливаем движение
+        currentSlowingTower = null; // Убираем влияние замедляющих башен
     }
 }

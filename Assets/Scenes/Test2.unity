@@ -19213,7 +19213,7 @@ MonoBehaviour:
     - enemyName: FastZombie
       enemyCount: 20
     spawnInterval: 1
-  spawnPoint: {fileID: 0}
+  spawnPoints: []
   startWaveButton: {fileID: 672741832}
   waveText: {fileID: 668392401}
   waveCounterText: {fileID: 1276351257}
@@ -28319,28 +28319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3526b75fe6b6ee34c85a30a7bdd5e81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  points: []
 --- !u!1001 &1533322710
 PrefabInstance:
   m_ObjectHideFlags: 0
