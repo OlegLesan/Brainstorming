@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 44117633}
   - component: {fileID: 44117632}
   - component: {fileID: 44117631}
-  - component: {fileID: 44117634}
   m_Layer: 5
   m_Name: Ep6
   m_TagString: Untagged
@@ -208,9 +207,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 44117634}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelectButton, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -219,7 +218,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &44117632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,19 +257,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44117629}
   m_CullTransparentMesh: 1
---- !u!114 &44117634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44117629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1076228cc2ea1f479c63764edb0a993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelToLoad: 
 --- !u!1 &80456270
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +269,6 @@ GameObject:
   - component: {fileID: 80456274}
   - component: {fileID: 80456273}
   - component: {fileID: 80456272}
-  - component: {fileID: 80456275}
   m_Layer: 5
   m_Name: Ep4
   m_TagString: Untagged
@@ -356,9 +341,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 80456275}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelectButton, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -367,7 +352,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &80456273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,19 +391,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80456270}
   m_CullTransparentMesh: 1
---- !u!114 &80456275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80456270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1076228cc2ea1f479c63764edb0a993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelToLoad: 
 --- !u!1 &195802662
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +403,6 @@ GameObject:
   - component: {fileID: 195802666}
   - component: {fileID: 195802665}
   - component: {fileID: 195802664}
-  - component: {fileID: 195802667}
   m_Layer: 5
   m_Name: Ep5
   m_TagString: Untagged
@@ -504,9 +475,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 195802667}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelectButton, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -515,7 +486,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &195802665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,19 +525,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195802662}
   m_CullTransparentMesh: 1
---- !u!114 &195802667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195802662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1076228cc2ea1f479c63764edb0a993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelToLoad: 
 --- !u!1 &252882711
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9783183, y: 0.022864433}
   m_AnchorMax: {x: 0.9783183, y: 0.022864433}
-  m_AnchoredPosition: {x: -62.647, y: 40.591}
+  m_AnchoredPosition: {x: -62.647003, y: 40.591003}
   m_SizeDelta: {x: 125.293396, y: 81.1813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &639325221
@@ -819,7 +777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9842957, y: 0.022391085}
   m_AnchorMax: {x: 0.9842957, y: 0.022391085}
-  m_AnchoredPosition: {x: -62.647, y: 40.591}
+  m_AnchoredPosition: {x: -62.647003, y: 40.591003}
   m_SizeDelta: {x: 125.293396, y: 81.1813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &722956970
@@ -1097,7 +1055,6 @@ GameObject:
   - component: {fileID: 976907200}
   - component: {fileID: 976907199}
   - component: {fileID: 976907198}
-  - component: {fileID: 976907201}
   m_Layer: 5
   m_Name: Ep3
   m_TagString: Untagged
@@ -1170,9 +1127,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976907201}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelectButton, Assembly-CSharp
-        m_MethodName: LoadLevel
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1181,7 +1138,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &976907199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,19 +1177,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976907196}
   m_CullTransparentMesh: 1
---- !u!114 &976907201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976907196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1076228cc2ea1f479c63764edb0a993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelToLoad: 
 --- !u!1 &1076685146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,7 +1759,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 33.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1943,7 +1887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.98, y: 0.018685542}
   m_AnchorMax: {x: 0.98, y: 0.018685542}
-  m_AnchoredPosition: {x: -62.647, y: 40.591}
+  m_AnchoredPosition: {x: -62.647003, y: 40.591003}
   m_SizeDelta: {x: 125.293396, y: 81.1813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423916930
@@ -2240,7 +2184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9717442, y: 0.04116499}
   m_AnchorMax: {x: 0.9717442, y: 0.04116499}
-  m_AnchoredPosition: {x: -74, y: 40.591}
+  m_AnchoredPosition: {x: -74, y: 40.591003}
   m_SizeDelta: {x: 125.293396, y: 81.181305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1880384087
