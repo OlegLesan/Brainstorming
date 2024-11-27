@@ -139,16 +139,16 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyStudios_Skybox.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyStudios_Skybox.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyGoopShader.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyGoopShader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyTriplanar.shader" />
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyUVScroll.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyTriplanar.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyUVScroll.shader" />
     <None Include="Assets\Assets import\PROTOFACTOR\Ultimate Animation Collection\Animations\Creature Animset\Animation List - Creature Animset.txt" />
     <None Include="Assets\Assets import\PolygonNatureBiomes\PNB_Core\Shaders\SyntyStudios_Basic_LOD_Shader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyCharacterShader.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyCharacterShader.shader" />
     <None Include="Assets\Assets import\PROTOFACTOR\Ultimate Animation Collection\Animations\Crowd Animset\Animation List - Crowd Animset.txt" />
     <None Include="Assets\Assets import\PROTOFACTOR\Ultimate Animation Collection\Animations\1Handed Melee Weapon Animset\Animation List - 1 Handed Melee Weapon Animset.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
@@ -194,7 +194,7 @@
     <None Include="Assets\Assets import\PolygonNatureBiomes\PNB_Core\Shaders\SyntyStudios_Skybox_NoFog.shader" />
     <None Include="Assets\Assets import\PolygonDog\Documentation\Guide.txt" />
     <None Include="Assets\Assets import\PolygonBossZombies\Shaders\POLYGON_ZombieBoss.shader" />
-    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyVehicleShader_01.shader" />
+    <None Include="Assets\Assets import\Wasteland\Shaders\SyntyVehicleShader_01.shader" />
     <None Include="Assets\Assets import\PROTOFACTOR\Ultimate Animation Collection\Animations\2Handed Melee Weapon Animset\Animation List - 2 Handed Melee Weapon Animset.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\Assets import\PROTOFACTOR\Ultimate Animation Collection\Animations\Campfire Animset\Animation List - Campfire Animset.txt" />
