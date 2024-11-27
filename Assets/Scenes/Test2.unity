@@ -12199,11 +12199,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36786db1ee669647a37797cda59371c, type: 3}
---- !u!4 &553519501 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-  m_PrefabInstance: {fileID: 1883213795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &560251048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13332,7 +13327,6 @@ Transform:
   - {fileID: 1882330040}
   - {fileID: 1122715553}
   - {fileID: 1318214532}
-  - {fileID: 553519501}
   - {fileID: 1066516310}
   - {fileID: 141590721}
   - {fileID: 338327166}
@@ -29915,7 +29909,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1884362525594058, guid: 62708f4ef55dc8944aba4c0986f5194e, type: 3}
+    - {fileID: 1589575612363558, guid: 62708f4ef55dc8944aba4c0986f5194e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62708f4ef55dc8944aba4c0986f5194e, type: 3}
@@ -42170,7 +42166,10 @@ MonoBehaviour:
   projectilePools:
   - projectileTag: ShotGunBullet
     projectilePrefab: {fileID: 2067379261028636081, guid: e3cf52bacf96df94a83a82b4a13915df, type: 3}
-    poolSize: 10
+    poolSize: 5
+  - projectileTag: ShotGunBullet2
+    projectilePrefab: {fileID: 2067379261028636081, guid: f722d7266c731f94ab529706aa8bf4ad, type: 3}
+    poolSize: 5
 --- !u!1001 &1878033262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42238,64 +42237,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4187834345423590, guid: 07f1cb66f92cc884f811a47abb580688, type: 3}
   m_PrefabInstance: {fileID: 437576755}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1883213795
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 626063026}
-    m_Modifications:
-    - target: {fileID: 1233500644573024, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_Name
-      value: SM_Prop_Chair_Rocking_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -21.634222
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 46.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 30.980902
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6988001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.715317
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 91.338
-      objectReference: {fileID: 0}
-    - target: {fileID: 4309520898865312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 64806374238562312, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9b68e2996c72a8b4496ac486a418e457, type: 3}
 --- !u!4 &1883631978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4975514956758280, guid: 9f18aaa6cfb8c0142bc63d6546b3a190, type: 3}
