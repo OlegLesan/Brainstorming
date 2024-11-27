@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\LevelSelectController.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleButtonAction.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleScrollUV.cs" />
+    <Compile Include="Assets\Assets import\PolygonDog\Scripts\POLYGON_DogAnimationController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\UI\LevelSelectButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleTimeLabel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\Towers\Projectile.cs" />
+    <Compile Include="Assets\Assets import\PolygonDog\Scripts\POLYGON_DogPrefabs.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Towers\SlowDownTower.cs" />
     <Compile Include="Assets\Scripts\Towers\BazokaImpact.cs" />
+    <Compile Include="Assets\Assets import\PolygonDog\Scripts\POLYGON_CameraController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\Path.cs" />
@@ -136,10 +139,15 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyStudios_Skybox.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyGoopShader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyTriplanar.shader" />
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyUVScroll.shader" />
     <None Include="Assets\Assets import\PolygonNatureBiomes\PNB_Core\Shaders\SyntyStudios_Basic_LOD_Shader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyCharacterShader.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\Assets import\PolygonNatureBiomes\PNB_Core\README.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
@@ -161,14 +169,18 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Assets import\PolygonBattleRoyale\Shader\DamageZone.shader" />
     <None Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Fonts\SairaCondensed\OFL.txt" />
     <None Include="Assets\Assets import\Animation\Bazooka Animset\Animation List - Bazooka Animset.txt" />
+    <None Include="Assets\!GET_MORE_ASSETS_FOR_FREE\DEV FREEDOM.txt" />
     <None Include="Assets\Assets import\Animation\2Handed Gun Animset\Animation List - 2 Handed Gun Animset.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Assets import\PolygonParticles\Materials\SHARED BY LUXURYPANDA.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Assets import\PolygonNatureBiomes\PNB_Core\Shaders\SyntyStudios_Skybox_NoFog.shader" />
+    <None Include="Assets\Assets import\PolygonDog\Documentation\Guide.txt" />
     <None Include="Assets\Assets import\PolygonBossZombies\Shaders\POLYGON_ZombieBoss.shader" />
+    <None Include="Assets\Assets import\PolygonApocalypseWasteland\Shaders\SyntyVehicleShader_01.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
