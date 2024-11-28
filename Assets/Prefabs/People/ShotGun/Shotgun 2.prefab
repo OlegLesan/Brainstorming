@@ -684,7 +684,7 @@ MonoBehaviour:
   firePoint: {fileID: 4522555514462586698}
   launcherModel: {fileID: 4106335723276150}
   rotateSpeed: 100
-  projectileTag: ShotGunBullet2
+  projectileTag: ShotGunBullet
   animationSpeed: 1
   targetFarthestEnemy: 0
 --- !u!114 &412149932343875631
