@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\Waves\Wave.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleOscillateSliders.cs" />
+    <Compile Include="Assets\Scripts\Towers\Flamethrower.cs" />
     <Compile Include="Assets\Scripts\Base.cs" />
     <Compile Include="Assets\Assets import\Animations\Kevin Iglesias\Caster Mage Animations\Scripts\ThrowNova.cs" />
     <Compile Include="Assets\Scripts\Systems\ManiPulatorTimer.cs" />
