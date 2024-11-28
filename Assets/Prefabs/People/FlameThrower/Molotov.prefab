@@ -2034,7 +2034,7 @@ MonoBehaviour:
   launcherModel: {fileID: 4421881298656014}
   rotateSpeed: 100
   projectileTag: Molotov
-  animationSpeed: 1
+  animationSpeed: 0.5
   targetFarthestEnemy: 0
 --- !u!114 &4790409328189870052
 MonoBehaviour:
@@ -2559,7 +2559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Item_Alcohol_02
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7476363020874665962, guid: b96403e687d43704a9db50abbb9525a6, type: 3}
+    - {fileID: 6831633389923577775, guid: b96403e687d43704a9db50abbb9525a6, type: 3}
+    - {fileID: 2172001052935123889, guid: b96403e687d43704a9db50abbb9525a6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Main Camera
+  - Molotov
   layers:
   - Default
   - TransparentFX

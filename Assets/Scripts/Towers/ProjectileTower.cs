@@ -87,6 +87,7 @@ public class ProjectileTower : MonoBehaviour
                 projectile.transform.rotation = firePoint.rotation;
                 projectile.SetActive(true);
 
+                // ѕровер€ем, какой тип снар€да мы получили
                 BazokaProjectile bazokaProjectile = projectile.GetComponent<BazokaProjectile>();
                 if (bazokaProjectile != null)
                 {
@@ -95,11 +96,20 @@ public class ProjectileTower : MonoBehaviour
                 }
                 else
                 {
-                    Projectile projectileScript = projectile.GetComponent<Projectile>();
-                    if (projectileScript != null)
+                    MolotovProjectile molotovProjectile = projectile.GetComponent<MolotovProjectile>();
+                    if (molotovProjectile != null)
                     {
-                        projectileScript.SetTarget(target);
-                        projectileScript.projectileTower = this;
+                        molotovProjectile.SetTarget(target);
+                        molotovProjectile.SetTower(this);
+                    }
+                    else
+                    {
+                        Projectile projectileScript = projectile.GetComponent<Projectile>();
+                        if (projectileScript != null)
+                        {
+                            projectileScript.SetTarget(target);
+                            projectileScript.projectileTower = this;
+                        }
                     }
                 }
             }
@@ -108,7 +118,7 @@ public class ProjectileTower : MonoBehaviour
 
     public void ReturnProjectileToPool(GameObject projectile)
     {
-        if (projectileTag != null)
+        if (!string.IsNullOrEmpty(projectileTag))
         {
             ProjectilePoolManager.instance.ReturnProjectile(projectileTag, projectile);
         }
