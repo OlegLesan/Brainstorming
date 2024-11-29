@@ -45,7 +45,7 @@ public class MolotovProjectile : MonoBehaviour
         }
         else if (target == null)
         {
-            Debug.LogWarning($"{gameObject.name}: ÷ель не найдена, возврат в пул.");
+           
             ReturnToPool();
         }
     }

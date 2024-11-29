@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
         bool wavesCompleted = WaveManager.instance.AllWavesCompleted();
         bool baseIsAlive = theBase.currentHealth > 0;
 
-        Debug.Log($"[CheckForLevelCompletion] WavesCompleted={wavesCompleted}, AllEnemiesDefeated={allEnemiesDefeated}, BaseHealth={baseIsAlive}");
+       
 
         if (allEnemiesDefeated && wavesCompleted && baseIsAlive)
         {
