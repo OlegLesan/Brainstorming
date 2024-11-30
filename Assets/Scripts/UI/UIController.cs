@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour
     public Button sellButton;
     public TMP_Text sellValueText;
 
+    public Button meleeButton; // Кнопка ближнего боя
+
     // Звуковые эффекты
     public AudioClip upgradeSound;
     public AudioClip sellSound;
@@ -61,13 +63,11 @@ public class UIController : MonoBehaviour
 
     public void PauseUnpause()
     {
-        // Проверяем, включен ли экран завершения уровня
         if (levelCompleteScreen.activeSelf)
         {
-            return; // Если включен, выходим из метода, чтобы не включать экран паузы
+            return;
         }
 
-        // Переключение паузы, если экран завершения уровня не активен
         if (pauseScreen.activeSelf == false)
         {
             pauseScreen.SetActive(true);
@@ -112,29 +112,33 @@ public class UIController : MonoBehaviour
     public void ShowTowerButtons()
     {
         towerButtons.SetActive(true);
+        SetMeleeButtonActive(false); // Скрываем кнопку ближнего боя
     }
 
     public void HideTowerButtons()
     {
         towerButtons.SetActive(false);
+        SetMeleeButtonActive(true); // Показываем кнопку ближнего боя
     }
 
-    // Показать панель улучшений и обновить стоимость продажи
     public void ShowUpgradePanel(Tower tower)
     {
         upgradePanel.SetActive(true);
-        upgradeCostText.text = $"{tower.upgradeCost}G"; // Отображаем стоимость улучшения
+        upgradeCostText.text = $"{tower.upgradeCost}G";
 
         bool canUpgrade = tower.upgradedTowerPrefab != null && MoneyManager.instance.currentMoney >= tower.upgradeCost;
-        upgradeButton.interactable = canUpgrade; // Включаем или отключаем кнопку улучшения
+        upgradeButton.interactable = canUpgrade;
 
-        sellButton.interactable = true; // Включаем кнопку продажи
-        sellValueText.text = $"Sell: {tower.sellValue}G"; // Отображаем стоимость продажи
+        sellButton.interactable = true;
+        sellValueText.text = $"Sell: {tower.sellValue}G";
+
+        SetMeleeButtonActive(false); // Скрываем кнопку ближнего боя
     }
 
     public void HideUpgradePanel()
     {
         upgradePanel.SetActive(false);
+        SetMeleeButtonActive(true); // Показываем кнопку ближнего боя
     }
 
     public void UpgradeSelectedTower()
@@ -154,6 +158,14 @@ public class UIController : MonoBehaviour
             TowerManager.instance.selectedTower.SellTower();
             PlaySound(sellSound);
             HideUpgradePanel();
+        }
+    }
+
+    private void SetMeleeButtonActive(bool isActive)
+    {
+        if (meleeButton != null)
+        {
+            meleeButton.gameObject.SetActive(isActive); // Управляем активностью объекта кнопки
         }
     }
 
