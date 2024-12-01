@@ -5099,8 +5099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c0d49e18bbbc144830c29f6da058c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRange: 5
   attackRange: 1
-  attackCooldown: 0
+  moveSpeed: 1
   damage: 1
   health: 100
   healthBar: {fileID: 7812541933888710037}

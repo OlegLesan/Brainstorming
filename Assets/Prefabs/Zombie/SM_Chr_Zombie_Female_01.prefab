@@ -729,8 +729,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8313518, y: 2.3230324, z: 1}
-  m_Center: {x: 0.035628825, y: 0.6615181, z: 8.423937e-12}
+  m_Size: {x: 1.0368488, y: 1.7812682, z: 0.66270125}
+  m_Center: {x: 0.097593784, y: 0.9412002, z: 0.10721246}
 --- !u!54 &4800946566204092155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -757,7 +757,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!82 &1484954028657302681
 AudioSource:
   m_ObjectHideFlags: 0
@@ -866,11 +866,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
   attackRange: 1
   detectionRange: 5
-  attackCooldown: 1
   damage: 10
+  moveSpeed: 8
 --- !u!1 &3459764533057100739
 GameObject:
   m_ObjectHideFlags: 0

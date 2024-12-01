@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class MeleeUnitController : MonoBehaviour
 {
+    public float detectionRange = 5f; // Радиус обнаружения врагов
     public float attackRange = 1.5f; // Радиус атаки
     public float moveSpeed = 3f; // Скорость движения
     public float damage = 15f; // Наносимый урон
@@ -39,7 +40,7 @@ public class MeleeUnitController : MonoBehaviour
 
         if (!isEngaged && targetEnemy == null)
         {
-            FindEnemyInRange();
+            FindEnemyInDetectionRange();
         }
 
         if (targetEnemy != null)
@@ -50,15 +51,15 @@ public class MeleeUnitController : MonoBehaviour
         UpdateHealthBarRotation();
     }
 
-    private void FindEnemyInRange()
+    private void FindEnemyInDetectionRange()
     {
-        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Enemy"));
+        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, detectionRange, LayerMask.GetMask("Enemy"));
 
         if (enemiesInRange.Length > 0)
         {
             targetEnemy = enemiesInRange[0].transform;
             isEngaged = true;
-            animator?.SetBool("IsAttacking", true);
+            animator?.SetBool("IsMoving", true); // Начинаем движение
         }
     }
 
@@ -72,13 +73,14 @@ public class MeleeUnitController : MonoBehaviour
         if (distanceToEnemy > attackRange)
         {
             // Движемся к врагу
-            animator?.SetBool("IsMoving", true);
-
             Vector3 direction = (targetEnemy.position - transform.position).normalized;
             transform.position += direction * moveSpeed * Time.deltaTime;
 
             // Поворачиваем юнита в сторону врага
             transform.rotation = Quaternion.LookRotation(direction);
+
+            animator?.SetBool("IsMoving", true);
+            animator?.SetBool("IsAttacking", false);
         }
         else
         {
@@ -103,6 +105,7 @@ public class MeleeUnitController : MonoBehaviour
                 targetEnemy = null;
                 isEngaged = false;
                 animator?.SetBool("IsAttacking", false);
+                animator?.SetBool("IsMoving", false);
             }
         }
     }
@@ -143,8 +146,11 @@ public class MeleeUnitController : MonoBehaviour
             collider.enabled = false;
         }
 
-        // Запуск анимации смерти
+        // Отключаем все анимации кроме "Death"
+        animator?.SetBool("IsMoving", false);
         animator?.SetBool("IsAttacking", false);
+
+        // Сразу запускаем анимацию смерти
         animator?.SetTrigger("Death");
 
         if (healthBar != null)
@@ -194,7 +200,9 @@ public class MeleeUnitController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange); // Отображаем радиус обнаружения
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, attackRange); // Отображаем радиус атаки
     }
 }
