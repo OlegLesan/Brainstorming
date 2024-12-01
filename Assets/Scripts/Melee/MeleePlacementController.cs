@@ -8,10 +8,12 @@ public class MeleePlacementController : MonoBehaviour
 {
     public GameObject meleePrefab; // Префаб юнита
     public LayerMask groundLayer; // Слой, на который можно размещать
+    public LayerMask enemyLayer; // Слой врагов
     public Button meleeButton; // Кнопка ближнего боя
     public int initialPoolSize = 10; // Начальный размер пула
     public int meleeUnitCost = 50; // Стоимость юнита
     public TMP_Text meleeCostText; // Текст для отображения стоимости юнита
+    public float minDistanceFromEnemies = 2f; // Минимальное расстояние до врагов
 
     private Queue<GameObject> unitPool; // Пул объектов
     private GameObject previewObject; // Объект-превью
@@ -29,8 +31,8 @@ public class MeleePlacementController : MonoBehaviour
         if (meleePrefab != null)
         {
             previewObject = Instantiate(meleePrefab);
-            previewObject.GetComponent<Collider>().enabled = false;
-            previewObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            previewObject.GetComponent<Collider>().enabled = false; // Отключаем коллайдер у превью
+            previewObject.layer = LayerMask.NameToLayer("Ignore Raycast"); // Устанавливаем недоступный для лучей слой
             previewObject.SetActive(false);
         }
 
@@ -97,17 +99,47 @@ public class MeleePlacementController : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            previewObject.transform.position = hit.point;
-            previewObject.SetActive(true);
+            // Проверяем, находится ли точка пересечения на допустимом слое
+            if (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0)
+            {
+                // Проверяем расстояние до ближайших врагов относительно позиции объекта-превью
+                bool isNearEnemy = IsNearEnemy(hit.point);
+
+                if (!isNearEnemy)
+                {
+                    // Если врагов нет вблизи, включаем объект-превью
+                    previewObject.transform.position = hit.point;
+                    previewObject.SetActive(true);
+                }
+                else
+                {
+                    // Если враги слишком близко, отключаем объект-превью
+                    previewObject.SetActive(false);
+                }
+            }
+            else
+            {
+                // Выключаем объект-превью на недопустимых слоях
+                previewObject.SetActive(false);
+            }
         }
         else
         {
+            // Если ничего не пересекли, выключаем объект-превью
             previewObject.SetActive(false);
         }
 
         HandleMouseClicks();
+    }
+
+    private bool IsNearEnemy(Vector3 position)
+    {
+        // Ищем врагов в пределах минимального расстояния от указанной позиции
+        Collider[] enemiesInRange = Physics.OverlapSphere(position, minDistanceFromEnemies, enemyLayer);
+
+        return enemiesInRange.Length > 0; // Если враги найдены, возвращаем true
     }
 
     private void HandleMouseClicks()
@@ -166,5 +198,14 @@ public class MeleePlacementController : MonoBehaviour
     {
         isPlacingMelee = false;
         meleeButton.gameObject.SetActive(true);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isPlacingMelee && previewObject != null && previewObject.activeSelf)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(previewObject.transform.position, minDistanceFromEnemies);
+        }
     }
 }
