@@ -1,36 +1,43 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // Для работы с TMP_Text
+using System.Collections;
+using System.Collections.Generic;
 
 public class MeleePlacementController : MonoBehaviour
 {
-    public GameObject meleePrefab; // Префаб, который будет создан
-    public LayerMask groundLayer;  // Слой, на который можно размещать
-    public Button meleeButton;     // Кнопка ближнего боя
+    public GameObject meleePrefab; // Префаб юнита
+    public LayerMask groundLayer; // Слой, на который можно размещать
+    public Button meleeButton; // Кнопка ближнего боя
+    public int initialPoolSize = 10; // Начальный размер пула
+    public int meleeUnitCost = 50; // Стоимость юнита
+    public TMP_Text meleeCostText; // Текст для отображения стоимости юнита
 
-    private GameObject previewObject; // Объект для предварительного отображения
+    private Queue<GameObject> unitPool; // Пул объектов
+    private GameObject previewObject; // Объект-превью
     private bool isPlacingMelee = false; // Режим размещения
 
     void Start()
     {
-        // Настраиваем кнопку
+        InitializePool();
+
         if (meleeButton != null)
         {
             meleeButton.onClick.AddListener(StartPlacingMelee);
-            Debug.Log("Кнопка ближнего боя настроена");
         }
 
-        // Создаем объект-превью, но скрываем его
         if (meleePrefab != null)
         {
             previewObject = Instantiate(meleePrefab);
-            previewObject.GetComponent<Collider>().enabled = false; // Отключаем коллайдер
-            previewObject.layer = LayerMask.NameToLayer("Ignore Raycast"); // Игнорируем Raycast
-            previewObject.SetActive(false); // Скрываем по умолчанию
-            Debug.Log("Объект-превью создан и скрыт по умолчанию");
+            previewObject.GetComponent<Collider>().enabled = false;
+            previewObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            previewObject.SetActive(false);
         }
-        else
+
+        // Устанавливаем текст цены юнита
+        if (meleeCostText != null)
         {
-            Debug.LogWarning("MeleePrefab не установлен!");
+            meleeCostText.text = $"{meleeUnitCost}G";
         }
     }
 
@@ -38,86 +45,126 @@ public class MeleePlacementController : MonoBehaviour
     {
         if (isPlacingMelee)
         {
-            HandlePreviewPosition(); // Управляем позицией объекта-превью
+            HandlePreviewPosition();
         }
     }
 
-    // Начало процесса размещения
-    private void StartPlacingMelee()
+    private void InitializePool()
     {
-        if (previewObject == null)
-        {
-            Debug.LogWarning("Превью объект не установлен!");
-            return;
-        }
+        unitPool = new Queue<GameObject>();
 
-        isPlacingMelee = true;
-        meleeButton.gameObject.SetActive(false); // Скрываем кнопку ближнего боя
-        previewObject.SetActive(true); // Показываем объект-превью
-        Debug.Log("Начат процесс размещения, кнопка скрыта");
+        for (int i = 0; i < initialPoolSize; i++)
+        {
+            GameObject unit = Instantiate(meleePrefab);
+            unit.SetActive(false);
+            unitPool.Enqueue(unit);
+        }
     }
 
-    // Обработка позиции объекта-превью
-    private void HandlePreviewPosition()
+    public GameObject GetUnitFromPool()
     {
-        // Отправляем луч из камеры в позицию курсора
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        // Проверяем попадание на слой
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
+        if (unitPool.Count > 0)
         {
-            // Если курсор на слое, обновляем позицию объекта-превью
-            previewObject.transform.position = hit.point;
-            previewObject.SetActive(true); // Убеждаемся, что превью видно
-            
+            GameObject unit = unitPool.Dequeue();
+            unit.SetActive(true);
+            unit.GetComponent<MeleeUnitController>().enabled = true; // Активируем логику юнита
+            return unit;
         }
         else
         {
-            
+            Debug.LogWarning("Пул пуст. Создаётся новый юнит.");
+            return Instantiate(meleePrefab);
+        }
+    }
+
+    public void ReturnUnitToPool(GameObject unit)
+    {
+        unit.SetActive(false);
+        unit.GetComponent<MeleeUnitController>().enabled = false; // Отключаем логику юнита
+        unitPool.Enqueue(unit);
+    }
+
+    private void StartPlacingMelee()
+    {
+        if (previewObject == null) return;
+
+        isPlacingMelee = true;
+        meleeButton.gameObject.SetActive(false);
+        previewObject.SetActive(true);
+    }
+
+    private void HandlePreviewPosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
+        {
+            previewObject.transform.position = hit.point;
+            previewObject.SetActive(true);
+        }
+        else
+        {
             previewObject.SetActive(false);
         }
 
-        // Обработка кликов мыши
         HandleMouseClicks();
     }
 
-    // Обработка кликов мыши
     private void HandleMouseClicks()
     {
-        // Левый клик: создаем объект
         if (Input.GetMouseButtonDown(0) && previewObject.activeSelf)
         {
             PlaceMeleeObject(previewObject.transform.position);
         }
 
-        // Правый клик: отменяем размещение
         if (Input.GetMouseButtonDown(1))
         {
             CancelMeleePlacement();
         }
     }
 
-    // Установка объекта на слой
     private void PlaceMeleeObject(Vector3 position)
     {
-        Instantiate(meleePrefab, position, Quaternion.identity); // Создаем финальный объект
-        
+        if (!MoneyManager.instance.SpendMoney(meleeUnitCost))
+        {
+            if (UIController.instance.notEnoughMoneyWarning != null)
+            {
+                UIController.instance.notEnoughMoneyWarning.SetActive(true);
+                StartCoroutine(HideNotEnoughMoneyWarning());
+            }
+            return; // Выходим, если недостаточно денег
+        }
+
+        GameObject unit = GetUnitFromPool();
+        unit.transform.position = position;
+        unit.transform.rotation = Quaternion.identity;
+
+        if (previewObject != null)
+        {
+            previewObject.SetActive(false);
+        }
+
         EndPlacingMelee();
     }
 
-    // Отмена процесса размещения
+    private IEnumerator HideNotEnoughMoneyWarning()
+    {
+        yield return new WaitForSeconds(2f);
+        if (UIController.instance.notEnoughMoneyWarning != null)
+        {
+            UIController.instance.notEnoughMoneyWarning.SetActive(false);
+        }
+    }
+
     private void CancelMeleePlacement()
     {
-        previewObject.SetActive(false); // Скрываем объект-превью
-        
+        previewObject.SetActive(false);
         EndPlacingMelee();
     }
 
-    // Завершение процесса размещения
     private void EndPlacingMelee()
     {
         isPlacingMelee = false;
-        meleeButton.gameObject.SetActive(true); // Показываем кнопку ближнего боя
-        
+        meleeButton.gameObject.SetActive(true);
     }
 }

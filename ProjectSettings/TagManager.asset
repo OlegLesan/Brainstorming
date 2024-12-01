@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Main Camera
   - Molotov
+  - Unit
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - NO
   - IgnoreRaycast
   - GroundMelee
-  - MeleeUnit
+  - Unit
   - 
   - 
   - 

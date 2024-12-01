@@ -1,32 +1,41 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeleeUnitController : MonoBehaviour
 {
     public float attackRange = 1.5f; // Радиус атаки
-    public float attackCooldown = 1f; // Время между атаками
+    public float moveSpeed = 3f; // Скорость движения
     public float damage = 15f; // Наносимый урон
     public float health = 100f; // Здоровье юнита
+    public Slider healthBar; // Полоска здоровья
 
-    private Vector3 startPosition; // Начальная позиция юнита
     private Animator animator;
     private Transform targetEnemy; // Цель (враг)
-    private bool isAttacking = false; // Идёт ли атака
-    private bool isEngaged = false; // Юнит занят боем
+    private bool isEngaged = false; // Юнит находится в бою
     private bool isDead = false;
 
-    private EnemyPool unitPool;
+    private Camera mainCamera;
+    private MeleePlacementController poolController; // Контроллер пула
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        unitPool = FindObjectOfType<EnemyPool>();
-        startPosition = transform.position; // Сохраняем начальную позицию юнита
+        mainCamera = Camera.main;
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = health;
+            healthBar.value = health;
+            healthBar.gameObject.SetActive(false); // Полоска скрыта, пока не получен урон
+        }
+
+        // Поиск контроллера пула
+        poolController = FindObjectOfType<MeleePlacementController>();
     }
 
     private void Update()
     {
-        if (isDead || isAttacking) return;
+        if (isDead) return;
 
         if (!isEngaged && targetEnemy == null)
         {
@@ -35,8 +44,10 @@ public class MeleeUnitController : MonoBehaviour
 
         if (targetEnemy != null)
         {
-            EngageEnemy();
+            MoveTowardsEnemy();
         }
+
+        UpdateHealthBarRotation();
     }
 
     private void FindEnemyInRange()
@@ -47,55 +58,66 @@ public class MeleeUnitController : MonoBehaviour
         {
             targetEnemy = enemiesInRange[0].transform;
             isEngaged = true;
+            animator?.SetBool("IsAttacking", true);
         }
     }
 
-    private void EngageEnemy()
+    private void MoveTowardsEnemy()
     {
         if (targetEnemy == null) return;
 
-        Vector3 direction = (targetEnemy.position - transform.position).normalized;
-        transform.rotation = Quaternion.LookRotation(direction);
+        // Рассчитываем расстояние до врага
+        float distanceToEnemy = Vector3.Distance(transform.position, targetEnemy.position);
 
-        float distance = Vector3.Distance(transform.position, targetEnemy.position);
-        if (distance > attackRange)
+        if (distanceToEnemy > attackRange)
         {
-            animator?.SetBool("IsMoving", false);
+            // Движемся к врагу
+            animator?.SetBool("IsMoving", true);
+
+            Vector3 direction = (targetEnemy.position - transform.position).normalized;
+            transform.position += direction * moveSpeed * Time.deltaTime;
+
+            // Поворачиваем юнита в сторону врага
+            transform.rotation = Quaternion.LookRotation(direction);
         }
         else
         {
-            StartCoroutine(AttackEnemy());
+            // Останавливаем движение и атакуем
+            animator?.SetBool("IsMoving", false);
+            animator?.SetBool("IsAttacking", true);
         }
     }
 
-    private IEnumerator AttackEnemy()
+    // Этот метод вызывается из Animation Event
+    private void DealDamage()
     {
-        isAttacking = true;
-        animator?.SetTrigger("Attack");
+        if (targetEnemy == null) return;
 
-        yield return new WaitForSeconds(attackCooldown);
-
-        if (targetEnemy != null)
+        EnemyHealthController enemyHealth = targetEnemy.GetComponent<EnemyHealthController>();
+        if (enemyHealth != null)
         {
-            // Получаем компонент EnemyHealthController
-            EnemyHealthController enemyHealth = targetEnemy.GetComponent<EnemyHealthController>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damage, "Melee");
+            enemyHealth.TakeDamage(damage, "Melee");
 
-                if (enemyHealth.IsDead())
-                {
-                    ResetUnit();
-                }
+            if (enemyHealth.IsDead())
+            {
+                targetEnemy = null;
+                isEngaged = false;
+                animator?.SetBool("IsAttacking", false);
             }
         }
-
-        isAttacking = false;
     }
 
     public void TakeDamage(float damageAmount)
     {
+        if (isDead) return; // Если уже мертв, урон не принимаем
+
         health -= damageAmount;
+
+        if (healthBar != null)
+        {
+            healthBar.value = health;
+            healthBar.gameObject.SetActive(true); // Показываем полоску здоровья
+        }
 
         if (health <= 0)
         {
@@ -105,22 +127,30 @@ public class MeleeUnitController : MonoBehaviour
 
     private void Die()
     {
+        if (isDead) return; // Избегаем повторного вызова
+
         isDead = true;
-        animator?.SetTrigger("Death");
-        StartCoroutine(ReturnToPoolAfterDelay());
-    }
+        health = 0; // Устанавливаем здоровье в 0 на всякий случай
 
-    private IEnumerator ReturnToPoolAfterDelay()
-    {
-        yield return new WaitForSeconds(2f);
-        unitPool.ReturnEnemy(gameObject);
-    }
-
-    private void ResetUnit()
-    {
+        // Сброс параметров взаимодействия
         targetEnemy = null;
-        transform.position = startPosition; // Возвращаем юнита на начальную позицию
         isEngaged = false;
+
+        // Отключение коллайдера, чтобы враги перестали атаковать
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+
+        // Запуск анимации смерти
+        animator?.SetBool("IsAttacking", false);
+        animator?.SetTrigger("Death");
+
+        if (healthBar != null)
+        {
+            healthBar.gameObject.SetActive(false); // Скрываем полоску здоровья при смерти
+        }
     }
 
     public bool IsDead()
@@ -128,10 +158,43 @@ public class MeleeUnitController : MonoBehaviour
         return isDead;
     }
 
+    // Этот метод вызывается в конце анимации смерти (Animation Event)
+    private void ReturnToPool()
+    {
+        if (poolController != null)
+        {
+            poolController.ReturnUnitToPool(gameObject);
+        }
+
+        // Сброс состояния перед возвратом в пул
+        isDead = false;
+        health = 100f; // Сброс здоровья
+        if (healthBar != null)
+        {
+            healthBar.value = healthBar.maxValue;
+            healthBar.gameObject.SetActive(false);
+        }
+
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = true; // Включаем коллайдер для следующего использования
+        }
+    }
+
+    private void UpdateHealthBarRotation()
+    {
+        if (healthBar == null || mainCamera == null) return;
+
+        // Полоска здоровья всегда смотрит на камеру
+        Vector3 direction = mainCamera.transform.position - healthBar.transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(-direction);
+        healthBar.transform.rotation = Quaternion.Lerp(healthBar.transform.rotation, targetRotation, Time.deltaTime * 10f);
+    }
+
     private void OnDrawGizmosSelected()
     {
-        // Отображение радиуса атаки в редакторе Unity
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

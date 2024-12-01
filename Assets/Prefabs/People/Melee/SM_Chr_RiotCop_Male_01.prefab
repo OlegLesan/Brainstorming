@@ -5100,9 +5100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1
-  attackCooldown: 1
+  attackCooldown: 0
   damage: 1
   health: 100
+  healthBar: {fileID: 7812541933888710037}
 --- !u!95 &95489333957544220
 Animator:
   serializedVersion: 5

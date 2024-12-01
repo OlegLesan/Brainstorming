@@ -3,43 +3,35 @@ using UnityEngine;
 
 public class MeleeEnemyController : MonoBehaviour
 {
-    public float moveSpeed = 2f; // Скорость движения
     public float attackRange = 1.5f; // Радиус атаки
     public float detectionRange = 5f; // Радиус обнаружения юнита
-    public float attackCooldown = 1f; // Время между атаками
     public float damage = 10f; // Наносимый урон
+    public float moveSpeed = 2f; // Скорость движения
 
-    private Animator animator; // Для управления анимацией
+    private Animator animator;
     private Transform targetUnit; // Цель (юнит)
-    private Vector3 savedTargetPosition; // Сохранённая точка пути
-    private bool isAttacking = false; // Идёт ли атака
-    private bool isEngaged = false; // Враг занят боем
-    private bool reachedEnd = false; // Достиг ли конца пути
-    private Path thePath; // Путь врага
-    private int currentPoint = 0; // Текущая точка пути
-    private EnemyPool enemyPool;
-
+    private bool isAttacking = false; // В процессе атаки
+    private bool isDead = false;
+    private EnemyControler enemyControler; // Ссылка на EnemyControler
     private EnemyHealthController healthController; // Ссылка на EnemyHealthController
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        enemyPool = FindObjectOfType<EnemyPool>();
+        enemyControler = GetComponent<EnemyControler>();
         healthController = GetComponent<EnemyHealthController>();
 
         if (healthController == null)
         {
-            Debug.LogError("EnemyHealthController не найден на враге!");
+            Debug.LogError("EnemyHealthController не найден на объекте " + gameObject.name);
         }
-
-        
     }
 
     private void Update()
     {
-        if (reachedEnd || isAttacking || healthController == null || healthController.IsDead()) return;
+        if (isDead) return;
 
-        if (!isEngaged && targetUnit == null)
+        if (targetUnit == null)
         {
             FindUnitInRange();
         }
@@ -48,36 +40,18 @@ public class MeleeEnemyController : MonoBehaviour
         {
             EngageUnit();
         }
-        else
+        else if (enemyControler != null && !enemyControler.enabled)
         {
-            ResumeSavedPath();
+            enemyControler.enabled = true; // Включаем EnemyControler, если цель потеряна
         }
     }
 
     private void FindUnitInRange()
     {
-        if (thePath == null || thePath.points == null || thePath.points.Length == 0)
-        {
-            Debug.LogWarning($"Path отсутствует или пуст у объекта {gameObject.name}!");
-            return;
-        }
-
         Collider[] unitsInRange = Physics.OverlapSphere(transform.position, detectionRange, LayerMask.GetMask("Unit"));
-
-        Debug.Log($"Units found in range: {unitsInRange.Length}");
 
         if (unitsInRange.Length > 0)
         {
-            if (!isEngaged)
-            {
-                if (thePath.points == null || currentPoint >= thePath.points.Length)
-                {
-                    Debug.LogError("Текущая точка пути недействительна!");
-                    return;
-                }
-                savedTargetPosition = thePath.points[currentPoint].position;
-            }
-
             float closestDistance = Mathf.Infinity;
             Transform closestUnit = null;
 
@@ -94,10 +68,11 @@ public class MeleeEnemyController : MonoBehaviour
             if (closestUnit != null)
             {
                 targetUnit = closestUnit;
-                isEngaged = true;
-                if (animator != null)
+
+                // Выключаем EnemyControler при обнаружении юнита
+                if (enemyControler != null && enemyControler.enabled)
                 {
-                    animator.SetBool("IsMoving", true);
+                    enemyControler.enabled = false;
                 }
             }
         }
@@ -107,7 +82,10 @@ public class MeleeEnemyController : MonoBehaviour
     {
         if (targetUnit == null)
         {
-            isEngaged = false;
+            if (enemyControler != null && !enemyControler.enabled)
+            {
+                enemyControler.enabled = true; // Включаем EnemyControler
+            }
             return;
         }
 
@@ -115,87 +93,36 @@ public class MeleeEnemyController : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(direction);
 
         float distance = Vector3.Distance(transform.position, targetUnit.position);
-
         if (distance > attackRange)
         {
+            // Сближаемся с целью
             transform.position += direction * moveSpeed * Time.deltaTime;
+            animator?.SetBool("IsAttacking", false);
             animator?.SetBool("IsMoving", true);
         }
         else
         {
+            // В радиусе атаки
             animator?.SetBool("IsMoving", false);
-            if (!isAttacking)
-            {
-                StartCoroutine(AttackUnit());
-            }
+            animator?.SetBool("IsAttacking", true);
         }
     }
 
-    private IEnumerator AttackUnit()
+    // Этот метод вызывается из Animation Event
+    private void DealDamage()
     {
-        isAttacking = true;
-        animator?.SetTrigger("Attack");
+        if (targetUnit == null) return;
 
-        yield return new WaitForSeconds(attackCooldown);
-
-        if (targetUnit != null)
+        MeleeUnitController unitController = targetUnit.GetComponent<MeleeUnitController>();
+        if (unitController != null)
         {
-            MeleeUnitController unitController = targetUnit.GetComponent<MeleeUnitController>();
-            if (unitController != null)
+            unitController.TakeDamage(damage);
+
+            if (unitController.IsDead())
             {
-                unitController.TakeDamage(damage);
-
-                if (unitController.IsDead())
-                {
-                    targetUnit = null;
-                    isEngaged = false;
-                }
+                targetUnit = null; // Уничтожаем цель
+                animator?.SetBool("IsAttacking", false);
             }
-        }
-
-        isAttacking = false;
-    }
-
-    private void ResumeSavedPath()
-    {
-        if (thePath == null || thePath.points.Length == 0) return;
-
-        Vector3 direction = (savedTargetPosition - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.LookRotation(direction);
-
-        if (Vector3.Distance(transform.position, savedTargetPosition) < 0.1f)
-        {
-            currentPoint++;
-            if (currentPoint >= thePath.points.Length)
-            {
-                reachedEnd = true;
-                DealDamageToBase();
-            }
-            else
-            {
-                savedTargetPosition = thePath.points[currentPoint].position;
-            }
-        }
-
-        animator?.SetBool("IsMoving", true);
-    }
-
-    private void DealDamageToBase()
-    {
-        Base baseComponent = FindObjectOfType<Base>();
-        if (baseComponent != null)
-        {
-            baseComponent.TakeDamage(damage);
-        }
-
-        if (enemyPool != null)
-        {
-            enemyPool.ReturnEnemy(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -204,7 +131,31 @@ public class MeleeEnemyController : MonoBehaviour
         if (healthController != null)
         {
             healthController.TakeDamage(damageAmount, "Melee");
+
+            if (healthController.IsDead())
+            {
+                Die();
+            }
         }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        animator?.SetBool("IsAttacking", false);
+        animator?.SetBool("IsMoving", false);
+        animator?.SetTrigger("Death");
+        StartCoroutine(ReturnToPoolAfterDelay());
+    }
+
+    private IEnumerator ReturnToPoolAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        if (enemyControler != null)
+        {
+            enemyControler.enabled = true; // Включаем EnemyControler перед возвратом в пул
+        }
+        Destroy(gameObject); // Или возвращаем в пул, если используется пул объектов
     }
 
     private void OnDrawGizmosSelected()
@@ -214,12 +165,5 @@ public class MeleeEnemyController : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
-
-    public void Setup(Path path)
-    {
-        thePath = path;
-        currentPoint = 0;
-        reachedEnd = false;
     }
 }
