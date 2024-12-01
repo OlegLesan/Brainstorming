@@ -1376,6 +1376,7 @@ GameObject:
   - component: {fileID: -1066753324870761247}
   - component: {fileID: -5676651643443199350}
   - component: {fileID: -5953205628036180329}
+  - component: {fileID: -7532558668318597504}
   m_Layer: 9
   m_Name: SimpleZombie8
   m_TagString: Enemy
@@ -1601,6 +1602,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-7532558668318597504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002605408045144682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  attackRange: 1
+  detectionRange: 5
+  attackCooldown: 1
+  damage: 10
 --- !u!1 &5002605408045144688
 GameObject:
   m_ObjectHideFlags: 0

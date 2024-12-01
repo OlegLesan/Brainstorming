@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 2382380630837414111}
   - component: {fileID: 884326617309397537}
   - component: {fileID: 2410536346701163545}
+  - component: {fileID: 5886796809451616216}
   m_Layer: 9
   m_Name: Armored zombie
   m_TagString: Enemy
@@ -339,6 +340,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5886796809451616216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069217425750644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  attackRange: 1
+  detectionRange: 5
+  attackCooldown: 1
+  damage: 10
 --- !u!1 &1073944212413306
 GameObject:
   m_ObjectHideFlags: 0

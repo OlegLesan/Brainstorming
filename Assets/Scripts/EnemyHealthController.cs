@@ -10,7 +10,7 @@ public class EnemyHealthController : MonoBehaviour
     public float rotationSpeed = 5f;
     private Camera targetCamera;
     public int moneyOnDeath = 50;
-    public float destroyTime = 10f; // Время перед возвращением в пул
+    public float destroyTime = 10f;
 
     private float initialHealth;
     private Collider enemyCollider;
@@ -18,7 +18,7 @@ public class EnemyHealthController : MonoBehaviour
     private AudioSource audioSource;
     private EnemyPool enemyPool;
 
-    private bool isDead = false; // Флаг, чтобы предотвратить повторную обработку смерти
+    private bool isDead = false; // Флаг для проверки смерти
 
     [System.Serializable]
     public struct DamageResistance
@@ -40,7 +40,7 @@ public class EnemyHealthController : MonoBehaviour
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
 
-        LevelManager.instance.activeEnemies.Add(this); // Добавляем врага в список активных врагов
+        LevelManager.instance.activeEnemies.Add(this);
         targetCamera = Camera.main;
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
@@ -60,7 +60,7 @@ public class EnemyHealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount, string damageType)
     {
-        if (isDead) return; // Игнорируем урон, если враг уже мёртв
+        if (isDead) return;
 
         float resistanceFactor = GetResistanceFactor(damageType);
         float effectiveDamage = damageAmount * (1 - resistanceFactor);
@@ -69,7 +69,7 @@ public class EnemyHealthController : MonoBehaviour
         if (totalHealth <= 0)
         {
             totalHealth = 0;
-            HandleDeath(); // Обрабатываем смерть только один раз
+            HandleDeath();
         }
         else
         {
@@ -112,17 +112,16 @@ public class EnemyHealthController : MonoBehaviour
         {
             animator.SetTrigger("Death");
         }
-        // Добавляем начисление денег за смерть врага
+
         MoneyManager.instance.GiveMoney(moneyOnDeath);
 
         LevelManager.instance.RemoveEnemyFromActiveList(this);
         WaveManager.instance.DecreaseEnemyCount();
 
-        // Отключаем движение врага
         EnemyControler enemyController = GetComponent<EnemyControler>();
         if (enemyController != null)
         {
-            enemyController.StopMoving(); // Прекращаем движение
+            enemyController.StopMoving();
         }
 
         StartCoroutine(ReturnToPoolAfterDelay());
@@ -157,12 +156,17 @@ public class EnemyHealthController : MonoBehaviour
             animator.ResetTrigger("Death");
         }
 
-        isDead = false; // Сбрасываем флаг, чтобы враг мог быть повторно использован
+        isDead = false;
 
         EnemyControler controller = GetComponent<EnemyControler>();
         if (controller != null && controller.thePath != null)
         {
-            controller.Setup(controller.thePath); // Назначаем путь для врага
+            controller.Setup(controller.thePath);
         }
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 }
