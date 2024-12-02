@@ -248,7 +248,7 @@ MonoBehaviour:
   moveSpeed: 20
   damagePerSecond: 0.5
   fireDuration: 4
-  damageType: 
+  damageType: Fire
   impactEffect: {fileID: 7892805660232619492, guid: efca4f1a86e4ce64b82ed4c6cc8e9d31, type: 3}
 --- !u!1001 &5038505232649749778
 PrefabInstance:

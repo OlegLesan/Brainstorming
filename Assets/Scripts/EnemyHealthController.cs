@@ -92,7 +92,7 @@ public class EnemyHealthController : MonoBehaviour
 
     private void HandleDeath()
     {
-        if (isDead) return;
+        if (isDead) return; // Проверяем, что смерть уже обработана
         isDead = true;
 
         Debug.Log("Enemy died: " + gameObject.name);
@@ -113,17 +113,13 @@ public class EnemyHealthController : MonoBehaviour
             audioSource.enabled = false;
         }
 
-        // Сброс параметров аниматора и запуск анимации смерти
+        // Сброс параметров аниматора и установка IsDead
         if (animator != null)
         {
             Debug.Log("Playing death animation for: " + gameObject.name);
 
-            // Сбрасываем все состояния аниматора
-            animator.SetBool("IsAttacking", false);
-            animator.SetBool("IsMoving", false);
-
-            // Запускаем анимацию смерти
-            animator.SetTrigger("Death");
+            // Устанавливаем состояние смерти в аниматоре
+            animator.SetBool("IsDead", true);
         }
         else
         {
@@ -147,6 +143,7 @@ public class EnemyHealthController : MonoBehaviour
         // Уничтожение или возврат в пул
         StartCoroutine(ReturnToPoolAfterDelay());
     }
+
 
     private IEnumerator ReturnToPoolAfterDelay()
     {

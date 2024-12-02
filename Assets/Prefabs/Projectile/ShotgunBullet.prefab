@@ -123,7 +123,7 @@ MonoBehaviour:
   theRB: {fileID: 6247319035920355404}
   moveSpeed: 50
   damageAmount: 4
-  damageType: 
+  damageType: ShotGun
   impactEffect: {fileID: 2107064138097909, guid: 84ad4265c32e5c74ca69ec86e5f42f9d, type: 3}
   projectileTower: {fileID: 0}
 --- !u!54 &6247319035920355404

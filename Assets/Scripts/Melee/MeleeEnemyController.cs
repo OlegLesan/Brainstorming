@@ -202,7 +202,7 @@ public class MeleeEnemyController : MonoBehaviour
         {
             animator.SetBool("IsAttacking", false);
             animator.SetBool("IsMoving", false);
-            animator.SetTrigger("Death");
+            animator.SetBool("IsDead", true);
         }
         else
         {

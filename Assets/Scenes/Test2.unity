@@ -24380,7 +24380,11 @@ MonoBehaviour:
       enemyCount: 3
     - enemyName: DogZombie2
       enemyCount: 3
+    - enemyName: RegenerationZombie
+      enemyCount: 3
     - enemyName: ArmoredZombie
+      enemyCount: 3
+    - enemyName: BossZombie
       enemyCount: 3
     spawnInterval: 0.1
   spawnPointsWithPaths:
@@ -24433,6 +24437,10 @@ MonoBehaviour:
     enemyPrefab: {fileID: 1069217425750644, guid: c312f79487f170740b92e37974ccb085, type: 3}
   - name: DogZombie2
     enemyPrefab: {fileID: 3841480357203371830, guid: 3770f510a9e25944fa8671e10f3258e4, type: 3}
+  - name: BossZombie
+    enemyPrefab: {fileID: 1069217425750644, guid: 4d786cf3abbead04280a3ae7042ccbd8, type: 3}
+  - name: RegenerationZombie
+    enemyPrefab: {fileID: 2119156692064389461, guid: 6f31acbbae1316a41bdc7b07b2802e59, type: 3}
   poolSize: 5
 --- !u!4 &1069104972 stripped
 Transform:
@@ -29435,12 +29443,12 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 4227bf11cfec4d34c843ab97809aca97, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 5
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 109
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_HeightmapPixelError: 15
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
@@ -43457,75 +43465,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4156750002270370, guid: 786679abb640bd84093160df1b69104b, type: 3}
   m_PrefabInstance: {fileID: 2126496389}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1845413792
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3414659972880772223, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_Name
-      value: SM_Chr_Zombie_Female_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.014
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99999684
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.0025394356
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0.291
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
 --- !u!1 &1846963120
 GameObject:
   m_ObjectHideFlags: 0
@@ -49360,4 +49299,3 @@ SceneRoots:
   - {fileID: 1635417915}
   - {fileID: 178124967}
   - {fileID: 1717523216}
-  - {fileID: 1845413792}

@@ -196,6 +196,8 @@ MonoBehaviour:
     resistancePercentage: 96.6
   - damageType: Explosive
     resistancePercentage: 95.7
+  - damageType: Shotgun
+    resistancePercentage: 95.7
 --- !u!65 &2382380630837414111
 BoxCollider:
   m_ObjectHideFlags: 0
