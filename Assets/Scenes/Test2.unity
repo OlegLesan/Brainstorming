@@ -9089,7 +9089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48, y: -161.33241}
+  m_AnchoredPosition: {x: 180.80205, y: -161.33241}
   m_SizeDelta: {x: 323.3732, y: 122.6648}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &382216416
@@ -15043,7 +15043,7 @@ GameObject:
   - component: {fileID: 672741834}
   - component: {fileID: 672741833}
   - component: {fileID: 672741832}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24375,223 +24375,13 @@ MonoBehaviour:
     - enemyName: SimpleZombie8
       enemyCount: 1
     - enemyName: SimpleZombie9
-      enemyCount: 1
-    spawnInterval: 0.1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 2
-    - enemyName: SimpleZombie2
-      enemyCount: 2
-    - enemyName: SimpleZombie3
-      enemyCount: 2
-    - enemyName: SimpleZombie4
-      enemyCount: 2
-    - enemyName: SimpleZombie5
-      enemyCount: 2
-    - enemyName: SimpleZombie6
-      enemyCount: 2
-    - enemyName: SimpleZombie7
-      enemyCount: 2
-    - enemyName: SimpleZombie8
-      enemyCount: 2
-    - enemyName: SimpleZombie9
-      enemyCount: 2
-    - enemyName: ArmoredZombie
-      enemyCount: 0
-    - enemyName: FastZombie
-      enemyCount: 2
-    spawnInterval: 0.1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
       enemyCount: 3
-    - enemyName: SimpleZombie2
+    - enemyName: DogZombie
       enemyCount: 3
-    - enemyName: SimpleZombie3
-      enemyCount: 3
-    - enemyName: SimpleZombie4
-      enemyCount: 3
-    - enemyName: SimpleZombie5
-      enemyCount: 3
-    - enemyName: SimpleZombie6
-      enemyCount: 3
-    - enemyName: SimpleZombie7
-      enemyCount: 3
-    - enemyName: SimpleZombie8
-      enemyCount: 3
-    - enemyName: SimpleZombie9
+    - enemyName: DogZombie2
       enemyCount: 3
     - enemyName: ArmoredZombie
       enemyCount: 3
-    - enemyName: FastZombie
-      enemyCount: 0
-    spawnInterval: 0.1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 2
-    - enemyName: SimpleZombie2
-      enemyCount: 2
-    - enemyName: SimpleZombie3
-      enemyCount: 2
-    - enemyName: SimpleZombie4
-      enemyCount: 2
-    - enemyName: SimpleZombie5
-      enemyCount: 2
-    - enemyName: SimpleZombie6
-      enemyCount: 2
-    - enemyName: SimpleZombie7
-      enemyCount: 2
-    - enemyName: SimpleZombie8
-      enemyCount: 3
-    - enemyName: SimpleZombie9
-      enemyCount: 2
-    - enemyName: ArmoredZombie
-      enemyCount: 2
-    - enemyName: FastZombie
-      enemyCount: 2
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 7
-    - enemyName: SimpleZombie2
-      enemyCount: 7
-    - enemyName: SimpleZombie3
-      enemyCount: 7
-    - enemyName: SimpleZombie4
-      enemyCount: 7
-    - enemyName: SimpleZombie5
-      enemyCount: 7
-    - enemyName: SimpleZombie6
-      enemyCount: 7
-    - enemyName: SimpleZombie7
-      enemyCount: 7
-    - enemyName: SimpleZombie8
-      enemyCount: 7
-    - enemyName: SimpleZombie9
-      enemyCount: 7
-    - enemyName: ArmoredZombie
-      enemyCount: 3
-    - enemyName: FastZombie
-      enemyCount: 3
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 2
-    - enemyName: SimpleZombie2
-      enemyCount: 2
-    - enemyName: SimpleZombie3
-      enemyCount: 2
-    - enemyName: SimpleZombie4
-      enemyCount: 2
-    - enemyName: SimpleZombie5
-      enemyCount: 2
-    - enemyName: SimpleZombie6
-      enemyCount: 2
-    - enemyName: SimpleZombie7
-      enemyCount: 2
-    - enemyName: SimpleZombie8
-      enemyCount: 2
-    - enemyName: SimpleZombie9
-      enemyCount: 2
-    - enemyName: ArmoredZombie
-      enemyCount: 10
-    - enemyName: FastZombie
-      enemyCount: 6
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 4
-    - enemyName: SimpleZombie2
-      enemyCount: 4
-    - enemyName: SimpleZombie3
-      enemyCount: 4
-    - enemyName: SimpleZombie4
-      enemyCount: 4
-    - enemyName: SimpleZombie5
-      enemyCount: 4
-    - enemyName: SimpleZombie6
-      enemyCount: 3
-    - enemyName: SimpleZombie7
-      enemyCount: 3
-    - enemyName: SimpleZombie8
-      enemyCount: 3
-    - enemyName: SimpleZombie9
-      enemyCount: 3
-    - enemyName: ArmoredZombie
-      enemyCount: 8
-    - enemyName: FastZombie
-      enemyCount: 8
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 4
-    - enemyName: SimpleZombie2
-      enemyCount: 4
-    - enemyName: SimpleZombie3
-      enemyCount: 4
-    - enemyName: SimpleZombie4
-      enemyCount: 4
-    - enemyName: SimpleZombie5
-      enemyCount: 4
-    - enemyName: SimpleZombie6
-      enemyCount: 4
-    - enemyName: SimpleZombie7
-      enemyCount: 4
-    - enemyName: SimpleZombie8
-      enemyCount: 4
-    - enemyName: SimpleZombie9
-      enemyCount: 4
-    - enemyName: ArmoredZombie
-      enemyCount: 11
-    - enemyName: FastZombie
-      enemyCount: 8
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 5
-    - enemyName: SimpleZombie2
-      enemyCount: 5
-    - enemyName: SimpleZombie3
-      enemyCount: 5
-    - enemyName: SimpleZombie4
-      enemyCount: 5
-    - enemyName: SimpleZombie5
-      enemyCount: 5
-    - enemyName: SimpleZombie6
-      enemyCount: 5
-    - enemyName: SimpleZombie7
-      enemyCount: 5
-    - enemyName: SimpleZombie8
-      enemyCount: 5
-    - enemyName: SimpleZombie9
-      enemyCount: 5
-    - enemyName: ArmoredZombie
-      enemyCount: 5
-    - enemyName: FastZombie
-      enemyCount: 5
-    spawnInterval: 1
-  - enemyTypes:
-    - enemyName: SimpleZombie1
-      enemyCount: 10
-    - enemyName: SimpleZombie2
-      enemyCount: 10
-    - enemyName: SimpleZombie3
-      enemyCount: 10
-    - enemyName: SimpleZombie4
-      enemyCount: 10
-    - enemyName: SimpleZombie5
-      enemyCount: 10
-    - enemyName: SimpleZombie6
-      enemyCount: 10
-    - enemyName: SimpleZombie7
-      enemyCount: 10
-    - enemyName: SimpleZombie8
-      enemyCount: 10
-    - enemyName: SimpleZombie9
-      enemyCount: 10
-    - enemyName: ArmoredZombie
-      enemyCount: 20
-    - enemyName: FastZombie
-      enemyCount: 20
     spawnInterval: 0.1
   spawnPointsWithPaths:
   - spawnPoint: {fileID: 2019731952}
@@ -24637,10 +24427,12 @@ MonoBehaviour:
     enemyPrefab: {fileID: 5002605408045144682, guid: 1385cab37bf9fcc41a6f27a1dfdf0eec, type: 3}
   - name: SimpleZombie9
     enemyPrefab: {fileID: 2635342793954984865, guid: 1a158d9260db78145b7d49c1664d51e2, type: 3}
+  - name: DogZombie
+    enemyPrefab: {fileID: 3313746650836730181, guid: 3df6712007bc981438bb426b014407c5, type: 3}
   - name: ArmoredZombie
     enemyPrefab: {fileID: 1069217425750644, guid: c312f79487f170740b92e37974ccb085, type: 3}
-  - name: FastZombie
-    enemyPrefab: {fileID: 3414659972880772223, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+  - name: DogZombie2
+    enemyPrefab: {fileID: 3841480357203371830, guid: 3770f510a9e25944fa8671e10f3258e4, type: 3}
   poolSize: 5
 --- !u!4 &1069104972 stripped
 Transform:
@@ -25844,7 +25636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1103978783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28338,7 +28130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -358.80206, y: -161.33241}
+  m_AnchoredPosition: {x: -226, y: -161.33241}
   m_SizeDelta: {x: 323.3732, y: 122.6648}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215325187
@@ -29653,7 +29445,7 @@ Terrain:
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
-  m_DrawInstanced: 0
+  m_DrawInstanced: 1
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
@@ -33606,79 +33398,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4694671610109278, guid: 1033ef80459eaf841a495441afaca434, type: 3}
   m_PrefabInstance: {fileID: 1968332555}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1402432454
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2216553773124183971, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216553773124183971, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216553773124183971, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99999684
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.0025394356
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0.291
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583894474287805222, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8310263849306289564, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: separationRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8595698503376618221, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
-      propertyPath: m_Name
-      value: SimpleZombie
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 429686e5f87bfd04687d9c27ac6e97f2, type: 3}
 --- !u!4 &1403009162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7899259231448525897, guid: c331c7b6ba7118e408ec014ac3a63c8a, type: 3}
@@ -33843,7 +33562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -33894,7 +33613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 345c5e4c25b36ff4da9dc5cf3b2a486e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d9b1e11372516f40b095ef5bf35ca79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -35103,10 +34822,14 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   meleeButton: {fileID: 1408751532}
   initialPoolSize: 10
   meleeUnitCost: 50
   meleeCostText: {fileID: 874520528}
+  minDistanceFromEnemies: 1
 --- !u!1 &1486373891
 GameObject:
   m_ObjectHideFlags: 0
@@ -39599,14 +39322,14 @@ RectTransform:
   - {fileID: 1902045606}
   - {fileID: 1756504528}
   - {fileID: 672741831}
-  - {fileID: 839667692}
-  - {fileID: 1894207019}
-  - {fileID: 1075359015}
   - {fileID: 957614513}
   - {fileID: 1489802935}
   - {fileID: 1848357231}
   - {fileID: 772728018}
   - {fileID: 1477671987}
+  - {fileID: 1894207019}
+  - {fileID: 839667692}
+  - {fileID: 1075359015}
   m_Father: {fileID: 1636860873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -39689,6 +39412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519d68534165b0d46ba89131e8e81d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customCursor: {fileID: 2800000, guid: 6d82ec86ce55e9a44a88fdb50f58927d, type: 3}
+  cursorHotspot: {x: 0, y: 0}
   hotbar: {fileID: 1489802934}
   goldText: {fileID: 982279077}
   notEnoughMoneyWarning: {fileID: 698211058}
@@ -43732,6 +43457,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4156750002270370, guid: 786679abb640bd84093160df1b69104b, type: 3}
   m_PrefabInstance: {fileID: 2126496389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1845413792
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3414659972880772223, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_Name
+      value: SM_Chr_Zombie_Female_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.014
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999684
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0025394356
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.291
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779979847146544056, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034118313430097920, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ace8a93d2a381b41ac3a074aa27952e, type: 3}
 --- !u!1 &1846963120
 GameObject:
   m_ObjectHideFlags: 0
@@ -49566,4 +49360,4 @@ SceneRoots:
   - {fileID: 1635417915}
   - {fileID: 178124967}
   - {fileID: 1717523216}
-  - {fileID: 1402432454}
+  - {fileID: 1845413792}

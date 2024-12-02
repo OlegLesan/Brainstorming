@@ -10,8 +10,7 @@ public class MeleeEnemyController : MonoBehaviour
 
     private Animator animator;
     private Transform targetUnit; // Цель (юнит)
-    private bool isAttacking = false; // В процессе атаки
-    private bool isDead = false;
+    private bool isDead = false; // Флаг смерти
     private EnemyControler enemyControler; // Ссылка на EnemyControler
     private EnemyHealthController healthController; // Ссылка на EnemyHealthController
 
@@ -30,6 +29,13 @@ public class MeleeEnemyController : MonoBehaviour
     private void Update()
     {
         if (isDead) return;
+
+        // Проверяем, если враг мертв, запускаем анимацию смерти
+        if (healthController != null && healthController.IsDead())
+        {
+            TriggerDeathAnimation();
+            return;
+        }
 
         // Проверяем, активна ли цель
         if (targetUnit != null && !targetUnit.gameObject.activeInHierarchy)
@@ -140,13 +146,11 @@ public class MeleeEnemyController : MonoBehaviour
         }
     }
 
-    // Метод для проверки принадлежности объекта к слою
     private bool IsTargetInLayer(GameObject target, LayerMask layerMask)
     {
         return (layerMask.value & (1 << target.layer)) != 0;
     }
 
-    // Этот метод вызывается из Animation Event
     private void DealDamage()
     {
         if (targetUnit == null) return;
@@ -158,11 +162,9 @@ public class MeleeEnemyController : MonoBehaviour
 
             if (unitController.IsDead())
             {
-                // Устанавливаем цель в null, чтобы враг больше не атаковал
                 targetUnit = null;
                 animator?.SetBool("IsAttacking", false);
 
-                // Включаем EnemyController после потери цели
                 if (enemyControler != null && !enemyControler.enabled)
                 {
                     enemyControler.enabled = true;
@@ -179,39 +181,53 @@ public class MeleeEnemyController : MonoBehaviour
 
             if (healthController.IsDead())
             {
-                Die();
+                TriggerDeathAnimation();
             }
+        }
+        else
+        {
+            Debug.LogError("EnemyHealthController не найден на объекте " + gameObject.name);
         }
     }
 
-    private void Die()
+    private void TriggerDeathAnimation()
     {
+        if (isDead) return;
+
         isDead = true;
 
-        // Отключаем анимации и сбрасываем цель
-        animator?.SetBool("IsAttacking", false);
-        animator?.SetBool("IsMoving", false);
-        animator?.SetTrigger("Death");
+        Debug.Log("Враг погиб: " + gameObject.name);
 
-        targetUnit = null; // Сбрасываем цель
+        if (animator != null)
+        {
+            animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsMoving", false);
+            animator.SetTrigger("Death");
+        }
+        else
+        {
+            Debug.LogWarning("Аниматор отсутствует на объекте " + gameObject.name);
+        }
 
-        // Включаем EnemyController перед возвратом в пул
+        targetUnit = null;
+
         if (enemyControler != null && !enemyControler.enabled)
         {
             enemyControler.enabled = true;
         }
+    }
 
+    // Этот метод вызывается анимационным эвентом
+    public void Die()
+    {
+        Debug.Log("Враг полностью уничтожен: " + gameObject.name);
         StartCoroutine(ReturnToPoolAfterDelay());
     }
 
     private IEnumerator ReturnToPoolAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        if (enemyControler != null)
-        {
-            enemyControler.enabled = true; // Включаем EnemyController перед возвратом в пул
-        }
-        Destroy(gameObject); // Или возвращаем в пул, если используется пул объектов
+        Destroy(gameObject); // Или вернуть объект в пул
     }
 
     private void OnDrawGizmosSelected()

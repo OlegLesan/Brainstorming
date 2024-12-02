@@ -7,6 +7,9 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    public Texture2D customCursor; // Ваша текстура курсора
+    public Vector2 cursorHotspot = Vector2.zero; // Точка привязки курсора
+
     public GameObject hotbar; // Панель выбора башен
     public TMP_Text goldText;
     public GameObject notEnoughMoneyWarning;
@@ -35,6 +38,7 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
+        SetCustomCursor(); // Устанавливаем кастомный курсор при запуске игры
         HideTowerButtons();
         HideUpgradePanel();
         HideHotbar(); // Скрываем hotbar по умолчанию
@@ -47,6 +51,11 @@ public class UIController : MonoBehaviour
         {
             PauseUnpause();
         }
+    }
+
+    public void SetCustomCursor()
+    {
+        Cursor.SetCursor(customCursor, cursorHotspot, CursorMode.Auto);
     }
 
     public void ShowHotbar()
@@ -63,50 +72,55 @@ public class UIController : MonoBehaviour
 
     public void PauseUnpause()
     {
-        if (levelCompleteScreen.activeSelf)
+        if (levelCompleteScreen.activeSelf || levelFailScreen.activeSelf)
         {
             return;
         }
 
-        if (pauseScreen.activeSelf == false)
+        if (!pauseScreen.activeSelf)
         {
             pauseScreen.SetActive(true);
             Time.timeScale = 0f;
+            AudioListener.volume = 0f; // Отключаем звук
         }
         else
         {
             pauseScreen.SetActive(false);
             Time.timeScale = 1f;
+            AudioListener.volume = 1f; // Включаем звук
         }
     }
 
     public void LevelSelect()
     {
-        Time.timeScale = 1f;
+        ResumeAudio();
         SceneManager.LoadScene(levelSelectScene);
     }
 
     public void MainMenu()
     {
-        Time.timeScale = 1f;
+        ResumeAudio();
         SceneManager.LoadScene(mainMenuScene);
     }
 
     public void TryAgain()
     {
+        ResumeAudio();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1f;
     }
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(LevelManager.instance.nextLevel);
+        levelCompleteScreen.SetActive(true);
+        Time.timeScale = 0f;
+        AudioListener.volume = 0f; // Отключаем звук
     }
 
     public void ShowLevelFailScreen()
     {
         levelFailScreen.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.volume = 0f; // Отключаем звук
     }
 
     public void ShowTowerButtons()
@@ -175,5 +189,11 @@ public class UIController : MonoBehaviour
         {
             audioSource.PlayOneShot(clip);
         }
+    }
+
+    private void ResumeAudio()
+    {
+        Time.timeScale = 1f;
+        AudioListener.volume = 1f; // Включаем звук
     }
 }

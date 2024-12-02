@@ -18,7 +18,7 @@ public class EnemyHealthController : MonoBehaviour
     private AudioSource audioSource;
     private EnemyPool enemyPool;
 
-    private bool isDead = false; // Флаг для проверки смерти
+    private bool isDead = false;
 
     [System.Serializable]
     public struct DamageResistance
@@ -95,40 +95,76 @@ public class EnemyHealthController : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
+        Debug.Log("Enemy died: " + gameObject.name);
+
+        // Отключение коллайдера
         if (enemyCollider != null)
         {
             enemyCollider.enabled = false;
         }
 
+        // Отключение здоровья
         healthBar.gameObject.SetActive(false);
 
+        // Остановка аудио
         if (audioSource != null)
         {
             audioSource.Stop();
             audioSource.enabled = false;
         }
 
+        // Сброс параметров аниматора и запуск анимации смерти
         if (animator != null)
         {
+            Debug.Log("Playing death animation for: " + gameObject.name);
+
+            // Сбрасываем все состояния аниматора
+            animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsMoving", false);
+
+            // Запускаем анимацию смерти
             animator.SetTrigger("Death");
         }
+        else
+        {
+            Debug.LogWarning("Animator not found on: " + gameObject.name);
+        }
 
+        // Добавляем деньги
         MoneyManager.instance.GiveMoney(moneyOnDeath);
 
+        // Убираем из активного списка
         LevelManager.instance.RemoveEnemyFromActiveList(this);
         WaveManager.instance.DecreaseEnemyCount();
 
+        // Остановка движения
         EnemyControler enemyController = GetComponent<EnemyControler>();
         if (enemyController != null)
         {
             enemyController.StopMoving();
         }
 
+        // Уничтожение или возврат в пул
         StartCoroutine(ReturnToPoolAfterDelay());
     }
 
     private IEnumerator ReturnToPoolAfterDelay()
     {
+        if (animator != null)
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            // Ждем, пока анимация смерти начнется
+            while (!stateInfo.IsName("Death"))
+            {
+                yield return null;
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            // Ждем окончания анимации смерти
+            yield return new WaitForSeconds(stateInfo.length);
+        }
+
         yield return new WaitForSeconds(destroyTime);
         enemyPool.ReturnEnemy(gameObject);
     }
