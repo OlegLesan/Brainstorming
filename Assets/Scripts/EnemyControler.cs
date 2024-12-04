@@ -12,7 +12,7 @@ public class EnemyControler : MonoBehaviour
 
     public float damage = 5;
     private Base theBase;
-    private AudioSource audioSource;
+    
 
     private float initialSpeedMod; // Для сохранения изначальной скорости
 
@@ -27,11 +27,7 @@ public class EnemyControler : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        
 
         theBase = FindObjectOfType<Base>();
 

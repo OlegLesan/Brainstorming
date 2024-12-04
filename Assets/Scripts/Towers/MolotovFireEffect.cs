@@ -5,7 +5,7 @@ public class MolotovFireEffect : MonoBehaviour
     private float damageAmount;
     private string damageType;
     private Collider impactCollider;
-    private AudioSource explosionSound;
+    
     private float duration;       // Длительность эффекта
     private float damageInterval = 1f; // Интервал между нанесением урона
     private float timer;
@@ -13,7 +13,7 @@ public class MolotovFireEffect : MonoBehaviour
     private void Awake()
     {
         impactCollider = GetComponent<Collider>();
-        explosionSound = GetComponent<AudioSource>();
+        
     }
 
     public void SetDamageAmount(float amount, string type)
@@ -29,10 +29,7 @@ public class MolotovFireEffect : MonoBehaviour
 
     private void Start()
     {
-        if (explosionSound != null)
-        {
-            explosionSound.Play();
-        }
+       
 
         timer = duration;
         InvokeRepeating(nameof(ApplyDamageToAllEnemiesInRange), 0f, damageInterval);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ProjectileTower : MonoBehaviour
 {
-    private AudioSource audioSource;
+    
     private Tower theTower;
     private Transform target;
 
@@ -22,7 +22,7 @@ public class ProjectileTower : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        
         theTower = GetComponent<Tower>();
         animator = GetComponent<Animator>();
         animator.speed = animationSpeed;
@@ -78,7 +78,7 @@ public class ProjectileTower : MonoBehaviour
     {
         if (target != null && !string.IsNullOrEmpty(projectileTag))
         {
-            audioSource.Play();
+            
             GameObject projectile = ProjectilePoolManager.instance.GetProjectile(projectileTag);
 
             if (projectile != null)

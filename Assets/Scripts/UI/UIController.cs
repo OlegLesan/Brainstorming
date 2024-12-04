@@ -24,8 +24,7 @@ public class UIController : MonoBehaviour
     public Button meleeButton; // Кнопка ближнего боя
 
     // Звуковые эффекты
-    public AudioClip upgradeSound;
-    public AudioClip sellSound;
+    
     private AudioSource audioSource;
 
     public string levelSelectScene, mainMenuScene;
@@ -160,7 +159,7 @@ public class UIController : MonoBehaviour
         if (TowerManager.instance.selectedTower != null)
         {
             TowerManager.instance.selectedTower.UpgradeTower();
-            PlaySound(upgradeSound);
+            
             HideUpgradePanel();
         }
     }
@@ -170,7 +169,7 @@ public class UIController : MonoBehaviour
         if (TowerManager.instance.selectedTower != null)
         {
             TowerManager.instance.selectedTower.SellTower();
-            PlaySound(sellSound);
+            
             HideUpgradePanel();
         }
     }

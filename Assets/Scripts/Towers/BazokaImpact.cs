@@ -7,13 +7,13 @@ public class BazokaImpact : MonoBehaviour
     private float damageAmount;
     private string damageType; // Переменная для хранения типа урона
     private Collider impactCollider;
-    private AudioSource explosionSound; // Ссылка на AudioSource для звука
+    
 
     private void Awake()
     {
         // Кэшируем ссылки на коллайдер и аудиокомпонент
         impactCollider = GetComponent<Collider>();
-        explosionSound = GetComponent<AudioSource>();
+        
     }
 
     // Метод для установки значения урона и типа урона
@@ -36,11 +36,7 @@ public class BazokaImpact : MonoBehaviour
 
     private void ApplyDamageToAllEnemiesInRange()
     {
-        // Проигрываем звук взрыва
-        if (explosionSound != null)
-        {
-            explosionSound.Play();
-        }
+        
 
         // Находим все коллайдеры с тегом "Enemy" в зоне поражения
         Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, impactCollider.bounds.extents.magnitude);

@@ -132,7 +132,6 @@
     <Compile Include="Assets\Scripts\Ranks.cs" />
     <Compile Include="Assets\Scripts\Towers\Tower.cs" />
     <Compile Include="Assets\Assets import\Animations\Kevin Iglesias\Caster Mage Animations\Scripts\ThrowFireball.cs" />
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\PauseOnStart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Assets import\Animations\Kevin Iglesias\Throwing Animations\Scripts\ThrowProp.cs" />
@@ -144,13 +143,13 @@
     <Compile Include="Assets\Scripts\Towers\SlowDownTower.cs" />
     <Compile Include="Assets\Scripts\Towers\BazokaImpact.cs" />
     <Compile Include="Assets\Assets import\PolygonDog\Scripts\POLYGON_CameraController.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\Path.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleURL.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleCountdownLabel.cs" />
     <Compile Include="Assets\Assets import\Animations\Kevin Iglesias\Archer Animations\Scripts\BowLoadScript.cs" />
-    <Compile Include="Assets\Audio\AudioSettings.cs" />
     <Compile Include="Assets\Scripts\Systems\MoneyManager.cs" />
     <Compile Include="Assets\Scripts\Systems\TowerManager.cs" />
     <Compile Include="Assets\Scripts\Waves\EnemyPool.cs" />
