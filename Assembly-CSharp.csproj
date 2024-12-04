@@ -150,6 +150,7 @@
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleURL.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleCountdownLabel.cs" />
     <Compile Include="Assets\Assets import\Animations\Kevin Iglesias\Archer Animations\Scripts\BowLoadScript.cs" />
+    <Compile Include="Assets\Audio\AudioSettings.cs" />
     <Compile Include="Assets\Scripts\Systems\MoneyManager.cs" />
     <Compile Include="Assets\Scripts\Systems\TowerManager.cs" />
     <Compile Include="Assets\Scripts\Waves\EnemyPool.cs" />
