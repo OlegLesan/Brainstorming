@@ -24453,7 +24453,7 @@ MonoBehaviour:
       enemyCount: 3
     - enemyName: BossZombie
       enemyCount: 3
-    spawnInterval: 0.1
+    spawnInterval: 2
   spawnPointsWithPaths:
   - spawnPoint: {fileID: 2019731952}
     path: {fileID: 212577115}
@@ -39505,6 +39505,7 @@ GameObject:
   - component: {fileID: 1680741621}
   - component: {fileID: 1680741624}
   - component: {fileID: 1680741625}
+  - component: {fileID: 1680741626}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -39647,7 +39648,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.051
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -39731,6 +39732,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1680741626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680741619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndexes: 060000000a000000
 --- !u!1 &1682291912
 GameObject:
   m_ObjectHideFlags: 0

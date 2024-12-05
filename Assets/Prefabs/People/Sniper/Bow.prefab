@@ -4084,6 +4084,7 @@ GameObject:
   - component: {fileID: 7212895349178791549}
   - component: {fileID: 4458187846012469570}
   - component: {fileID: -6583889344741937446}
+  - component: {fileID: -3684115362624897832}
   m_Layer: 11
   m_Name: Bow
   m_TagString: Untagged
@@ -4238,7 +4239,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9f92558805ef69a46b22bbb832650df8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.07
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4322,6 +4323,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3684115362624897832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6219501672966566426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndexes: 07000000
 --- !u!1 &6298552530621197977
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,14 +2,56 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
-    [Tooltip("Индекс звука в массиве sfx в AudioManager")]
-    public int soundIndex; // Номер индекса звука в AudioManager.sfx
+    [Tooltip("Массив индексов звуков в AudioManager.sfx")]
+    public int[] soundIndexes;
 
-    public void PlaySound()
+    private AudioSource prefabAudioSource;
+
+    private void Awake()
+    {
+        // Получаем или добавляем компонент AudioSource на этот объект
+        prefabAudioSource = GetComponent<AudioSource>();
+        if (prefabAudioSource == null)
+        {
+            prefabAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    /// <summary>
+    /// Воспроизведение звука через AudioManager по индексу массива soundIndexes.
+    /// </summary>
+    /// <param name="index">Индекс внутри массива soundIndexes.</param>
+    public void PlaySound(int index)
     {
         if (AudioManager.instance != null)
         {
-            AudioManager.instance.PlaySFX(soundIndex);
+            if (index >= 0 && index < soundIndexes.Length)
+            {
+                int soundIndex = soundIndexes[index];
+                AudioManager.instance.PlaySFXFromIndex(soundIndex, prefabAudioSource);
+            }
+            else
+            {
+                Debug.LogWarning($"Индекс {index} вне диапазона массива soundIndexes.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("AudioManager не найден в сцене.");
+        }
+    }
+
+    /// <summary>
+    /// Воспроизведение всех звуков из массива soundIndexes.
+    /// </summary>
+    public void PlayAllSounds()
+    {
+        if (AudioManager.instance != null)
+        {
+            foreach (int soundIndex in soundIndexes)
+            {
+                AudioManager.instance.PlaySFXFromIndex(soundIndex, prefabAudioSource);
+            }
         }
         else
         {

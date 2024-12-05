@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BazokaImpact : MonoBehaviour
 {
+    private SoundPlayer soundPlayer;
     private float damageAmount;
     private string damageType; // Переменная для хранения типа урона
     private Collider impactCollider;
@@ -11,11 +12,15 @@ public class BazokaImpact : MonoBehaviour
 
     private void Awake()
     {
+        soundPlayer = GetComponent<SoundPlayer>();
         // Кэшируем ссылки на коллайдер и аудиокомпонент
         impactCollider = GetComponent<Collider>();
         
     }
-
+    private void Start()
+    {
+        soundPlayer.PlaySound(0);
+    }
     // Метод для установки значения урона и типа урона
     public void SetDamageAmount(float amount, string type)
     {

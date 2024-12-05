@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MolotovFireEffect : MonoBehaviour
 {
+    private SoundPlayer soundPlayer;
     private float damageAmount;
     private string damageType;
     private Collider impactCollider;
@@ -12,10 +13,11 @@ public class MolotovFireEffect : MonoBehaviour
 
     private void Awake()
     {
+        soundPlayer = GetComponent<SoundPlayer>();
         impactCollider = GetComponent<Collider>();
         
     }
-
+    
     public void SetDamageAmount(float amount, string type)
     {
         damageAmount = amount;
@@ -29,10 +31,11 @@ public class MolotovFireEffect : MonoBehaviour
 
     private void Start()
     {
-       
 
+        
         timer = duration;
         InvokeRepeating(nameof(ApplyDamageToAllEnemiesInRange), 0f, damageInterval);
+        soundPlayer.PlaySound(0);
     }
 
     private void ApplyDamageToAllEnemiesInRange()

@@ -2601,8 +2601,9 @@ GameObject:
   - component: {fileID: 216922695173174486}
   - component: {fileID: 6128151455917748677}
   - component: {fileID: 8467195341991411183}
-  - component: {fileID: 7112688384433456876}
   - component: {fileID: 5865469344522471564}
+  - component: {fileID: 3549087444219973277}
+  - component: {fileID: 4471120461890171581}
   m_Layer: 9
   m_Name: ZombieDog
   m_TagString: Enemy
@@ -2732,7 +2733,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!82 &7112688384433456876
+--- !u!114 &5865469344522471564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841480357203371830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1
+  detectionRange: 5
+  damage: 15
+  moveSpeed: 4
+--- !u!82 &3549087444219973277
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2742,9 +2759,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 124287e0cf1792941bf17a20bfd05244, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.05
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2828,7 +2845,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5865469344522471564
+--- !u!114 &4471120461890171581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2837,13 +2854,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841480357203371830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
-  detectionRange: 5
-  damage: 15
-  moveSpeed: 4
+  soundIndexes: 05000000
 --- !u!1 &3841480357203371832
 GameObject:
   m_ObjectHideFlags: 0

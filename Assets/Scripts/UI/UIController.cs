@@ -7,6 +7,8 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    private SoundPlayer soundPlayer;
+
     public Texture2D customCursor; // Ваша текстура курсора
     public Vector2 cursorHotspot = Vector2.zero; // Точка привязки курсора
 
@@ -20,12 +22,12 @@ public class UIController : MonoBehaviour
     public TMP_Text upgradeCostText;
     public Button sellButton;
     public TMP_Text sellValueText;
-
+   
     public Button meleeButton; // Кнопка ближнего боя
 
     // Звуковые эффекты
     
-    private AudioSource audioSource;
+   
 
     public string levelSelectScene, mainMenuScene;
     public GameObject pauseScreen;
@@ -33,15 +35,17 @@ public class UIController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        soundPlayer = GetComponent<SoundPlayer>();
     }
 
     void Start()
     {
+        
         SetCustomCursor(); // Устанавливаем кастомный курсор при запуске игры
         HideTowerButtons();
         HideUpgradePanel();
         HideHotbar(); // Скрываем hotbar по умолчанию
-        audioSource = GetComponent<AudioSource>();
+        
     }
 
     void Update()
@@ -159,7 +163,7 @@ public class UIController : MonoBehaviour
         if (TowerManager.instance.selectedTower != null)
         {
             TowerManager.instance.selectedTower.UpgradeTower();
-            
+            soundPlayer.PlaySound(1);
             HideUpgradePanel();
         }
     }
@@ -169,7 +173,7 @@ public class UIController : MonoBehaviour
         if (TowerManager.instance.selectedTower != null)
         {
             TowerManager.instance.selectedTower.SellTower();
-            
+            soundPlayer.PlaySound(0);
             HideUpgradePanel();
         }
     }
@@ -182,13 +186,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void PlaySound(AudioClip clip)
-    {
-        if (clip != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(clip);
-        }
-    }
+    
 
     private void ResumeAudio()
     {

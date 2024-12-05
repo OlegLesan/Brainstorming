@@ -1,18 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System;
-
-
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
     private Dictionary<GameObject, bool> uiElementStates = new Dictionary<GameObject, bool>();
-    
 
     [Header("Audio Sources")]
     public AudioSource menuMusic;
@@ -49,7 +45,6 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        
         SetupSoundMenuButton();
 
         if (musicVolumeSlider != null)
@@ -66,8 +61,6 @@ public class AudioManager : MonoBehaviour
 
         ApplyAudioSettings();
     }
-
-   
 
     public void PlaySFX(int index)
     {
@@ -86,6 +79,29 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySFXFromIndex(int index, AudioSource mainAudioSource)
+    {
+        if (index >= 0 && index < sfx.Length)
+        {
+            AudioSource sfxSource = sfx[index];
+            if (sfxSource != null && !isSFXMuted)
+            {
+                sfxSource.volume = sfxVolume * mainAudioSource.volume;
+                sfxSource.pitch = mainAudioSource.pitch;
+                sfxSource.loop = mainAudioSource.loop;
+
+                sfxSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource не найден или отключён для данного SFX.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Индекс {index} вне диапазона массива sfx.");
+        }
+    }
 
     private void OnEnable()
     {
@@ -114,14 +130,12 @@ public class AudioManager : MonoBehaviour
             PlayRandomBGM();
         }
 
-        // Убедитесь, что кнопка настроена после загрузки сцены
         StartCoroutine(SetupSoundMenuButtonDelayed());
     }
 
-    // Добавьте задержку для поиска кнопки
     private IEnumerator SetupSoundMenuButtonDelayed()
     {
-        yield return null; // Дождаться завершения загрузки сцены
+        yield return null;
         SetupSoundMenuButton();
     }
 
@@ -200,7 +214,7 @@ public class AudioManager : MonoBehaviour
         StopAllMusic();
         if (bgm.Length > 0)
         {
-            int randomIndex = UnityEngine.Random.Range(0, bgm.Length); // Явное указание UnityEngine.Random
+            int randomIndex = UnityEngine.Random.Range(0, bgm.Length);
             currentBGM = bgm[randomIndex];
             currentBGM.volume = isMusicMuted ? 0f : musicVolume;
             currentBGM.Play();
@@ -220,10 +234,10 @@ public class AudioManager : MonoBehaviour
 
     private void SetupSoundMenuButton()
     {
-        Button[] allButtons = FindObjectsOfType<Button>(true); // Ищем все кнопки, включая отключённые
+        Button[] allButtons = FindObjectsOfType<Button>(true);
         foreach (var button in allButtons)
         {
-            if (button.CompareTag("SoundMenuButton")) // Проверяем тэг
+            if (button.CompareTag("SoundMenuButton"))
             {
                 button.onClick.RemoveAllListeners();
                 button.onClick.AddListener(ShowSoundMenu);
@@ -234,7 +248,6 @@ public class AudioManager : MonoBehaviour
 
         Debug.LogWarning("Кнопка с тэгом SoundMenuButton не найдена (даже если отключена).");
     }
-
 
     public void ShowSoundMenu()
     {

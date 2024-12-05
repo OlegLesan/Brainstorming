@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHealthController : MonoBehaviour
 {
+    private SoundPlayer soundPlayer;
     public float totalHealth;
     public Slider healthBar;
     public float rotationSpeed = 5f;
@@ -15,7 +16,7 @@ public class EnemyHealthController : MonoBehaviour
     private float initialHealth;
     private Collider enemyCollider;
     private Animator animator;
-    private AudioSource audioSource;
+    
     private EnemyPool enemyPool;
 
     private bool isDead = false;
@@ -31,11 +32,15 @@ public class EnemyHealthController : MonoBehaviour
 
     void Awake()
     {
+        soundPlayer = GetComponent<SoundPlayer>();
         initialHealth = totalHealth;
     }
 
     void Start()
     {
+
+
+        soundPlayer.PlaySound(0);
         healthBar.maxValue = initialHealth;
         healthBar.value = totalHealth;
         healthBar.gameObject.SetActive(false);
@@ -44,12 +49,13 @@ public class EnemyHealthController : MonoBehaviour
         targetCamera = Camera.main;
         enemyCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+       
         enemyPool = FindObjectOfType<EnemyPool>();
     }
 
     void Update()
     {
+        
         if (healthBar != null && targetCamera != null)
         {
             Vector3 direction = targetCamera.transform.position - healthBar.transform.position;
@@ -106,12 +112,7 @@ public class EnemyHealthController : MonoBehaviour
         // Отключение здоровья
         healthBar.gameObject.SetActive(false);
 
-        // Остановка аудио
-        if (audioSource != null)
-        {
-            audioSource.Stop();
-            audioSource.enabled = false;
-        }
+        
 
         // Сброс параметров аниматора и установка IsDead
         if (animator != null)
@@ -178,11 +179,7 @@ public class EnemyHealthController : MonoBehaviour
             enemyCollider.enabled = true;
         }
 
-        if (audioSource != null)
-        {
-            audioSource.enabled = true;
-            audioSource.Play();
-        }
+       
 
         if (animator != null)
         {

@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class Gates : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private SoundPlayer soundPlayer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        // Get the AudioSource component attached to this GameObject
-        audioSource = GetComponent<AudioSource>();
+        soundPlayer = GetComponent<SoundPlayer>();
+       
 
-        if (audioSource == null)
-        {
-            Debug.LogWarning("AudioSource component is missing on the GameObject.");
-        }
     }
 
     // Method to play sound, triggered by an animation event
     public void PlayGateSound()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        soundPlayer.PlaySound(0);
+        
     }
 }

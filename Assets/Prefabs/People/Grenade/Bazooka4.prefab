@@ -2506,6 +2506,7 @@ GameObject:
   - component: {fileID: 8329875072962199582}
   - component: {fileID: 5732287956209662836}
   - component: {fileID: 7202733822467168722}
+  - component: {fileID: 5645993699464633637}
   m_Layer: 11
   m_Name: Bazooka4
   m_TagString: Untagged
@@ -2666,7 +2667,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 256
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -2744,6 +2745,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5645993699464633637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706318339412650984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndexes: 07000000
 --- !u!1 &3795326097411295802
 GameObject:
   m_ObjectHideFlags: 0

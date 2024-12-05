@@ -622,6 +622,7 @@ GameObject:
   - component: {fileID: 584741857131778032}
   - component: {fileID: 3484334871149814174}
   - component: {fileID: 4818749600810058130}
+  - component: {fileID: 8318974621159737808}
   m_Layer: 0
   m_Name: Shotgun 3
   m_TagString: Untagged
@@ -756,7 +757,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -850,6 +851,19 @@ MonoBehaviour:
   - m_Rig: {fileID: 0}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &8318974621159737808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350103588185370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndexes: 0e000000
 --- !u!1 &1351599260908466
 GameObject:
   m_ObjectHideFlags: 0

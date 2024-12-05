@@ -6,7 +6,7 @@ public class ProjectileTower : MonoBehaviour
     
     private Tower theTower;
     private Transform target;
-
+    private SoundPlayer soundPlayer;
     public Transform firePoint;
     public Transform launcherModel;
     public float rotateSpeed;
@@ -19,6 +19,11 @@ public class ProjectileTower : MonoBehaviour
 
     [Tooltip("Прицеливаться в самого дальнего врага вместо ближайшего")]
     public bool targetFarthestEnemy = false; // Новый булево поле для переключения цели
+
+    void Awake()
+    {
+        soundPlayer = GetComponent<SoundPlayer>();
+    }
 
     void Start()
     {
@@ -76,7 +81,7 @@ public class ProjectileTower : MonoBehaviour
 
     public void FireProjectile()
     {
-        GetComponent<SoundPlayer>()?.PlaySound();
+        soundPlayer.PlaySound(0);
         if (target != null && !string.IsNullOrEmpty(projectileTag))
         {
             

@@ -4,28 +4,19 @@ using UnityEngine;
 
 public class ZombieHorde : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private SoundPlayer soundPlayer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        // Get the AudioSource component attached to this GameObject
-        audioSource = GetComponent<AudioSource>();
+        soundPlayer = GetComponent<SoundPlayer>();
 
-        // Play the sound at the start of the game
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
-        else
-        {
-            Debug.LogWarning("AudioSource component is missing on the GameObject.");
-        }
+
     }
 
-    // Update is called once per frame
-    void Update()
+    // Method to play sound, triggered by an animation event
+    public void Start()
     {
+        soundPlayer.PlaySound(0);
 
     }
 }

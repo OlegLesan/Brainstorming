@@ -941,8 +941,9 @@ GameObject:
   - component: {fileID: 5652300488791309916}
   - component: {fileID: 7979073309924269006}
   - component: {fileID: 4930228889889454338}
-  - component: {fileID: 9174554750524910752}
   - component: {fileID: 6094161780097847008}
+  - component: {fileID: 6089051416804876756}
+  - component: {fileID: 408931438490487365}
   m_Layer: 9
   m_Name: RegenerationZombie
   m_TagString: Enemy
@@ -1095,7 +1096,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!82 &9174554750524910752
+--- !u!114 &6094161780097847008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119156692064389461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1
+  detectionRange: 5
+  damage: 10
+  moveSpeed: 1.1
+--- !u!82 &6089051416804876756
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1105,9 +1122,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bd91660fb6d23094381e63d77cea2c3c, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.045
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1191,7 +1208,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6094161780097847008
+--- !u!114 &408931438490487365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1200,13 +1217,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2119156692064389461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25dd99f79aa0ec5469330071afdf3f69, type: 3}
+  m_Script: {fileID: 11500000, guid: b35bedc27c2521d4692f6337e80c4eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
-  detectionRange: 5
-  damage: 10
-  moveSpeed: 1.1
+  soundIndexes: 01000000
 --- !u!1 &2130120870878097466
 GameObject:
   m_ObjectHideFlags: 0
