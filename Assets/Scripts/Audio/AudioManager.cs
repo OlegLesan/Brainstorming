@@ -103,6 +103,39 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void ConfigureSFX(int index, AudioSource targetAudioSource)
+    {
+        if (index >= 0 && index < sfx.Length)
+        {
+            AudioSource pooledSource = sfx[index];
+            if (pooledSource != null)
+            {
+                // Ќастраиваем параметры звука
+                targetAudioSource.clip = pooledSource.clip;
+                targetAudioSource.volume = sfxVolume;
+                targetAudioSource.pitch = pooledSource.pitch;
+                targetAudioSource.loop = pooledSource.loop;
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource из пула отсутствует дл€ данного индекса.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"»ндекс {index} вне диапазона массива sfx.");
+        }
+    }
+
+    public void StopSFX(AudioSource source)
+    {
+        // ќстанавливаем звук, св€занный с конкретным AudioSource
+        if (source != null && source.isPlaying)
+        {
+            source.Stop();
+        }
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

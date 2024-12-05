@@ -28,7 +28,10 @@ public class SoundPlayer : MonoBehaviour
             if (index >= 0 && index < soundIndexes.Length)
             {
                 int soundIndex = soundIndexes[index];
-                AudioManager.instance.PlaySFXFromIndex(soundIndex, prefabAudioSource);
+
+                // Настройка и воспроизведение через локальный AudioSource
+                AudioManager.instance.ConfigureSFX(soundIndex, prefabAudioSource);
+                prefabAudioSource.Play();
             }
             else
             {
@@ -50,12 +53,37 @@ public class SoundPlayer : MonoBehaviour
         {
             foreach (int soundIndex in soundIndexes)
             {
-                AudioManager.instance.PlaySFXFromIndex(soundIndex, prefabAudioSource);
+                AudioManager.instance.ConfigureSFX(soundIndex, prefabAudioSource);
+                prefabAudioSource.Play();
             }
         }
         else
         {
             Debug.LogWarning("AudioManager не найден в сцене.");
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Если AudioManager существует, остановить звуки, связанные с этим объектом
+        if (AudioManager.instance != null && prefabAudioSource != null)
+        {
+            AudioManager.instance.StopSFX(prefabAudioSource);
+        }
+
+        // Останавливаем локальный звук, если объект отключен
+        if (prefabAudioSource != null && prefabAudioSource.isPlaying)
+        {
+            prefabAudioSource.Stop();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Если объект уничтожен, также остановить звуки
+        if (AudioManager.instance != null && prefabAudioSource != null)
+        {
+            AudioManager.instance.StopSFX(prefabAudioSource);
         }
     }
 }
