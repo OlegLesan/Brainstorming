@@ -318,7 +318,18 @@ public class AudioManager : MonoBehaviour
 
         Time.timeScale = 0;
     }
-
+    public AudioSource GetSFXSource(int index)
+    {
+        if (index >= 0 && index < sfx.Length)
+        {
+            return sfx[index];
+        }
+        else
+        {
+            Debug.LogWarning($"Индекс {index} вне диапазона массива sfx.");
+            return null;
+        }
+    }
     public void HideSoundMenu()
     {
         if (soundMenuCanvas != null)
