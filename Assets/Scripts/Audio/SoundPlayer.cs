@@ -9,11 +9,11 @@ public class SoundPlayer : MonoBehaviour
 
     private void Awake()
     {
-        // Получаем или добавляем компонент AudioSource на этот объект
+        // Получаем существующий AudioSource на объекте
         prefabAudioSource = GetComponent<AudioSource>();
         if (prefabAudioSource == null)
         {
-            prefabAudioSource = gameObject.AddComponent<AudioSource>();
+            Debug.LogError("AudioSource не найден на объекте! Убедитесь, что компонент AudioSource добавлен.");
         }
     }
 
@@ -23,15 +23,28 @@ public class SoundPlayer : MonoBehaviour
     /// <param name="index">Индекс внутри массива soundIndexes.</param>
     public void PlaySound(int index)
     {
+        if (prefabAudioSource == null)
+        {
+            Debug.LogWarning("Попытка воспроизвести звук, но AudioSource не найден.");
+            return;
+        }
+
         if (AudioManager.instance != null)
         {
             if (index >= 0 && index < soundIndexes.Length)
             {
                 int soundIndex = soundIndexes[index];
 
-                // Настройка и воспроизведение через локальный AudioSource
-                AudioManager.instance.ConfigureSFX(soundIndex, prefabAudioSource);
-                prefabAudioSource.Play();
+                // Устанавливаем только AudioClip, оставляя остальные настройки AudioSource объекта
+                prefabAudioSource.clip = AudioManager.instance.GetSFXClip(soundIndex);
+                if (prefabAudioSource.clip != null)
+                {
+                    prefabAudioSource.Play();
+                }
+                else
+                {
+                    Debug.LogWarning($"AudioClip для индекса {soundIndex} не найден в AudioManager.");
+                }
             }
             else
             {
@@ -49,12 +62,25 @@ public class SoundPlayer : MonoBehaviour
     /// </summary>
     public void PlayAllSounds()
     {
+        if (prefabAudioSource == null)
+        {
+            Debug.LogWarning("Попытка воспроизвести звук, но AudioSource не найден.");
+            return;
+        }
+
         if (AudioManager.instance != null)
         {
             foreach (int soundIndex in soundIndexes)
             {
-                AudioManager.instance.ConfigureSFX(soundIndex, prefabAudioSource);
-                prefabAudioSource.Play();
+                prefabAudioSource.clip = AudioManager.instance.GetSFXClip(soundIndex);
+                if (prefabAudioSource.clip != null)
+                {
+                    prefabAudioSource.Play();
+                }
+                else
+                {
+                    Debug.LogWarning($"AudioClip для индекса {soundIndex} не найден в AudioManager.");
+                }
             }
         }
         else

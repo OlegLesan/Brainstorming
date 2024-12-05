@@ -62,6 +62,63 @@ public class AudioManager : MonoBehaviour
         ApplyAudioSettings();
     }
 
+    public void SetMusicVolume(float volume)
+    {
+        musicVolume = volume;
+        ApplyAudioSettings();
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = volume;
+
+        // Применяем громкость ко всем AudioSource в массиве sfx
+        foreach (var sfxSource in sfx)
+        {
+            if (sfxSource != null)
+            {
+                sfxSource.volume = isSFXMuted ? 0f : sfxVolume;
+            }
+        }
+
+        // Обновляем громкость локальных источников звука
+        UpdateLocalSFXVolumes();
+    }
+
+    private void UpdateLocalSFXVolumes()
+    {
+        SoundPlayer[] soundPlayers = FindObjectsOfType<SoundPlayer>();
+        foreach (var player in soundPlayers)
+        {
+            AudioSource source = player.GetComponent<AudioSource>();
+            if (source != null)
+            {
+                source.volume = isSFXMuted ? 0f : sfxVolume;
+            }
+        }
+    }
+
+    public void ApplyAudioSettings()
+    {
+        if (menuMusic != null)
+            menuMusic.volume = isMusicMuted ? 0f : musicVolume;
+
+        if (levelSelectMusic != null)
+            levelSelectMusic.volume = isMusicMuted ? 0f : musicVolume;
+
+        foreach (var bgmSource in bgm)
+        {
+            if (bgmSource != null)
+                bgmSource.volume = isMusicMuted ? 0f : musicVolume;
+        }
+
+        foreach (var sfxSource in sfx)
+        {
+            if (sfxSource != null)
+                sfxSource.volume = isSFXMuted ? 0f : sfxVolume;
+        }
+    }
+
     public void PlaySFX(int index)
     {
         if (index >= 0 && index < sfx.Length)
@@ -103,33 +160,26 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void ConfigureSFX(int index, AudioSource targetAudioSource)
+    public AudioClip GetSFXClip(int index)
     {
         if (index >= 0 && index < sfx.Length)
         {
-            AudioSource pooledSource = sfx[index];
-            if (pooledSource != null)
+            AudioSource sfxSource = sfx[index];
+            if (sfxSource != null)
             {
-                // Настраиваем параметры звука
-                targetAudioSource.clip = pooledSource.clip;
-                targetAudioSource.volume = sfxVolume;
-                targetAudioSource.pitch = pooledSource.pitch;
-                targetAudioSource.loop = pooledSource.loop;
-            }
-            else
-            {
-                Debug.LogWarning("AudioSource из пула отсутствует для данного индекса.");
+                return sfxSource.clip;
             }
         }
         else
         {
             Debug.LogWarning($"Индекс {index} вне диапазона массива sfx.");
         }
+
+        return null;
     }
 
     public void StopSFX(AudioSource source)
     {
-        // Останавливаем звук, связанный с конкретным AudioSource
         if (source != null && source.isPlaying)
         {
             source.Stop();
@@ -170,39 +220,6 @@ public class AudioManager : MonoBehaviour
     {
         yield return null;
         SetupSoundMenuButton();
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        musicVolume = volume;
-        ApplyAudioSettings();
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        sfxVolume = volume;
-        ApplyAudioSettings();
-    }
-
-    private void ApplyAudioSettings()
-    {
-        if (menuMusic != null)
-            menuMusic.volume = isMusicMuted ? 0f : musicVolume;
-
-        if (levelSelectMusic != null)
-            levelSelectMusic.volume = isMusicMuted ? 0f : musicVolume;
-
-        foreach (var bgmSource in bgm)
-        {
-            if (bgmSource != null)
-                bgmSource.volume = isMusicMuted ? 0f : musicVolume;
-        }
-
-        foreach (var sfxSource in sfx)
-        {
-            if (sfxSource != null)
-                sfxSource.volume = isSFXMuted ? 0f : sfxVolume;
-        }
     }
 
     public void StopAllMusic()
