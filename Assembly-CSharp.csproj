@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\LevelSelectController.cs" />
+    <Compile Include="Assets\Scripts\Audio\SoundPlayer.cs" />
     <Compile Include="Assets\Scripts\Towers\MolotovFireEffect.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleButtonAction.cs" />
     <Compile Include="Assets\Assets import\Synty\InterfaceApocalypseHUD\Samples\Scripts\SampleScrollUV.cs" />

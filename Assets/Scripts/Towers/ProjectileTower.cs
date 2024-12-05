@@ -76,6 +76,7 @@ public class ProjectileTower : MonoBehaviour
 
     public void FireProjectile()
     {
+        GetComponent<SoundPlayer>()?.PlaySound();
         if (target != null && !string.IsNullOrEmpty(projectileTag))
         {
             

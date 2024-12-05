@@ -1,25 +1,38 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+
+
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    [Header("Audio Sources")]
-    public AudioSource menuMusic; // Музыка для главного меню
-    public AudioSource levelSelectMusic; // Музыка для выбора уровня
-    public AudioSource[] bgm; // Массив треков для фоновой музыки
-    public AudioSource[] sfx; // Звуковые эффекты
+    private Dictionary<GameObject, bool> uiElementStates = new Dictionary<GameObject, bool>();
+    
 
-    private AudioSource currentBGM; // Текущий трек фоновой музыки
-    private Coroutine bgmCoroutine; // Ссылка на корутину фоновой музыки
+    [Header("Audio Sources")]
+    public AudioSource menuMusic;
+    public AudioSource levelSelectMusic;
+    public AudioSource[] bgm;
+    public AudioSource[] sfx;
+
+    private AudioSource currentBGM;
+    private Coroutine bgmCoroutine;
 
     [Header("Audio Settings")]
-    [Range(0f, 1f)] public float musicVolume = 1f; // Громкость музыки
-    [Range(0f, 1f)] public float sfxVolume = 1f; // Громкость звуковых эффектов
-    public bool isMusicMuted = false; // Отключена ли музыка
-    public bool isSFXMuted = false; // Отключены ли звуковые эффекты
+    [Range(0f, 1f)] public float musicVolume = 1f;
+    [Range(0f, 1f)] public float sfxVolume = 1f;
+    public bool isMusicMuted = false;
+    public bool isSFXMuted = false;
+
+    [Header("UI References")]
+    public Canvas soundMenuCanvas;
+    public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
 
     private void Awake()
     {
@@ -36,8 +49,43 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        
+        SetupSoundMenuButton();
+
+        if (musicVolumeSlider != null)
+        {
+            musicVolumeSlider.value = musicVolume;
+            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
+
+        if (sfxVolumeSlider != null)
+        {
+            sfxVolumeSlider.value = sfxVolume;
+            sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
+        }
+
         ApplyAudioSettings();
     }
+
+   
+
+    public void PlaySFX(int index)
+    {
+        if (index >= 0 && index < sfx.Length)
+        {
+            AudioSource audioSource = sfx[index];
+            if (!isSFXMuted && audioSource != null)
+            {
+                audioSource.volume = sfxVolume;
+                audioSource.PlayOneShot(audioSource.clip);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Индекс {index} находится вне диапазона массива sfx.");
+        }
+    }
+
 
     private void OnEnable()
     {
@@ -65,9 +113,51 @@ public class AudioManager : MonoBehaviour
         {
             PlayRandomBGM();
         }
+
+        // Убедитесь, что кнопка настроена после загрузки сцены
+        StartCoroutine(SetupSoundMenuButtonDelayed());
     }
 
-    // Остановка всей музыки
+    // Добавьте задержку для поиска кнопки
+    private IEnumerator SetupSoundMenuButtonDelayed()
+    {
+        yield return null; // Дождаться завершения загрузки сцены
+        SetupSoundMenuButton();
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        musicVolume = volume;
+        ApplyAudioSettings();
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = volume;
+        ApplyAudioSettings();
+    }
+
+    private void ApplyAudioSettings()
+    {
+        if (menuMusic != null)
+            menuMusic.volume = isMusicMuted ? 0f : musicVolume;
+
+        if (levelSelectMusic != null)
+            levelSelectMusic.volume = isMusicMuted ? 0f : musicVolume;
+
+        foreach (var bgmSource in bgm)
+        {
+            if (bgmSource != null)
+                bgmSource.volume = isMusicMuted ? 0f : musicVolume;
+        }
+
+        foreach (var sfxSource in sfx)
+        {
+            if (sfxSource != null)
+                sfxSource.volume = isSFXMuted ? 0f : sfxVolume;
+        }
+    }
+
     public void StopAllMusic()
     {
         if (menuMusic != null && menuMusic.isPlaying) menuMusic.Stop();
@@ -110,7 +200,7 @@ public class AudioManager : MonoBehaviour
         StopAllMusic();
         if (bgm.Length > 0)
         {
-            int randomIndex = Random.Range(0, bgm.Length);
+            int randomIndex = UnityEngine.Random.Range(0, bgm.Length); // Явное указание UnityEngine.Random
             currentBGM = bgm[randomIndex];
             currentBGM.volume = isMusicMuted ? 0f : musicVolume;
             currentBGM.Play();
@@ -128,48 +218,60 @@ public class AudioManager : MonoBehaviour
         PlayRandomBGM();
     }
 
-    public void SetMusicVolume(float volume)
+    private void SetupSoundMenuButton()
     {
-        musicVolume = volume;
-        ApplyAudioSettings();
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        sfxVolume = volume;
-        ApplyAudioSettings();
-    }
-
-    public void ToggleMusicMute(bool mute)
-    {
-        isMusicMuted = mute;
-        ApplyAudioSettings();
-    }
-
-    public void ToggleSFXMute(bool mute)
-    {
-        isSFXMuted = mute;
-        ApplyAudioSettings();
-    }
-
-    private void ApplyAudioSettings()
-    {
-        if (menuMusic != null)
-            menuMusic.volume = isMusicMuted ? 0f : musicVolume;
-
-        if (levelSelectMusic != null)
-            levelSelectMusic.volume = isMusicMuted ? 0f : musicVolume;
-
-        foreach (var bgmSource in bgm)
+        Button[] allButtons = FindObjectsOfType<Button>(true); // Ищем все кнопки, включая отключённые
+        foreach (var button in allButtons)
         {
-            if (bgmSource != null)
-                bgmSource.volume = isMusicMuted ? 0f : musicVolume;
+            if (button.CompareTag("SoundMenuButton")) // Проверяем тэг
+            {
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(ShowSoundMenu);
+                Debug.Log("SoundMenuButton настроена.");
+                return;
+            }
         }
 
-        foreach (var sfxSource in sfx)
+        Debug.LogWarning("Кнопка с тэгом SoundMenuButton не найдена (даже если отключена).");
+    }
+
+
+    public void ShowSoundMenu()
+    {
+        if (soundMenuCanvas != null)
         {
-            if (sfxSource != null)
-                sfxSource.volume = isSFXMuted ? 0f : sfxVolume;
+            soundMenuCanvas.gameObject.SetActive(true);
         }
+
+        Canvas[] allCanvases = FindObjectsOfType<Canvas>();
+        foreach (var canvas in allCanvases)
+        {
+            if (canvas.gameObject != soundMenuCanvas.gameObject && !uiElementStates.ContainsKey(canvas.gameObject))
+            {
+                uiElementStates[canvas.gameObject] = canvas.gameObject.activeSelf;
+                canvas.gameObject.SetActive(false);
+            }
+        }
+
+        Time.timeScale = 0;
+    }
+
+    public void HideSoundMenu()
+    {
+        if (soundMenuCanvas != null)
+        {
+            soundMenuCanvas.gameObject.SetActive(false);
+        }
+
+        foreach (var entry in uiElementStates)
+        {
+            if (entry.Key != null)
+            {
+                entry.Key.SetActive(entry.Value);
+            }
+        }
+
+        uiElementStates.Clear();
+        Time.timeScale = 1;
     }
 }

@@ -8,6 +8,8 @@ TagManager:
   - Main Camera
   - Molotov
   - Unit
+  - UI
+  - SoundMenuButton
   layers:
   - Default
   - TransparentFX
