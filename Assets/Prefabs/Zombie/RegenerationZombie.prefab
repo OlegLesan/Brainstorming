@@ -1124,6 +1124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundIndexes: 01000000
+  priority: 256
+  volumeMultiplier: 0.135
+  loop: 1
 --- !u!1 &2130120870878097466
 GameObject:
   m_ObjectHideFlags: 0

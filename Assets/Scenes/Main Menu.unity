@@ -6636,6 +6636,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundIndexes: 10000000
+  priority: 256
+  volumeMultiplier: 0.099
+  loop: 0
+  minPitch: 0.9
+  maxPitch: 1.1
 --- !u!1001 &304649782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42794,6 +42799,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundIndexes: 11000000
+  priority: 256
+  volumeMultiplier: 0.173
+  loop: 1
+  minPitch: 0.9
+  maxPitch: 1.1
 --- !u!4 &2025939642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4316265118851238, guid: d7ef0a4417e3c154bb14482f7b5e018b, type: 3}

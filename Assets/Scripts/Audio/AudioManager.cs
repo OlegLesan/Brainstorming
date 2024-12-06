@@ -316,7 +316,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        Time.timeScale = 0;
+       
     }
     public AudioSource GetSFXSource(int index)
     {
@@ -346,6 +346,6 @@ public class AudioManager : MonoBehaviour
         }
 
         uiElementStates.Clear();
-        Time.timeScale = 1;
+        
     }
 }
