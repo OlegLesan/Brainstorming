@@ -90,11 +90,7 @@ public class AudioManager : MonoBehaviour
         SoundPlayer[] soundPlayers = FindObjectsOfType<SoundPlayer>();
         foreach (var player in soundPlayers)
         {
-            AudioSource source = player.GetComponent<AudioSource>();
-            if (source != null)
-            {
-                source.volume = isSFXMuted ? 0f : sfxVolume;
-            }
+            player.UpdateVolume();
         }
     }
 
@@ -330,6 +326,8 @@ public class AudioManager : MonoBehaviour
             return null;
         }
     }
+    
+
     public void HideSoundMenu()
     {
         if (soundMenuCanvas != null)
