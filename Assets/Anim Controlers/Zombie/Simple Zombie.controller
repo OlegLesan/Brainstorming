@@ -91,19 +91,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsMoving
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsDead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -316,7 +316,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Anim_Walking_001 0
-  m_Speed: 1.6
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2482179751212448309}
@@ -329,7 +329,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 070bac98ae9a4e14eabf86e57f182618, type: 3}
+  m_Motion: {fileID: 7400000, guid: 67413f6995792f2439afff84dff5bdb8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -395,7 +395,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Anim_Walking_001
-  m_Speed: 1.6
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5836569375846174408}
@@ -410,7 +410,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 070bac98ae9a4e14eabf86e57f182618, type: 3}
+  m_Motion: {fileID: 7400000, guid: b4fb25d19c29b2c4e940f2b9219cc524, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

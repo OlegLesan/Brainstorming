@@ -12,6 +12,7 @@ public class ManipulatorTimer : MonoBehaviour
 
     private float normalAlpha = 1f;
     private float transparentAlpha = 0.5f;
+    private float previousTimeScale = 1f;
     public static bool IsPaused { get; private set; } = false; // Состояние паузы
 
     void Start()
@@ -28,13 +29,19 @@ public class ManipulatorTimer : MonoBehaviour
 
     void Update()
     {
-        // Если экран паузы включен, игнорируем нажатия на клавиши
         if (IsPauseScreenActive()) return;
 
-        // Проверяем горячие клавиши
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetTimeScale(0f, pauseButton);
+            if (!IsPaused)
+            {
+                previousTimeScale = Time.timeScale;
+                SetTimeScale(0f, pauseButton);
+            }
+            else
+            {
+                RestorePreviousTimeScale();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -52,11 +59,13 @@ public class ManipulatorTimer : MonoBehaviour
 
     void SetTimeScale(float timeScale, Button activeButton)
     {
-        // Если экран паузы включен или уровень завершён, не изменяем таймскейл
         if (IsPauseScreenActive() || !LevelManager.instance.levelActive) return;
 
         Time.timeScale = timeScale;
-        IsPaused = timeScale == 0; // Обновляем флаг паузы
+        IsPaused = timeScale == 0;
+
+        // Управляем звуком
+        AudioListener.pause = IsPaused;
 
         // Обновляем прозрачность кнопок
         UpdateButtonAlpha(pauseButton, activeButton == pauseButton);
@@ -76,4 +85,18 @@ public class ManipulatorTimer : MonoBehaviour
     {
         return UIController.instance.pauseScreen.activeSelf;
     }
+    void RestorePreviousTimeScale()
+    {
+        if (previousTimeScale == 0f) previousTimeScale = 1f; // подстраховка
+
+        if (Mathf.Approximately(previousTimeScale, 1f))
+            SetTimeScale(1f, x1Button);
+        else if (Mathf.Approximately(previousTimeScale, 2f))
+            SetTimeScale(2f, x2Button);
+        else if (Mathf.Approximately(previousTimeScale, 3f))
+            SetTimeScale(3f, x3Button);
+        else
+            SetTimeScale(previousTimeScale, x1Button); // если что-то нестандартное
+    }
+
 }
